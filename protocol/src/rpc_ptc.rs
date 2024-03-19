@@ -328,6 +328,15 @@ pub struct RpcDelNewMapArg {
     pub ids: PropertyHashSet<i32>,
 }
 
+#[derive(OctData, Debug)]
+pub struct PtcDungeonQuestFinishedArg {
+    pub player_uid: u64,
+    pub quest_id: i32,
+    pub success: bool,
+    pub reward_items: PropertyHashMap<u64, ItemIDCount>,
+    pub statistics: PropertyHashMap<QuestStatisticsType, u64>,
+}
+
 ret! {
     struct RpcLoginRet {
         account_info: PropertyBlob,

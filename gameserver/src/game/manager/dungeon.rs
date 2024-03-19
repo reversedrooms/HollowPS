@@ -244,6 +244,48 @@ impl DungeonManager {
         ))
     }
 
+    pub fn hollow_finished(&self) -> PlayerOperationResult<u64> {
+        let cur_scene_uid = self.get_cur_scene_uid();
+
+        let mut player = self.player.borrow_mut();
+
+        let hollow_scene = player
+            .dungeon_collection
+            .as_mut()
+            .unwrap()
+            .scenes
+            .as_mut()
+            .unwrap()
+            .get_mut(&cur_scene_uid)
+            .unwrap();
+
+        if let SceneInfo::Hollow {
+            hollow_system_ui_state,
+            ..
+        } = hollow_scene
+        {
+            hollow_system_ui_state.insert(
+                HollowSystemType::HollowResultPage,
+                HollowSystemUIState::Normal,
+            );
+            hollow_system_ui_state.insert(HollowSystemType::Menu, HollowSystemUIState::Close);
+        }
+
+        PlayerOperationResult::with_changes(
+            cur_scene_uid,
+            PlayerInfo {
+                dungeon_collection: Some(DungeonCollection {
+                    scenes: Some(PropertyHashMap::Modify {
+                        to_add: vec![(cur_scene_uid, hollow_scene.clone())],
+                        to_remove: Vec::new(),
+                    }),
+                    ..Default::default()
+                }),
+                ..Default::default()
+            },
+        )
+    }
+
     pub fn get_default_scene_uid(&self) -> u64 {
         self.player
             .borrow()

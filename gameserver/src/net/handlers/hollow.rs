@@ -43,9 +43,29 @@ pub async fn on_rpc_end_battle_arg(session: &NetworkSession, arg: &RpcEndBattleA
     let player_uid = session.get_player_uid();
     let hollow_grid_manager = session.context.hollow_grid_manager.borrow();
 
-    session
-        .send_rpc_arg(210, &hollow_grid_manager.battle_finished())
-        .await?;
+    let (sync_event, hollow_finished) = hollow_grid_manager.battle_finished();
+
+    if !hollow_finished {
+        session.send_rpc_arg(210, &sync_event).await?;
+    } else {
+        let dungeon_manager = session.context.dungeon_manager.borrow();
+        let cur_scene = *dungeon_manager
+            .hollow_finished()
+            .send_changes(session)
+            .await?;
+
+        let ptc_dungeon_quest_finished = PtcDungeonQuestFinishedArg {
+            player_uid: 1337,
+            quest_id: 1001000101,
+            success: true,
+            reward_items: phashmap![],
+            statistics: phashmap![],
+        };
+
+        session
+            .send_rpc_arg(148, &ptc_dungeon_quest_finished)
+            .await?;
+    }
 
     let dungeon_manager = session.context.dungeon_manager.borrow();
     let ptc_enter_scene = dungeon_manager
@@ -120,11 +140,37 @@ pub async fn on_rpc_run_hollow_event_graph_arg(
         }
     } else {
         let hollow_grid_manager = session.context.hollow_grid_manager.borrow();
-        let (sync_hollow_event, hollow_grid, trigger_battle_id) = hollow_grid_manager
-            .run_event_graph(arg.event_graph_uid, arg.event_id, arg.move_path.clone());
+        let (sync_hollow_event, hollow_grid, trigger_battle_id, hollow_finished) =
+            hollow_grid_manager.run_event_graph(
+                arg.event_graph_uid,
+                arg.event_id,
+                arg.move_path.clone(),
+            );
 
-        session.send_rpc_arg(210, &sync_hollow_event).await?;
+        if !hollow_finished {
+            session.send_rpc_arg(210, &sync_hollow_event).await?;
+        }
         session.send_rpc_arg(114, &hollow_grid).await?;
+
+        if hollow_finished {
+            let dungeon_manager = session.context.dungeon_manager.borrow();
+            let cur_scene = *dungeon_manager
+                .hollow_finished()
+                .send_changes(session)
+                .await?;
+
+            let ptc_dungeon_quest_finished = PtcDungeonQuestFinishedArg {
+                player_uid: 1337,
+                quest_id: 1001000101,
+                success: true,
+                reward_items: phashmap![],
+                statistics: phashmap![],
+            };
+
+            session
+                .send_rpc_arg(148, &ptc_dungeon_quest_finished)
+                .await?;
+        }
 
         if let Some(trigger_battle_id) = trigger_battle_id {
             let dungeon_manager = session.context.dungeon_manager.borrow();

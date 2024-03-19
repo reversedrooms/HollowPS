@@ -134,13 +134,7 @@ pub async fn on_rpc_leave_cur_dungeon_arg(
     session: &NetworkSession,
     _arg: &RpcLeaveCurDungeonArg,
 ) -> Result<()> {
-    let dungeon_manager = session.context.dungeon_manager.borrow();
-    if dungeon_manager.is_in_tutorial() {
-        Box::pin(enter_main_city(session)).await?;
-    }
-
-    // TODO: enter scene by back_scene_uid from cur DungeonInfo.
-
+    Box::pin(enter_main_city(session)).await?;
     session.send_rpc_ret(RpcLeaveCurDungeonRet::new()).await
 }
 

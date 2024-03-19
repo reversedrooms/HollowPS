@@ -91,28 +91,42 @@ impl HollowGridManager {
         )
     }
 
-    pub fn battle_finished(&self) -> PtcSyncHollowEventInfoArg {
+    pub fn battle_finished(&self) -> (PtcSyncHollowEventInfoArg, bool) {
         let map = self.map.borrow();
         let map = map.as_ref().unwrap();
         let cur_grid = map.grids.get(&map.start_grid).unwrap();
 
-        PtcSyncHollowEventInfoArg {
-            event_graph_uid: u64::from(map.start_grid),
-            hollow_event_template_id: cur_grid.grid.event_graph_info.hollow_event_template_id,
-            event_graph_id: cur_grid.grid.event_graph_info.hollow_event_template_id,
-            updated_event: EventInfo {
-                id: 1000,
-                cur_action_id: 2001,
-                action_move_path: vec![1001, 1002, 2001],
-                state: EventState::WaitingClient,
-                prev_state: EventState::Running,
-                cur_action_info: ActionInfo::None {},
-                cur_action_state: ActionState::Init,
-                predicated_failed_actions: phashset![],
-                stack_frames: Vec::new(),
-            },
-            specials: phashmap![],
+        let event_config =
+            data::get_event_config_json(cur_grid.grid.event_graph_info.hollow_event_template_id);
+
+        let mut hollow_finished = false;
+        let actions = event_config["Events"]["OnEnd"]["Actions"]
+            .as_array()
+            .unwrap();
+        if let Some(action) = actions.get(0) {
+            hollow_finished = action["$type"].as_str().unwrap() == "Share.CConfigFinishHollow";
         }
+
+        (
+            PtcSyncHollowEventInfoArg {
+                event_graph_uid: u64::from(map.start_grid),
+                hollow_event_template_id: cur_grid.grid.event_graph_info.hollow_event_template_id,
+                event_graph_id: cur_grid.grid.event_graph_info.hollow_event_template_id,
+                updated_event: EventInfo {
+                    id: 1000,
+                    cur_action_id: 2001,
+                    action_move_path: vec![1001, 1002, 2001],
+                    state: EventState::WaitingClient,
+                    prev_state: EventState::Running,
+                    cur_action_info: ActionInfo::None {},
+                    cur_action_state: ActionState::Init,
+                    predicated_failed_actions: phashset![],
+                    stack_frames: Vec::new(),
+                },
+                specials: phashmap![],
+            },
+            hollow_finished,
+        )
     }
 
     pub fn get_cur_event_template_id(&self) -> i32 {
@@ -156,7 +170,12 @@ impl HollowGridManager {
         event_graph_uid: u64,
         _event_id: i32,
         move_path: Vec<i32>,
-    ) -> (PtcSyncHollowEventInfoArg, PtcHollowGridArg, Option<i32>) {
+    ) -> (
+        PtcSyncHollowEventInfoArg,
+        PtcHollowGridArg,
+        Option<i32>,
+        bool,
+    ) {
         let (player_uid, scene_uid) = {
             let player = self.player.borrow();
 
@@ -174,6 +193,8 @@ impl HollowGridManager {
             hollow_level: 1,
             grids: HashMap::new(),
         };
+
+        let mut hollow_finished = false;
 
         let sync_hollow_event = {
             let info = map.grids.get(&(event_graph_uid as u16)).unwrap().clone();
@@ -215,6 +236,9 @@ impl HollowGridManager {
                                     1000107 => 10101002,
                                     _ => 10101001,
                                 });
+                        }
+                        "Share.CConfigFinishHollow" => {
+                            hollow_finished = true;
                         }
                         _ => {}
                     };
@@ -288,7 +312,12 @@ impl HollowGridManager {
             finish_event
         };
 
-        (sync_hollow_event, grid_update, trigger_battle_id)
+        (
+            sync_hollow_event,
+            grid_update,
+            trigger_battle_id,
+            hollow_finished,
+        )
     }
 
     pub fn sync_hollow_maps(&self, player_uid: u64, scene_uid: u64) -> PtcSyncHollowGridMapsArg {

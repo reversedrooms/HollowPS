@@ -194,7 +194,7 @@ trait_handler! {
     RpcCloseLevelChgTipsArg 244;
     // RpcCreatePlayer 104;
     // RpcDebugPay 216;
-    // RpcDelNewMap 287;
+    RpcDelNewMapArg 287;
     // RpcDelNewRamen 228;
     // RpcDressEquipment 112;
     // RpcEatRamen 283;
@@ -209,7 +209,7 @@ trait_handler! {
     // RpcEquipmentStarUp 131;
     RpcFinishACTPerformShowArg 185;
     // RpcFinishBlackout 267;
-    // RpcFinishEventGraphPerformShow 187;
+    RpcFinishEventGraphPerformShowArg 187;
     // RpcFinishGraphInClient 146;
     // RpcGMCommand 113;
     // RpcGacha 173;

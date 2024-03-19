@@ -312,6 +312,22 @@ pub struct RpcEndBattleArg {
     pub battle_statistics: LogBattleStatistics,
 }
 
+#[derive(OctData, Debug)]
+pub struct RpcFinishEventGraphPerformShowArg {
+    pub owner_type: EventGraphOwnerType,
+    pub owner_uid: u64,
+    pub event_graph_id: i32,
+    pub event_id: i32,
+    pub step: u8,
+    pub return_map: HashMap<String, i32>,
+}
+
+#[derive(OctData, Debug)]
+pub struct RpcDelNewMapArg {
+    pub map_type: UnlockIDType,
+    pub ids: PropertyHashSet<i32>,
+}
+
 ret! {
     struct RpcLoginRet {
         account_info: PropertyBlob,
@@ -399,5 +415,11 @@ ret! {
     struct RpcEndBattleRet {
         hollow_event_id: i32,
         reward_items_classify: HashMap<BattleRewardType, HashMap<u64, ItemIDCount>>,
+    }
+
+    struct RpcFinishEventGraphPerformShowRet {
+    }
+
+    struct RpcDelNewMapRet {
     }
 }

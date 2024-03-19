@@ -2,6 +2,7 @@ use qwer::{
     pdkhashmap, phashmap, phashset, PropertyDoubleKeyHashMap, PropertyHashMap, PropertyHashSet,
 };
 
+use crate::config;
 use crate::game::{globals, util};
 
 use super::*;
@@ -23,6 +24,12 @@ pub async fn on_rpc_run_event_graph_arg(
 ) -> Result<()> {
     tracing::info!("RunEventGraph requested");
 
+    let scene_unit_mgr = session.context.scene_unit_manager.borrow();
+    let unit = scene_unit_mgr.get(arg.owner_uid);
+
+    let SceneUnitProtocolInfo::NpcProtocolInfo { tag, id, .. } = unit;
+    let main_city_object = config::get_main_city_object(tag, id).unwrap();
+
     let mut ptc_sync_event_info = PtcSyncEventInfoArg {
         owner_type: EventGraphOwnerType::SceneUnit,
         owner_uid: arg.owner_uid,
@@ -30,7 +37,7 @@ pub async fn on_rpc_run_event_graph_arg(
     };
 
     ptc_sync_event_info.updated_events.insert(
-        10000009,
+        *main_city_object.default_interact_ids.iter().next().unwrap(),
         100,
         EventInfo {
             id: 100,
@@ -50,38 +57,76 @@ pub async fn on_rpc_run_event_graph_arg(
 }
 
 #[tracing::instrument(skip(session))]
+pub async fn on_rpc_finish_event_graph_perform_show_arg(
+    session: &NetworkSession,
+    arg: &RpcFinishEventGraphPerformShowArg,
+) -> Result<()> {
+    tracing::info!("FinishEventGraphPerformShow");
+
+    let mut ptc_sync_event_info = PtcSyncEventInfoArg {
+        owner_type: EventGraphOwnerType::SceneUnit,
+        owner_uid: arg.owner_uid,
+        updated_events: pdkhashmap![],
+    };
+
+    ptc_sync_event_info.updated_events.insert(
+        arg.event_graph_id,
+        arg.event_id,
+        EventInfo {
+            id: arg.event_id,
+            cur_action_id: -1,
+            action_move_path: Vec::from([101, 102, 101, -1]),
+            state: EventState::Finished,
+            prev_state: EventState::Initing,
+            cur_action_info: ActionInfo::None {},
+            cur_action_state: ActionState::Init,
+            predicated_failed_actions: phashset![],
+            stack_frames: Vec::new(),
+        },
+    );
+
+    session.send_rpc_arg(177, &ptc_sync_event_info).await?;
+    session
+        .send_rpc_ret(RpcFinishEventGraphPerformShowRet::new())
+        .await
+}
+
+#[tracing::instrument(skip(session))]
 pub async fn on_rpc_interact_with_unit_arg(
     session: &NetworkSession,
     arg: &RpcInteractWithUnitArg,
 ) -> Result<()> {
     tracing::info!("InteractWithUnit");
 
-    if arg.event_graph_id == 19900062 {
-        let mut ptc_sync_event_info = PtcSyncEventInfoArg {
-            owner_type: EventGraphOwnerType::SceneUnit,
-            owner_uid: arg.unit_uid,
-            updated_events: pdkhashmap![],
-        };
+    let scene_unit_mgr = session.context.scene_unit_manager.borrow();
+    let unit = scene_unit_mgr.get(arg.unit_uid);
 
-        ptc_sync_event_info.updated_events.insert(
-            10000009,
-            100,
-            EventInfo {
-                id: 100,
-                cur_action_id: 101,
-                action_move_path: Vec::from([101]),
-                state: EventState::WaitingClient,
-                prev_state: EventState::Running,
-                cur_action_info: ActionInfo::None {},
-                cur_action_state: ActionState::Init,
-                predicated_failed_actions: phashset![],
-                stack_frames: Vec::new(),
-            },
-        );
+    let SceneUnitProtocolInfo::NpcProtocolInfo { tag, id, .. } = unit;
+    let main_city_object = config::get_main_city_object(tag, id).unwrap();
 
-        session.send_rpc_arg(177, &ptc_sync_event_info).await?;
-    }
+    let mut ptc_sync_event_info = PtcSyncEventInfoArg {
+        owner_type: EventGraphOwnerType::SceneUnit,
+        owner_uid: arg.unit_uid,
+        updated_events: pdkhashmap![],
+    };
 
+    ptc_sync_event_info.updated_events.insert(
+        *main_city_object.default_interact_ids.iter().next().unwrap(),
+        100,
+        EventInfo {
+            id: 100,
+            cur_action_id: 101,
+            action_move_path: Vec::from([101]),
+            state: EventState::WaitingClient,
+            prev_state: EventState::Running,
+            cur_action_info: ActionInfo::None {},
+            cur_action_state: ActionState::Init,
+            predicated_failed_actions: phashset![],
+            stack_frames: Vec::new(),
+        },
+    );
+
+    session.send_rpc_arg(177, &ptc_sync_event_info).await?;
     session.send_rpc_ret(RpcInteractWithUnitRet::new()).await
 }
 

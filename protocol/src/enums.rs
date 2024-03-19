@@ -20,6 +20,16 @@ pub enum HollowQuestType {
     AvatarSide = 7,
 }
 
+#[derive(OctData, Clone, Copy, Debug, PartialEq, Eq, Hash)]
+#[repr(i16)]
+pub enum UnlockIDType {
+    HollowCard = 1,
+    HollowBuff = 2,
+    HollowEvent = 3,
+    HollowItem = 4,
+    Curse = 5,
+}
+
 #[derive(OctData, Clone, Debug, PartialEq, Eq)]
 #[repr(u8)]
 pub enum FairyState {

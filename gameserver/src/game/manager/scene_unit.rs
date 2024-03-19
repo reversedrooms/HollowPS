@@ -42,6 +42,11 @@ impl SceneUnitManager {
         uid
     }
 
+    pub fn get(&self, uid: u64) -> SceneUnitProtocolInfo {
+        let units = self.units.borrow();
+        units.get(&uid).unwrap().clone()
+    }
+
     pub fn sync(&self, scene_uid: u64, section_id: i32) -> PtcSyncSceneUnitArg {
         PtcSyncSceneUnitArg {
             scene_uid,

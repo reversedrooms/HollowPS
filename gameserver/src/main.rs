@@ -3,6 +3,7 @@ use std::path::Path;
 use anyhow::Result;
 use tracing::Level;
 
+mod config;
 mod game;
 mod logging;
 mod net;

@@ -1,0 +1,9 @@
+[package]
+name = "protocol"
+edition = "2021"
+version.workspace = true
+
+[dependencies]
+byteorder.workspace = true
+hex.workspace = true
+qwer.workspace = true

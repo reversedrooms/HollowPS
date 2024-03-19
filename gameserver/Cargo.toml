@@ -1,0 +1,35 @@
+[package]
+name = "gameserver"
+edition = "2021"
+version.workspace = true
+
+[dependencies]
+ansi_term.workspace = true
+anyhow.workspace = true
+atomic_refcell.workspace = true
+dirs.workspace = true
+dotenv.workspace = true
+env_logger.workspace = true
+hex.workspace = true
+lazy_static.workspace = true
+paste.workspace = true
+sysinfo.workspace = true
+
+serde.workspace = true
+serde_json.workspace = true
+
+tokio.workspace = true
+tokio-util.workspace = true
+
+tracing.workspace = true
+tracing-futures.workspace = true
+tracing-log.workspace = true
+tracing-subscriber.workspace = true
+tracing-bunyan-formatter.workspace = true
+
+protocol.workspace = true
+qwer.workspace = true
+
+[[bin]]
+name = "nap-gameserver"
+path = "src/main.rs"

@@ -1,0 +1,15 @@
+[package]
+name = "qwer"
+edition = "2021"
+version.workspace = true
+
+[features]
+default = ["collection", "fastoct"]
+full = ["default", "protocol"]
+collection = []
+fastoct = []
+protocol = []
+
+[dependencies]
+byteorder.workspace = true
+qwer-derive.workspace = true

@@ -10,7 +10,8 @@ A Server emulator for the game [`Zenless Zone Zero`](https://zenless.hoyoverse.c
 
 - [Rust](https://www.rust-lang.org/tools/install)
 
-**NOTE**: Nightly Rust is required to build the project. To install it, first install Rust itself, then run the following command:
+**NOTE**: Nightly Rust is required to build the project. To install it, first install
+Rust itself, then run the following command:
 
 ```sh
 rustup toolchain install nightly
@@ -26,7 +27,7 @@ cargo install --path gameserver
 cargo install --path sdkserver
 ```
 
-### From Prebuilt Binaries
+### From Pre-built Binaries
 
 Navigate to the [Releases](https://git.xeondev.com/reversedrooms/HollowPS/releases)
 page and download the latest release for your platform.
@@ -43,8 +44,9 @@ nap-gameserver
 nap-sdkserver
 ```
 
-If you installed from prebuilt binaries, navigate to the directory where you downloaded
-the binaries and run the following:
+If you installed from pre-built binaries, navigate to the directory where you downloaded
+the binaries and either a) double-click on the following executable names or b)
+run the following in a terminal:
 
 ```sh
 ./nap-gameserver

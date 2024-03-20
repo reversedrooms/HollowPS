@@ -9,7 +9,7 @@ pub async fn on_rpc_hollow_move_arg(
 ) -> Result<()> {
     tracing::info!("Hollow movement {:?}", &arg);
 
-    let destination_pos = *arg.positions.iter().last().unwrap();
+    let destination_pos = *arg.positions.last().unwrap();
     let scene_uid = session.get_player().scene_uid.unwrap();
 
     let hollow_grid_manager = session.context.hollow_grid_manager.borrow();
@@ -32,7 +32,7 @@ pub async fn on_rpc_hollow_move_arg(
     session
         .send_rpc_ret(RpcHollowMoveRet::new(
             arg.hollow_level,
-            *arg.positions.iter().last().unwrap(),
+            *arg.positions.last().unwrap(),
         ))
         .await
 }
@@ -224,7 +224,11 @@ pub async fn on_rpc_start_hollow_quest_arg(
 
     let dungeon_manager = session.context.dungeon_manager.borrow();
 
-    let avatars: Vec<u64> = arg.avatar_map.iter().map(|(_idx, uid)| *uid).collect();
+    let avatars = arg
+        .avatar_map
+        .iter()
+        .map(|(_idx, uid)| *uid)
+        .collect::<Vec<_>>();
     let (dungeon_uid, scene_uid) = *dungeon_manager
         .create_hollow(10001, 10010001, &avatars)
         .send_changes(session)

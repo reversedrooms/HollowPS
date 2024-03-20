@@ -53,7 +53,7 @@ macro_rules! ret {
     };
 }
 
-#[derive(OctData)]
+#[derive(OctData, Debug)]
 pub struct RpcLoginArg {
     pub account_name: String,
     pub token: String,

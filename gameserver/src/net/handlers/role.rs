@@ -1,6 +1,5 @@
 use super::*;
 
-#[tracing::instrument(skip(session))]
 pub async fn on_rpc_mod_nick_name_arg(
     session: &NetworkSession,
     arg: &RpcModNickNameArg,

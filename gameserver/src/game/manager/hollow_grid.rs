@@ -103,7 +103,7 @@ impl HollowGridManager {
         let actions = event_config["Events"]["OnEnd"]["Actions"]
             .as_array()
             .unwrap();
-        if let Some(action) = actions.get(0) {
+        if let Some(action) = actions.first() {
             hollow_finished = action["$type"].as_str().unwrap() == "Share.CConfigFinishHollow";
         }
 
@@ -247,7 +247,7 @@ impl HollowGridManager {
 
             let mut action_move_path = move_path;
 
-            let last_client_action = *action_move_path.iter().last().unwrap();
+            let last_client_action = *action_move_path.last().unwrap();
             let actions = if last_client_action / 1000 == 1 {
                 event_config["Events"]["OnStart"]["Actions"]
                     .as_array()
@@ -277,7 +277,7 @@ impl HollowGridManager {
                     event_graph_id: info.grid.event_graph_info.hollow_event_template_id,
                     updated_event: EventInfo {
                         id: 1000,
-                        cur_action_id: *action_move_path.iter().last().unwrap(),
+                        cur_action_id: *action_move_path.last().unwrap(),
                         action_move_path,
                         state,
                         prev_state: EventState::Running,

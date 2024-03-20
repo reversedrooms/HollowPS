@@ -17,7 +17,6 @@ static UNLOCK_FEATURES: [i32; 35] = [
     10014, 10015, 10017, 10018, 10019,
 ];
 
-#[tracing::instrument(skip(session))]
 pub async fn on_rpc_run_event_graph_arg(
     session: &NetworkSession,
     arg: &RpcRunEventGraphArg,
@@ -37,7 +36,7 @@ pub async fn on_rpc_run_event_graph_arg(
     };
 
     ptc_sync_event_info.updated_events.insert(
-        *main_city_object.default_interact_ids.iter().next().unwrap(),
+        *main_city_object.default_interact_ids.first().unwrap(),
         100,
         EventInfo {
             id: 100,
@@ -56,7 +55,6 @@ pub async fn on_rpc_run_event_graph_arg(
     session.send_rpc_ret(RpcRunEventGraphRet::new()).await
 }
 
-#[tracing::instrument(skip(session))]
 pub async fn on_rpc_finish_event_graph_perform_show_arg(
     session: &NetworkSession,
     arg: &RpcFinishEventGraphPerformShowArg,
@@ -91,7 +89,6 @@ pub async fn on_rpc_finish_event_graph_perform_show_arg(
         .await
 }
 
-#[tracing::instrument(skip(session))]
 pub async fn on_rpc_interact_with_unit_arg(
     session: &NetworkSession,
     arg: &RpcInteractWithUnitArg,
@@ -111,7 +108,7 @@ pub async fn on_rpc_interact_with_unit_arg(
     };
 
     ptc_sync_event_info.updated_events.insert(
-        *main_city_object.default_interact_ids.iter().next().unwrap(),
+        *main_city_object.default_interact_ids.first().unwrap(),
         100,
         EventInfo {
             id: 100,
@@ -145,7 +142,6 @@ pub async fn on_ptc_player_operation_arg(
     session.send_rpc_ret(PtcPlayerOperationRet::new()).await
 }
 
-#[tracing::instrument(skip(session))]
 pub async fn on_rpc_save_pos_in_main_city_arg(
     session: &NetworkSession,
     arg: &RpcSavePosInMainCityArg,
@@ -212,7 +208,7 @@ pub async fn on_rpc_enter_world_arg(
 ) -> Result<()> {
     let account = session.get_account();
 
-    let id = *account.players.as_ref().unwrap().iter().next().unwrap(); // get first id from list
+    let id = *account.players.as_ref().unwrap().first().unwrap(); // get first id from list
     *session.get_player_mut() = create_player(id);
 
     let item_manager = session.context.item_manager.borrow();

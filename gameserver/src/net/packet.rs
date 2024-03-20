@@ -90,6 +90,7 @@ macro_rules! trait_handler {
         pub trait PacketHandler {
             $(
                 paste! {
+                    #[tracing::instrument(skip(session))]
                     async fn [<on_$name:snake>](session: &mut NetworkSession, arg: &$name) -> Result<()> {
                         [<on_$name:snake>](session, arg).await
                     }

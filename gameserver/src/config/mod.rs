@@ -32,6 +32,8 @@ macro_rules! template_collections {
 }
 
 template_collections! {
+    AvatarConfig;
+    UnlockConfig;
     MainCityObject;
 }
 

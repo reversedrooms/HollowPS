@@ -7,16 +7,6 @@ use crate::game::{globals, util};
 
 use super::*;
 
-static UNLOCK_AVATARS: [i32; 12] = [
-    1011, 1021, 1031, 1041, 1061, 1081, 1091, 1101, 1111, 1121, 1131, 1141,
-];
-
-static UNLOCK_FEATURES: [i32; 35] = [
-    1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009, 1010, 1011, 1013, 1014, 1015, 1016, 1017,
-    1018, 1019, 10001, 10002, 10003, 10004, 10005, 10006, 10007, 10008, 10009, 10010, 10012, 10013,
-    10014, 10015, 10017, 10018, 10019,
-];
-
 pub async fn on_rpc_run_event_graph_arg(
     session: &NetworkSession,
     arg: &RpcRunEventGraphArg,
@@ -144,7 +134,7 @@ pub async fn on_ptc_player_operation_arg(
 
 pub async fn on_rpc_save_pos_in_main_city_arg(
     session: &NetworkSession,
-    arg: &RpcSavePosInMainCityArg,
+    _arg: &RpcSavePosInMainCityArg,
 ) -> Result<()> {
     tracing::info!("MainCity pos updated");
 
@@ -217,12 +207,15 @@ pub async fn on_rpc_enter_world_arg(
     item_manager.add_resource(10, 228);
     item_manager.add_resource(100, 1337);
 
-    for avatar_id in UNLOCK_AVATARS {
+    for avatar_id in config::iter_avatar_config_collection()
+        .map(|c| c.id)
+        .filter(|id| *id < 2000)
+    {
         item_manager.unlock_avatar(avatar_id);
     }
 
     let unlock_manager = session.context.unlock_manager.borrow();
-    for unlock_id in UNLOCK_FEATURES {
+    for unlock_id in config::iter_unlock_config_collection().map(|c| c.id) {
         unlock_manager.unlock(unlock_id);
     }
 

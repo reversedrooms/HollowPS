@@ -2,8 +2,9 @@ use qwer::{
     pdkhashmap, phashmap, phashset, PropertyDoubleKeyHashMap, PropertyHashMap, PropertyHashSet,
 };
 
-use crate::config;
-use crate::game::{globals, util};
+use crate::config::CONFIGURATION;
+use crate::data;
+use crate::game::util;
 
 use super::*;
 
@@ -17,7 +18,7 @@ pub async fn on_rpc_run_event_graph_arg(
     let unit = scene_unit_mgr.get(arg.owner_uid);
 
     let SceneUnitProtocolInfo::NpcProtocolInfo { tag, id, .. } = unit;
-    let main_city_object = config::get_main_city_object(tag, id).unwrap();
+    let main_city_object = data::get_main_city_object(tag, id).unwrap();
 
     let mut ptc_sync_event_info = PtcSyncEventInfoArg {
         owner_type: EventGraphOwnerType::SceneUnit,
@@ -89,7 +90,7 @@ pub async fn on_rpc_interact_with_unit_arg(
     let unit = scene_unit_mgr.get(arg.unit_uid);
 
     let SceneUnitProtocolInfo::NpcProtocolInfo { tag, id, .. } = unit;
-    let main_city_object = config::get_main_city_object(tag, id).unwrap();
+    let main_city_object = data::get_main_city_object(tag, id).unwrap();
 
     let mut ptc_sync_event_info = PtcSyncEventInfoArg {
         owner_type: EventGraphOwnerType::SceneUnit,
@@ -152,7 +153,7 @@ fn create_player(id: u64) -> PlayerInfo {
         z: 11.18,
     });
 
-    if globals::should_skip_tutorial() {
+    if CONFIGURATION.skip_tutorial {
         let beginner_procedure = player.beginner_procedure_info.as_mut().unwrap();
         beginner_procedure.procedure_info.replace(6);
         player.nick_name.replace(String::from("xeondev"));
@@ -207,7 +208,7 @@ pub async fn on_rpc_enter_world_arg(
     item_manager.add_resource(10, 228);
     item_manager.add_resource(100, 1337);
 
-    for avatar_id in config::iter_avatar_config_collection()
+    for avatar_id in data::iter_avatar_config_collection()
         .map(|c| c.id)
         .filter(|id| *id < 2000)
     {
@@ -215,7 +216,7 @@ pub async fn on_rpc_enter_world_arg(
     }
 
     let unlock_manager = session.context.unlock_manager.borrow();
-    for unlock_id in config::iter_unlock_config_collection().map(|c| c.id) {
+    for unlock_id in data::iter_unlock_config_collection().map(|c| c.id) {
         unlock_manager.unlock(unlock_id);
     }
 
@@ -257,7 +258,7 @@ pub async fn on_rpc_enter_world_arg(
     let yorozuya_quest_manager = session.context.yorozuya_quest_manager.borrow();
     yorozuya_quest_manager.add_hollow_quest(102, HollowQuestType::SideQuest, 10010002);
 
-    if globals::should_skip_tutorial() {
+    if CONFIGURATION.skip_tutorial {
         Box::pin(enter_main_city(session)).await?;
     } else {
         let fresh_scene_uid = *dungeon_manager.create_fresh().unwrap();

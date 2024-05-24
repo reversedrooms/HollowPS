@@ -8,7 +8,6 @@ ansi_term.workspace = true
 anyhow.workspace = true
 atomic_refcell.workspace = true
 dirs.workspace = true
-dotenv.workspace = true
 env_logger.workspace = true
 hex.workspace = true
 lazy_static.workspace = true
@@ -27,6 +26,7 @@ tracing-log.workspace = true
 tracing-subscriber.workspace = true
 tracing-bunyan-formatter.workspace = true
 
+common.workspace = true
 protocol.workspace = true
 qwer.workspace = true
 

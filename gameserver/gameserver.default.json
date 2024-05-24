@@ -1,0 +1,5 @@
+{
+	"gateway_endpoint": "0.0.0.0:10301",
+	"skip_tutorial": false,
+	"system_resources_logging": false
+}

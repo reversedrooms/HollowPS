@@ -55,14 +55,9 @@ run the following in a terminal:
 
 ## Configuration
 
-The game server can be configured using a `.env` file. The file contains one configurable
-option, `SKIP_TUTORIAL`, which is set to 0 by default.
-
-If you have a `.env` file in the **same** directory as your executable, then this
-is the file that will be loaded. Otherwise, upon _first_ running the `gameserver`
-executable, it will create `{FOLDERID_RoamingAppData}\nap-gameserver\.env`
-(`C:\Users\{user}\AppData\Roaming\nap-gameserver\.env`) for you, and will source
-from this config instead.
+The game server can be configured using a `gameserver.json` file.
+Configuration file with default settings will be created in
+the working directory upon first startup.
 
 ## Contributing
 

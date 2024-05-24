@@ -1,5 +1,5 @@
 [workspace]
-members = ["gameserver", "protocol", "qwer", "qwer/qwer-derive", "sdkserver"]
+members = [ "common","gameserver", "protocol", "qwer", "qwer/qwer-derive", "sdkserver"]
 resolver = "2"
 
 [workspace.package]
@@ -41,6 +41,7 @@ tracing-subscriber = { version = "0.3.18", features = [
 ] }
 tracing-bunyan-formatter = "0.3.9"
 
+common = { version = "0.1.0", path = "common" }
 protocol = { version = "0.1.0", path = "protocol" }
 qwer = { version = "0.1.0", path = "qwer", features = ["full"] }
 qwer-derive = { version = "0.1.0", path = "qwer/qwer-derive" }

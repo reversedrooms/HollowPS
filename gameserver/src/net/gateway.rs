@@ -6,9 +6,9 @@ use crate::log_error;
 
 use super::NetworkSession;
 
-pub async fn listen(host: &str, port: u16) -> Result<()> {
-    let listener = TcpListener::bind(format!("{host}:{port}")).await?;
-    tracing::info!("Listening at {host}:{port}");
+pub async fn listen(bind_addr: &str) -> Result<()> {
+    let listener = TcpListener::bind(bind_addr).await?;
+    tracing::info!("Listening at {bind_addr}");
 
     loop {
         let Ok((client_socket, client_addr)) = listener.accept().await else {

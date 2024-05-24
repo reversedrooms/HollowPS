@@ -49,7 +49,7 @@ pub async fn on_rpc_end_battle_arg(session: &NetworkSession, arg: &RpcEndBattleA
         session.send_rpc_arg(210, &sync_event).await?;
     } else {
         let dungeon_manager = session.context.dungeon_manager.borrow();
-        let cur_scene = *dungeon_manager
+        let _ = *dungeon_manager
             .hollow_finished()
             .send_changes(session)
             .await?;
@@ -154,7 +154,7 @@ pub async fn on_rpc_run_hollow_event_graph_arg(
 
         if hollow_finished {
             let dungeon_manager = session.context.dungeon_manager.borrow();
-            let cur_scene = *dungeon_manager
+            let _ = *dungeon_manager
                 .hollow_finished()
                 .send_changes(session)
                 .await?;

@@ -494,6 +494,7 @@ impl DungeonManager {
         )
     }
 
+    #[allow(dead_code)]
     pub fn is_in_tutorial(&self) -> bool {
         let cur_scene_uid = self.get_cur_scene_uid();
 

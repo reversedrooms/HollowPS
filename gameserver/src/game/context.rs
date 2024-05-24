@@ -12,7 +12,7 @@ use super::manager::{
 };
 
 pub struct GameContext {
-    pub player: Arc<AtomicRefCell<PlayerInfo>>,
+    #[allow(unused)]
     pub uid_manager: Arc<AtomicRefCell<UniqueIDManager>>,
     pub item_manager: Arc<AtomicRefCell<ItemManager>>,
     pub dungeon_manager: Arc<AtomicRefCell<DungeonManager>>,
@@ -28,7 +28,6 @@ impl GameContext {
         let uid_manager = Arc::new(AtomicRefCell::new(UniqueIDManager::new()));
 
         Self {
-            player: player.clone(),
             uid_manager: uid_manager.clone(),
             item_manager: Arc::new(AtomicRefCell::new(ItemManager::new(
                 uid_manager.clone(),

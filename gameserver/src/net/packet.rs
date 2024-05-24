@@ -11,6 +11,7 @@ use super::handlers::*;
 use super::NetworkSession;
 
 pub struct Packet {
+    #[allow(unused)]
     pub to_channel: u16,
     pub header: ProtocolHeader,
     pub body: Vec<u8>,

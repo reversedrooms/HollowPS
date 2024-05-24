@@ -1,6 +1,7 @@
 use std::path::Path;
 
 use anyhow::Result;
+use config::init_assets;
 use tracing::Level;
 
 mod config;
@@ -19,6 +20,7 @@ async fn main() -> Result<()> {
     ansi_term::enable_ansi_support().unwrap();
 
     init_config()?;
+    init_assets()?;
     init_tracing();
 
     let span = tracing::span!(Level::DEBUG, "main");

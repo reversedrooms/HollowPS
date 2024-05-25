@@ -1,5 +1,8 @@
+use itertools::Itertools;
 use qwer::{phashmap, phashset, PropertyHashMap, PropertyHashSet};
 use std::collections::HashMap;
+
+use crate::data;
 
 use super::*;
 
@@ -59,7 +62,7 @@ pub async fn on_rpc_end_battle_arg(session: &NetworkSession, arg: &RpcEndBattleA
             quest_id: 1001000101,
             success: true,
             reward_items: phashmap![],
-            statistics: phashmap![],
+            statistics: phashmap![(QuestStatisticsType::ArrivedLevel, 1)],
         };
 
         session
@@ -211,12 +214,31 @@ pub async fn on_rpc_start_hollow_quest_arg(
 ) -> Result<()> {
     tracing::info!("start hollow quest: {arg:?}");
 
+    // Set avatar HP properties
     for (_idx, avatar_uid) in &arg.avatar_map {
-        // Set character HP
+        let player_info = session.get_player();
+        let items = player_info.items.as_ref().unwrap();
+        let Some(ItemInfo::Avatar { id, .. }) = items
+            .iter()
+            .find(|(uid, _)| **uid == *avatar_uid)
+            .map(|(_, item)| item)
+        else {
+            return session
+                .send_rpc_ret(RpcStartHollowQuestRet::error(
+                    ErrorCode::ObjectNotExist,
+                    Vec::new(),
+                ))
+                .await;
+        };
+
+        let avatar_config = data::iter_avatar_config_collection()
+            .find(|c| c.id == *id)
+            .unwrap();
+
         let update_properties = PtcPropertyChangedArg {
             scene_unit_uid: *avatar_uid,
             is_partial: true,
-            changed_properties: phashmap![(1, 500), (111, 500)],
+            changed_properties: phashmap![(1, avatar_config.hp), (111, avatar_config.hp)],
         };
 
         session.send_rpc_arg(129, &update_properties).await?;
@@ -227,6 +249,7 @@ pub async fn on_rpc_start_hollow_quest_arg(
     let avatars = arg
         .avatar_map
         .iter()
+        .sorted_by_key(|kv| kv.0)
         .map(|(_idx, uid)| *uid)
         .collect::<Vec<_>>();
     let (dungeon_uid, scene_uid) = *dungeon_manager

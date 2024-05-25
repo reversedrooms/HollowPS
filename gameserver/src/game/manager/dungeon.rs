@@ -92,21 +92,25 @@ impl DungeonManager {
             },
         };
 
+        let add_dungeon = dungeon_info.clone();
+        let add_scene = scene_info.clone();
+        let cur_scene_uid = scene_info.get_uid();
+
         Ok(PlayerOperationResult::with_changes(
             ptc_enter_scene,
             PlayerInfo {
                 dungeon_collection: Some(DungeonCollection {
                     dungeons: Some(PropertyHashMap::Modify {
-                        to_add: vec![(dungeon_info.uid, dungeon_info.clone())],
+                        to_add: vec![(add_dungeon.uid, add_dungeon)],
                         to_remove: Vec::new(),
                     }),
                     scenes: Some(PropertyHashMap::Modify {
-                        to_add: vec![(scene_info.get_uid(), scene_info.clone())],
+                        to_add: vec![(add_scene.get_uid(), add_scene)],
                         to_remove: Vec::new(),
                     }),
                     ..Default::default()
                 }),
-                scene_uid: Some(scene_info.get_uid()),
+                scene_uid: Some(cur_scene_uid),
                 ..Default::default()
             },
         ))
@@ -259,6 +263,8 @@ impl DungeonManager {
             .get_mut(&cur_scene_uid)
             .unwrap();
 
+        let dungeon_uid = hollow_scene.get_dungeon_uid();
+
         if let SceneInfo::Hollow {
             hollow_system_ui_state,
             ..
@@ -271,12 +277,33 @@ impl DungeonManager {
             hollow_system_ui_state.insert(HollowSystemType::Menu, HollowSystemUIState::Close);
         }
 
+        let add_scene = hollow_scene.clone();
+
+        let quest_data = player.quest_data.as_ref().unwrap();
+        let mut dungeon_quest = quest_data
+            .quests
+            .as_ref()
+            .unwrap()
+            .get(&dungeon_uid, &1001000101)
+            .unwrap()
+            .clone();
+        dungeon_quest.set_progress(1);
+        dungeon_quest.set_finished_count(1);
+        dungeon_quest.set_state(QuestState::Finished);
+
         PlayerOperationResult::with_changes(
             cur_scene_uid,
             PlayerInfo {
                 dungeon_collection: Some(DungeonCollection {
                     scenes: Some(PropertyHashMap::Modify {
-                        to_add: vec![(cur_scene_uid, hollow_scene.clone())],
+                        to_add: vec![(cur_scene_uid, add_scene)],
+                        to_remove: Vec::new(),
+                    }),
+                    ..Default::default()
+                }),
+                quest_data: Some(QuestData {
+                    quests: Some(PropertyDoubleKeyHashMap::Modify {
+                        to_add: vec![(dungeon_uid, 1001000101, dungeon_quest)],
                         to_remove: Vec::new(),
                     }),
                     ..Default::default()

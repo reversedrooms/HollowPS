@@ -5,9 +5,101 @@ use super::*;
 pub enum ErrorCode {
     Fail = -1,
     Success = 0,
+    Timeout = 1,
+    EntityNotExist = 2,
+    InvalidVersion = 3,
+    InvalidTemplateID = 4,
+    InvalidConfigVersion = 5,
+    ObjectNotExist = 100,
+    ConfigError = 101,
+    NoEnoughRes = 102,
+    NoEnoughEXP = 103,
+    NoEnoughItem = 104,
+    NoEnoughMaterials = 105,
+    NoEnoughGoods = 106,
+    NoEnoughCurrency = 107,
+    CannotFindGoods = 108,
+    AvatarMaxLevelLimit = 109,
+    AvatarMaxStarLimit = 110,
+    AvatarMaxAdvanceLevelLimit = 111,
+    EquipMaxLevelLimit = 112,
+    EquipMaxStarLimit = 113,
+    SceneAlreadyDestroyed = 114,
+    StageAlreadyDestroyed = 115,
+    ErrorSrcPosition = 116,
+    ErrorGraph = 117,
+    NodeFinished = 118,
+    NodeRunFailure = 119,
+    UnknownAvatarSkill = 120,
+    AvatarSkillMaxLevelLimit = 121,
+    AvatarTalentMaxLevelLimit = 122,
+    AvatarStarNotEnough = 123,
+    InvalidActionMovePath = 124,
+    ActionIDNotExist = 125,
+    NickNameMaxLength = 126,
+    NickNameIllegal = 127,
+    Ban = 128,
+    RepeatedLogin = 129,
+    FuncNotOpen = 130,
+    TokenError = 131,
+    PlayerNotExist = 132,
+    InvalidParam = 133,
+    ItemBeOccupy = 134,
+    ItemBeLock = 135,
+    EquipGachaClose = 136,
+    InvalidQuestState = 137,
+    QuestMaxFinishCnt = 138,
+    NoEnoughTimes = 139,
+    BattleReportLimit = 140,
+    BattleReportInvalid = 141,
+    MaxLevelLimit = 142,
+    MaxStarLimit = 143,
+    MaxRefineLimit = 144,
+    AlreadyGet = 145,
+    RepeatedModName = 146,
+    VHSStoreUnlock = 147,
+    VHSStoreAlreadSlot = 148,
+    VHSStoreSlotNumErr = 149,
+    FuncNotUnlock = 150,
+    VHSStoreRamenContinueEat = 151,
+    VHSStoreAlreadyUnlock = 152,
+    AFKGamePlayClose = 153,
+    InitiativeItemUnlock = 154,
+    InitiativeItemLevel = 155,
+    PrepareAvatarsFail = 156,
+    AlreadyAFK = 157,
+    HollowDoEvtListNotEmpty = 158,
+    HollowEvtNotCompleted = 159,
+    HollowMoveFail = 160,
+    BuyNumOverflow = 161,
+    PackgeOverflow = 162,
+    ReplacePkg = 163,
+    FileLenghCheckFaild = 164,
+    HashCheckFaild = 165,
+    DiskNotEnough = 166,
+    NotReachable = 167,
+    ServerException = 168,
+    RequestException = 169,
+    OherDownLoadError = 170,
+    QuestProgressNotEnough = 171,
+    ConditionComplete = 172,
+    ConditionNoComplete = 173,
+    PayErrCode0 = 174,
+    PayErrCode1 = 175,
+    PayErrCode2 = 176,
+    PayErrCode3 = 177,
+    PayErrCode4 = 178,
+    PayErrCode5 = 179,
+    NoWhite = 180,
+    NoWhiteDevice = 181,
+    NoWhiteIp = 182,
+    SdkError = 183,
+    StopServer = 184,
+    AccountServerError = 185,
+    CloseServer = 187,
 }
 
-#[derive(OctData, Clone, Copy, Debug, PartialEq, Eq, Hash)]
+#[derive(OctData, Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(i16)]
 pub enum HollowQuestType {
     Common = 0,
@@ -48,7 +140,7 @@ pub enum FightRanking {
     S = 5,
 }
 
-#[derive(OctData, Hash, Clone, Debug, PartialEq, Eq)]
+#[derive(OctData, Hash, Clone, Debug, PartialOrd, Ord, PartialEq, Eq)]
 #[repr(i16)]
 pub enum BattleRewardType {
     Client = 1,
@@ -79,7 +171,7 @@ pub enum HollowBattleEventType {
     LevelFin = 5,
 }
 
-#[derive(OctData, Clone, Debug, PartialEq, Eq, Hash)]
+#[derive(OctData, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(i16)]
 pub enum QuestType {
     ArchiveFile = 1,
@@ -113,7 +205,7 @@ pub enum ActionState {
     Error = 3,
 }
 
-#[derive(OctData, Clone, Debug, PartialEq, Eq, Hash)]
+#[derive(OctData, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(u8)]
 pub enum DungeonContentDropPoolType {
     Card = 0,
@@ -143,14 +235,14 @@ pub enum UIType {
     Archive = 3,
 }
 
-#[derive(OctData, Clone, Debug, PartialEq, Eq, Hash)]
+#[derive(OctData, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(i16)]
 pub enum ACTPerformShowMoment {
     Begin = 0,
     End = 1,
 }
 
-#[derive(OctData, Clone, Debug, PartialEq, Eq, Hash)]
+#[derive(OctData, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(i16)]
 pub enum HollowSystemType {
     Card = 1,
@@ -170,7 +262,7 @@ pub enum HollowSystemUIState {
     Brighten = 2,
 }
 
-#[derive(OctData, Clone, Debug, PartialEq, Eq, Hash)]
+#[derive(OctData, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(i16)]
 pub enum HollowShopType {
     All = 0,
@@ -203,7 +295,7 @@ pub enum WeatherType {
     Thunder = 5,
 }
 
-#[derive(OctData, Clone, Debug, PartialEq, Eq, Hash)]
+#[derive(OctData, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(i16)]
 pub enum PropertyType {
     Hp = 1,
@@ -333,7 +425,7 @@ pub enum PropertyType {
     EnumCount = 10351,
 }
 
-#[derive(OctData, Clone, Debug, PartialEq, Eq, Hash)]
+#[derive(OctData, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(i16)]
 pub enum ScenePropertyType {
     Stamina = 1001,
@@ -535,7 +627,7 @@ pub enum QuestState {
     Finished = 3,
 }
 
-#[derive(OctData, Clone, Debug, PartialEq, Eq, Hash)]
+#[derive(OctData, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(u8)]
 pub enum QuestStatisticsType {
     ArrivedLevel = 1,

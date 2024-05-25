@@ -6,6 +6,7 @@ use std::{
 };
 
 use byteorder::{ReadBytesExt, WriteBytesExt};
+use itertools::Itertools;
 
 pub use qwer_derive::OctData;
 
@@ -133,12 +134,12 @@ where
 
 impl<K, V> OctData for HashMap<K, V>
 where
-    K: OctData + Eq + Hash,
+    K: OctData + Eq + Hash + Ord,
     V: OctData,
 {
     default fn marshal_to<W: Write>(&self, w: &mut W, bt_property_tag: u16) -> Result<()> {
         (self.len() as i32).marshal_to(w, bt_property_tag)?;
-        for (key, value) in self {
+        for (key, value) in self.iter().sorted_by_key(|kv| kv.0) {
             key.marshal_to(w, bt_property_tag)?;
             value.marshal_to(w, bt_property_tag)?;
         }
@@ -164,8 +165,8 @@ where
 #[cfg(feature = "collection")]
 impl<K1, K2, V> OctData for DoubleKeyHashMap<K1, K2, V>
 where
-    K1: OctData + Eq + Hash,
-    K2: OctData + Eq + Hash,
+    K1: OctData + Eq + Hash + Ord,
+    K2: OctData + Eq + Hash + Ord,
     V: OctData,
 {
     fn marshal_to<W: Write>(&self, w: &mut W, bt_property_tag: u16) -> Result<()> {

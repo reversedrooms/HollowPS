@@ -658,6 +658,30 @@ macro_rules! polymorphic_quest_info {
                     )*
                 }
             }
+
+            pub fn set_state(&mut self, state: QuestState) {
+                match self {
+                    $(
+                        $name::$variant { state: ref mut c, .. } => *c = state,
+                    )*
+                }
+            }
+
+            pub fn set_progress(&mut self, progress: u16) {
+                match self {
+                    $(
+                        $name::$variant { progress: ref mut c, .. } => *c = progress,
+                    )*
+                }
+            }
+
+            pub fn set_finished_count(&mut self, finished_count: i32) {
+                match self {
+                    $(
+                        $name::$variant { finished_count: ref mut c, .. } => *c = finished_count,
+                    )*
+                }
+            }
         }
     };
 }

@@ -17,7 +17,7 @@ pub async fn listen(bind_addr: &str) -> Result<()> {
 
         tracing::info!("New session from {client_addr}");
 
-        let mut session = NetworkSession::new(client_socket, client_addr);
+        let mut session = NetworkSession::new(client_socket);
         tokio::spawn(
             async move {
                 log_error!(

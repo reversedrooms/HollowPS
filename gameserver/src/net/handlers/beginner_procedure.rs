@@ -1,4 +1,4 @@
-use std::time::{SystemTime, UNIX_EPOCH};
+use common::util;
 
 use super::*;
 
@@ -28,15 +28,11 @@ pub async fn on_rpc_beginnerbattle_begin_arg(
     session: &NetworkSession,
     arg: &RpcBeginnerbattleBeginArg,
 ) -> Result<()> {
-    let cur_timestamp = SystemTime::now()
-        .duration_since(UNIX_EPOCH)
-        .unwrap()
-        .as_secs();
-
     session
         .send_rpc_ret(RpcBeginnerbattleBeginRet::new(format!(
-            "{cur_timestamp}-{}",
-            arg.battle_id
+            "{}-{}",
+            arg.battle_id,
+            util::cur_timestamp_seconds()
         )))
         .await
 }

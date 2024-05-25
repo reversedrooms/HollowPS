@@ -3,7 +3,6 @@ use atomic_refcell::{AtomicRef, AtomicRefMut};
 use protocol::*;
 use qwer::{OctData, ProtocolHeader};
 use std::io::Cursor;
-use std::net::SocketAddr;
 use std::sync::Arc;
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio::net::TcpStream;
@@ -16,23 +15,25 @@ use super::{packet::PacketHandler, Packet, RequestBody, ResponseBody};
 
 pub struct NetworkSession {
     client_socket: Arc<Mutex<TcpStream>>,
-    client_addr: SocketAddr,
     cur_rpc_uid: u64,
     pub ns_prop_mgr: net_stream::PropertyManager,
     pub context: GameContext,
 }
 
 impl NetworkSession {
-    pub fn new(client_socket: TcpStream, client_addr: SocketAddr) -> Self {
+    pub fn new(client_socket: TcpStream) -> Self {
         let ns_prop_mgr = net_stream::PropertyManager::default();
 
         Self {
             client_socket: Arc::new(Mutex::new(client_socket)),
-            client_addr,
             cur_rpc_uid: 0,
             context: GameContext::new(ns_prop_mgr.player_info.clone()),
             ns_prop_mgr,
         }
+    }
+
+    async fn client_socket(&self) -> MutexGuard<'_, TcpStream> {
+        self.client_socket.lock().await
     }
 
     pub fn get_player_uid(&self) -> u64 {
@@ -55,20 +56,10 @@ impl NetworkSession {
         self.ns_prop_mgr.player_info.try_borrow_mut().unwrap()
     }
 
-    pub async fn client_socket(&self) -> MutexGuard<'_, TcpStream> {
-        self.client_socket.lock().await
-    }
-
     pub async fn run(&mut self) -> Result<()> {
-        let channel_id = match self.read_handshake().await {
-            Ok(channel_id) => channel_id,
-            Err(e) if e.kind() == std::io::ErrorKind::UnexpectedEof => return Ok(()),
-            Err(e) => return Err(e.into()),
+        let Some(_channel_id) = self.read_handshake().await? else {
+            return Ok(());
         };
-        tracing::info!(
-            "Session ({}) bound to channel {channel_id}",
-            self.client_addr
-        );
 
         loop {
             let packet = match Packet::read(&mut *self.client_socket().await).await {
@@ -83,8 +74,12 @@ impl NetworkSession {
         }
     }
 
-    async fn read_handshake(&mut self) -> Result<u16, std::io::Error> {
-        self.client_socket().await.read_u16_le().await
+    async fn read_handshake(&mut self) -> Result<Option<u16>> {
+        match self.client_socket().await.read_u16_le().await {
+            Ok(channel_id) => Ok(Some(channel_id)),
+            Err(e) if e.kind() == std::io::ErrorKind::UnexpectedEof => Ok(None),
+            Err(e) => return Err(e.into()),
+        }
     }
 
     pub async fn send_rpc_ret(&self, data: impl OctData) -> Result<()> {

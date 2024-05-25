@@ -227,7 +227,7 @@ pub async fn on_rpc_enter_world_arg(
 
     let quest_manager = session.context.quest_manager.borrow();
     quest_manager.add_world_quest(QuestInfo::MainCity {
-        id: 10020001,
+        id: 10020002,
         finished_count: 0,
         collection_uid: 0,
         progress: 0,

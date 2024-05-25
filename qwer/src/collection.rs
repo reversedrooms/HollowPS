@@ -612,7 +612,7 @@ fn test_dkhashmap_iter() {
 
 impl<K, V> OctData for PropertyHashMap<K, V>
 where
-    K: OctData + Eq + std::hash::Hash,
+    K: OctData + Eq + Ord + std::hash::Hash,
     V: OctData,
 {
     fn marshal_to<W: std::io::Write>(&self, w: &mut W, bt_property_tag: u16) -> Result<()> {
@@ -721,8 +721,8 @@ where
 
 impl<K1, K2, V> OctData for PropertyDoubleKeyHashMap<K1, K2, V>
 where
-    K1: OctData + Eq + std::hash::Hash,
-    K2: OctData + Eq + std::hash::Hash,
+    K1: OctData + Eq + Ord + std::hash::Hash,
+    K2: OctData + Eq + Ord + std::hash::Hash,
     V: OctData,
 {
     fn marshal_to<W: std::io::Write>(&self, w: &mut W, bt_property_tag: u16) -> Result<()> {

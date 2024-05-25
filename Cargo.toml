@@ -41,6 +41,8 @@ tracing-subscriber = { version = "0.3.18", features = [
 ] }
 tracing-bunyan-formatter = "0.3.9"
 
+itertools = "0.13.0"
+
 common = { version = "0.1.0", path = "common" }
 protocol = { version = "0.1.0", path = "protocol" }
 qwer = { version = "0.1.0", path = "qwer", features = ["full"] }

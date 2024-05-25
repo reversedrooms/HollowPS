@@ -1,15 +1,13 @@
 use super::*;
 
-pub async fn on_rpc_battle_report_arg(
-    session: &NetworkSession,
+pub async fn on_rpc_battle_report(
+    _session: &NetworkSession,
     arg: &RpcBattleReportArg,
-) -> Result<()> {
+) -> Result<RpcBattleReportRet> {
     let need_index = arg
         .battle_reports
         .last()
         .map_or(0, |report| report.index + 1);
 
-    session
-        .send_rpc_ret(RpcBattleReportRet::new(need_index))
-        .await
+    Ok(RpcBattleReportRet::new(need_index))
 }

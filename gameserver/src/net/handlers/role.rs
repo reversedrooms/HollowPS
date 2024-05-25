@@ -1,9 +1,9 @@
 use super::*;
 
-pub async fn on_rpc_mod_nick_name_arg(
+pub async fn on_rpc_mod_nick_name(
     session: &NetworkSession,
     arg: &RpcModNickNameArg,
-) -> Result<()> {
+) -> Result<RpcModNickNameRet> {
     tracing::info!("creating character");
 
     let mut player = session.get_player_mut();
@@ -19,6 +19,8 @@ pub async fn on_rpc_mod_nick_name_arg(
         },
     };
 
-    session.send_rpc_arg(101, &player_info_changed).await?;
-    session.send_rpc_ret(RpcModNickNameRet::new()).await
+    session
+        .send_rpc_arg(PTC_PLAYER_INFO_CHANGED_ID, &player_info_changed)
+        .await?;
+    Ok(RpcModNickNameRet::new())
 }

@@ -1,10 +1,8 @@
 use super::*;
 
-pub async fn on_rpc_check_yorozuya_info_refresh_arg(
-    session: &NetworkSession,
+pub async fn on_rpc_check_yorozuya_info_refresh(
+    _session: &NetworkSession,
     _arg: &RpcCheckYorozuyaInfoRefreshArg,
-) -> Result<()> {
-    session
-        .send_rpc_ret(RpcCheckYorozuyaInfoRefreshRet::new())
-        .await
+) -> Result<RpcCheckYorozuyaInfoRefreshRet> {
+    Ok(RpcCheckYorozuyaInfoRefreshRet::new())
 }

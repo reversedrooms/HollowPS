@@ -8,10 +8,10 @@ use crate::game::util;
 
 use super::*;
 
-pub async fn on_rpc_run_event_graph_arg(
+pub async fn on_rpc_run_event_graph(
     session: &NetworkSession,
     arg: &RpcRunEventGraphArg,
-) -> Result<()> {
+) -> Result<RpcRunEventGraphRet> {
     tracing::info!("RunEventGraph requested");
 
     let scene_unit_mgr = session.context.scene_unit_manager.borrow();
@@ -42,14 +42,17 @@ pub async fn on_rpc_run_event_graph_arg(
         },
     );
 
-    session.send_rpc_arg(177, &ptc_sync_event_info).await?;
-    session.send_rpc_ret(RpcRunEventGraphRet::new()).await
+    session
+        .send_rpc_arg(PTC_SYNC_EVENT_INFO_ID, &ptc_sync_event_info)
+        .await?;
+
+    Ok(RpcRunEventGraphRet::new())
 }
 
-pub async fn on_rpc_finish_event_graph_perform_show_arg(
+pub async fn on_rpc_finish_event_graph_perform_show(
     session: &NetworkSession,
     arg: &RpcFinishEventGraphPerformShowArg,
-) -> Result<()> {
+) -> Result<RpcFinishEventGraphPerformShowRet> {
     tracing::info!("FinishEventGraphPerformShow");
 
     let mut ptc_sync_event_info = PtcSyncEventInfoArg {
@@ -74,16 +77,17 @@ pub async fn on_rpc_finish_event_graph_perform_show_arg(
         },
     );
 
-    session.send_rpc_arg(177, &ptc_sync_event_info).await?;
     session
-        .send_rpc_ret(RpcFinishEventGraphPerformShowRet::new())
-        .await
+        .send_rpc_arg(PTC_SYNC_EVENT_INFO_ID, &ptc_sync_event_info)
+        .await?;
+
+    Ok(RpcFinishEventGraphPerformShowRet::new())
 }
 
-pub async fn on_rpc_interact_with_unit_arg(
+pub async fn on_rpc_interact_with_unit(
     session: &NetworkSession,
     arg: &RpcInteractWithUnitArg,
-) -> Result<()> {
+) -> Result<RpcInteractWithUnitRet> {
     tracing::info!("InteractWithUnit");
 
     let scene_unit_mgr = session.context.scene_unit_manager.borrow();
@@ -114,32 +118,34 @@ pub async fn on_rpc_interact_with_unit_arg(
         },
     );
 
-    session.send_rpc_arg(177, &ptc_sync_event_info).await?;
-    session.send_rpc_ret(RpcInteractWithUnitRet::new()).await
+    session
+        .send_rpc_arg(PTC_SYNC_EVENT_INFO_ID, &ptc_sync_event_info)
+        .await?;
+    Ok(RpcInteractWithUnitRet::new())
 }
 
-pub async fn on_rpc_leave_cur_dungeon_arg(
+pub async fn on_rpc_leave_cur_dungeon(
     session: &NetworkSession,
     _arg: &RpcLeaveCurDungeonArg,
-) -> Result<()> {
+) -> Result<RpcLeaveCurDungeonRet> {
     Box::pin(enter_main_city(session)).await?;
-    session.send_rpc_ret(RpcLeaveCurDungeonRet::new()).await
+    Ok(RpcLeaveCurDungeonRet::new())
 }
 
-pub async fn on_ptc_player_operation_arg(
-    session: &NetworkSession,
+pub async fn on_ptc_player_operation(
+    _session: &NetworkSession,
     _arg: &PtcPlayerOperationArg,
-) -> Result<()> {
-    session.send_rpc_ret(PtcPlayerOperationRet::new()).await
+) -> Result<PtcPlayerOperationRet> {
+    Ok(PtcPlayerOperationRet::new())
 }
 
-pub async fn on_rpc_save_pos_in_main_city_arg(
-    session: &NetworkSession,
+pub async fn on_rpc_save_pos_in_main_city(
+    _session: &NetworkSession,
     _arg: &RpcSavePosInMainCityArg,
-) -> Result<()> {
+) -> Result<RpcSavePosInMainCityRet> {
     tracing::info!("MainCity pos updated");
 
-    session.send_rpc_ret(RpcSavePosInMainCityRet::new()).await
+    Ok(RpcSavePosInMainCityRet::new())
 }
 
 fn create_player(id: u64) -> PlayerInfo {
@@ -171,7 +177,7 @@ pub async fn enter_main_city(session: &NetworkSession) -> Result<()> {
 
     session
         .send_rpc_arg(
-            243,
+            PTC_ENTER_SECTION_ID,
             dungeon_manager
                 .enter_scene_section(hall_scene_uid, 2)
                 .unwrap(),
@@ -179,12 +185,15 @@ pub async fn enter_main_city(session: &NetworkSession) -> Result<()> {
         .await?;
 
     session
-        .send_rpc_arg(180, &scene_unit_mgr.sync(hall_scene_uid, 2))
+        .send_rpc_arg(
+            PTC_SYNC_SCENE_UNIT_ID,
+            &scene_unit_mgr.sync(hall_scene_uid, 2),
+        )
         .await?;
 
     session
         .send_rpc_arg(
-            118,
+            PTC_ENTER_SCENE_ID,
             dungeon_manager
                 .enter_main_city()?
                 .send_changes(session)
@@ -193,10 +202,10 @@ pub async fn enter_main_city(session: &NetworkSession) -> Result<()> {
         .await
 }
 
-pub async fn on_rpc_enter_world_arg(
+pub async fn on_rpc_enter_world(
     session: &NetworkSession,
     _arg: &RpcEnterWorldArg,
-) -> Result<()> {
+) -> Result<RpcEnterWorldRet> {
     let account = session.get_account();
 
     let id = *account.players.as_ref().unwrap().first().unwrap(); // get first id from list
@@ -209,8 +218,8 @@ pub async fn on_rpc_enter_world_arg(
     item_manager.add_resource(100, 1337);
 
     for avatar_id in data::iter_avatar_config_collection()
+        .filter(|c| c.camp != 0)
         .map(|c| c.id)
-        .filter(|id| *id < 2000)
     {
         item_manager.unlock_avatar(avatar_id);
     }
@@ -264,7 +273,7 @@ pub async fn on_rpc_enter_world_arg(
         let fresh_scene_uid = *dungeon_manager.create_fresh().unwrap();
         session
             .send_rpc_arg(
-                118,
+                PTC_ENTER_SCENE_ID,
                 dungeon_manager
                     .enter_scene(fresh_scene_uid)
                     .unwrap()
@@ -274,8 +283,16 @@ pub async fn on_rpc_enter_world_arg(
     }
 
     session
-        .send_rpc_ret(RpcEnterWorldRet::new(
-            session.ns_prop_mgr.serialize_player_info(),
-        ))
-        .await
+        .send_rpc_arg(
+            PTC_SYNC_SCENE_TIME_ID,
+            &PtcSyncSceneTimeArg {
+                timestamp: 3600 * 8 * 1000,
+                last_timestamp: 0,
+            },
+        )
+        .await?;
+
+    Ok(RpcEnterWorldRet::new(
+        session.ns_prop_mgr.serialize_player_info(),
+    ))
 }

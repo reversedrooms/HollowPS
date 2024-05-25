@@ -4,10 +4,10 @@ use super::*;
 
 const START_PROC_ID: i32 = 1;
 
-pub async fn on_rpc_advance_beginner_procedure_arg(
+pub async fn on_rpc_advance_beginner_procedure(
     session: &NetworkSession,
     arg: &RpcAdvanceBeginnerProcedureArg,
-) -> Result<()> {
+) -> Result<RpcAdvanceBeginnerProcedureRet> {
     let next_procedure_id = if arg.procedure_id == 0 {
         START_PROC_ID
     } else {
@@ -19,29 +19,25 @@ pub async fn on_rpc_advance_beginner_procedure_arg(
         Box::pin(world::enter_main_city(session)).await?;
     }
 
-    session
-        .send_rpc_ret(RpcAdvanceBeginnerProcedureRet::new(next_procedure_id))
-        .await
+    Ok(RpcAdvanceBeginnerProcedureRet::new(next_procedure_id))
 }
 
-pub async fn on_rpc_beginnerbattle_begin_arg(
-    session: &NetworkSession,
+pub async fn on_rpc_beginnerbattle_begin(
+    _session: &NetworkSession,
     arg: &RpcBeginnerbattleBeginArg,
-) -> Result<()> {
-    session
-        .send_rpc_ret(RpcBeginnerbattleBeginRet::new(format!(
-            "{}-{}",
-            arg.battle_id,
-            util::cur_timestamp_seconds()
-        )))
-        .await
+) -> Result<RpcBeginnerbattleBeginRet> {
+    Ok(RpcBeginnerbattleBeginRet::new(format!(
+        "{}-{}",
+        arg.battle_id,
+        util::cur_timestamp_seconds()
+    )))
 }
 
-pub async fn on_rpc_beginnerbattle_end_arg(
-    session: &NetworkSession,
+pub async fn on_rpc_beginnerbattle_end(
+    _session: &NetworkSession,
     arg: &RpcBeginnerbattleEndArg,
-) -> Result<()> {
+) -> Result<RpcBeginnerbattleEndRet> {
     tracing::info!("Battle statistics: {:?}", arg.battle_statistics);
 
-    session.send_rpc_ret(RpcBeginnerbattleEndRet::new()).await
+    Ok(RpcBeginnerbattleEndRet::new())
 }

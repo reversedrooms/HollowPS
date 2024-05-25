@@ -117,7 +117,7 @@ pub struct RpcModNickNameArg {
 }
 
 #[derive(OctData, Clone, Debug)]
-pub struct RpcFinishACTPerformShowArg {
+pub struct RpcFinishActPerformShowArg {
     pub moment: ACTPerformShowMoment,
     pub step: u8,
 }
@@ -337,6 +337,12 @@ pub struct PtcDungeonQuestFinishedArg {
     pub statistics: PropertyHashMap<QuestStatisticsType, u64>,
 }
 
+#[derive(OctData, Debug)]
+pub struct PtcSyncSceneTimeArg {
+    pub timestamp: u64,
+    pub last_timestamp: u64,
+}
+
 ret! {
     struct RpcLoginRet {
         account_info: PropertyBlob,
@@ -369,7 +375,7 @@ ret! {
     struct RpcModNickNameRet {
     }
 
-    struct RpcFinishACTPerformShowRet {
+    struct RpcFinishActPerformShowRet {
     }
 
     struct RpcKeepAliveRet {

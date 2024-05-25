@@ -11,7 +11,8 @@ use tokio::sync::{Mutex, MutexGuard};
 use crate::game::manager::net_stream;
 use crate::game::GameContext;
 
-use super::{packet::PacketHandler, Packet, RequestBody, ResponseBody};
+use super::handlers::ProtocolHandler;
+use super::{Packet, RequestBody, ResponseBody};
 
 pub struct NetworkSession {
     client_socket: Arc<Mutex<TcpStream>>,
@@ -82,7 +83,35 @@ impl NetworkSession {
         }
     }
 
-    pub async fn send_rpc_ret(&self, data: impl OctData) -> Result<()> {
+    pub async fn send_rpc_arg(&self, protocol_id: u16, data: &impl OctData) -> Result<()> {
+        let header: Vec<u8> = ProtocolHeader::default().into();
+
+        let mut payload = Vec::new();
+        let mut cursor = Cursor::new(&mut payload);
+        data.marshal_to(&mut cursor, 0)?;
+
+        let body: Vec<u8> = RequestBody {
+            protocol_id,
+            payload,
+        }
+        .into();
+
+        let mut packet = Vec::new();
+        packet.extend(0_u16.to_le_bytes());
+        packet.extend(((body.len() + 2) as u32).to_le_bytes());
+        packet.extend((header.len() as u16).to_le_bytes());
+        packet.extend(header);
+        packet.extend(body);
+        packet.extend(0_u16.to_le_bytes()); // middleware count
+
+        self.client_socket().await.write_all(&packet).await?;
+        tracing::info!("Ptc with protocol id {protocol_id} sent");
+        Ok(())
+    }
+}
+
+impl ProtocolHandler for NetworkSession {
+    async fn send_rpc_ret(&self, data: impl OctData) -> Result<()> {
         let header = ProtocolHeader {
             is_rpc_ret: true,
             rpc_arg_uid: self.cur_rpc_uid,
@@ -111,33 +140,4 @@ impl NetworkSession {
         self.client_socket().await.write_all(&packet).await?;
         Ok(())
     }
-
-    pub async fn send_rpc_arg(&self, protocol_id: u16, data: &impl OctData) -> Result<()> {
-        let header: Vec<u8> = ProtocolHeader::default().into();
-
-        let mut payload = Vec::new();
-        let mut cursor = Cursor::new(&mut payload);
-        data.marshal_to(&mut cursor, 0)?;
-
-        let body: Vec<u8> = RequestBody {
-            protocol_id,
-            payload,
-        }
-        .into();
-
-        let mut packet = Vec::new();
-        packet.extend(0_u16.to_le_bytes());
-        packet.extend(((body.len() + 2) as u32).to_le_bytes());
-        packet.extend((header.len() as u16).to_le_bytes());
-        packet.extend(header);
-        packet.extend(body);
-        packet.extend(0_u16.to_le_bytes()); // middleware count
-
-        self.client_socket().await.write_all(&packet).await?;
-        tracing::info!("Ptc with protocol id {protocol_id} sent");
-        Ok(())
-    }
 }
-
-// Auto implemented
-impl PacketHandler for NetworkSession {}

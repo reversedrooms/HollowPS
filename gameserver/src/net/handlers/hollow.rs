@@ -13,11 +13,19 @@ pub async fn on_rpc_hollow_move(
     tracing::info!("Hollow movement {:?}", &arg);
 
     let destination_pos = *arg.positions.last().unwrap();
-    let scene_uid = session.get_player().scene_uid.unwrap();
+    let scene_uid = session
+        .ns_prop_mgr
+        .player_info
+        .read()
+        .await
+        .scene_uid
+        .unwrap();
 
-    let hollow_grid_manager = session.context.hollow_grid_manager.borrow();
-    let (ptc_hollow_grid, ptc_sync_hollow_event) =
-        hollow_grid_manager.move_to(destination_pos, scene_uid);
+    let (ptc_hollow_grid, ptc_sync_hollow_event) = session
+        .context
+        .hollow_grid_manager
+        .move_to(destination_pos, scene_uid)
+        .await;
 
     session
         .send_rpc_arg(PTC_HOLLOW_GRID_ID, &ptc_hollow_grid)
@@ -50,19 +58,19 @@ pub async fn on_rpc_end_battle(
 ) -> Result<RpcEndBattleRet> {
     tracing::info!("RpcEndBattle: {:?}", &arg);
 
-    let player_uid = session.get_player_uid();
-    let hollow_grid_manager = session.context.hollow_grid_manager.borrow();
-
-    let (sync_event, hollow_finished) = hollow_grid_manager.battle_finished();
+    let player_uid = session.get_player_uid().await;
+    let (sync_event, hollow_finished) = session.context.hollow_grid_manager.battle_finished().await;
 
     if !hollow_finished {
         session
             .send_rpc_arg(PTC_SYNC_HOLLOW_EVENT_INFO_ID, &sync_event)
             .await?;
     } else {
-        let dungeon_manager = session.context.dungeon_manager.borrow();
-        let _ = *dungeon_manager
+        let _ = *session
+            .context
+            .dungeon_manager
             .hollow_finished()
+            .await
             .send_changes(session)
             .await?;
 
@@ -79,9 +87,11 @@ pub async fn on_rpc_end_battle(
             .await?;
     }
 
-    let dungeon_manager = session.context.dungeon_manager.borrow();
-    let ptc_enter_scene = dungeon_manager
+    let ptc_enter_scene = session
+        .context
+        .dungeon_manager
         .leave_battle()
+        .await
         .unwrap()
         .send_changes(session)
         .await?
@@ -90,14 +100,25 @@ pub async fn on_rpc_end_battle(
     session
         .send_rpc_arg(
             PTC_SYNC_HOLLOW_GRID_MAPS_ID,
-            &hollow_grid_manager.sync_hollow_maps(player_uid, dungeon_manager.get_cur_scene_uid()),
+            &session
+                .context
+                .hollow_grid_manager
+                .sync_hollow_maps(
+                    player_uid,
+                    session.context.dungeon_manager.get_cur_scene_uid().await,
+                )
+                .await,
         )
         .await?;
 
     let ptc_position_in_hollow_changed = PtcPositionInHollowChangedArg {
         player_uid,
         hollow_level: 1,
-        position: hollow_grid_manager.get_cur_position_in_hollow(),
+        position: session
+            .context
+            .hollow_grid_manager
+            .get_cur_position_in_hollow()
+            .await,
     };
 
     session
@@ -112,7 +133,11 @@ pub async fn on_rpc_end_battle(
         .await?;
 
     Ok(RpcEndBattleRet::new(
-        hollow_grid_manager.get_cur_event_template_id(),
+        session
+            .context
+            .hollow_grid_manager
+            .get_cur_event_template_id()
+            .await,
         HashMap::new(),
     ))
 }
@@ -123,7 +148,13 @@ pub async fn on_rpc_run_hollow_event_graph(
 ) -> Result<RpcRunHollowEventGraphRet> {
     tracing::info!("Run hollow event graph {:?}", arg);
 
-    let scene_uid = session.get_player().scene_uid.unwrap();
+    let scene_uid = session
+        .ns_prop_mgr
+        .player_info
+        .read()
+        .await
+        .scene_uid
+        .unwrap();
 
     if arg.event_graph_uid == 3405096459205834 {
         // Perform (cutscene)
@@ -148,8 +179,11 @@ pub async fn on_rpc_run_hollow_event_graph(
             .send_rpc_arg(PTC_SYNC_HOLLOW_EVENT_INFO_ID, &finish_perform)
             .await?;
 
-        let hollow_grid_manager = session.context.hollow_grid_manager.borrow();
-        let (ptc_hollow_grid, ptc_sync_hollow_event) = hollow_grid_manager.move_to(22, scene_uid);
+        let (ptc_hollow_grid, ptc_sync_hollow_event) = session
+            .context
+            .hollow_grid_manager
+            .move_to(22, scene_uid)
+            .await;
 
         session
             .send_rpc_arg(PTC_HOLLOW_GRID_ID, &ptc_hollow_grid)
@@ -160,13 +194,11 @@ pub async fn on_rpc_run_hollow_event_graph(
                 .await?;
         }
     } else {
-        let hollow_grid_manager = session.context.hollow_grid_manager.borrow();
-        let (sync_hollow_event, hollow_grid, trigger_battle_id, hollow_finished) =
-            hollow_grid_manager.run_event_graph(
-                arg.event_graph_uid,
-                arg.event_id,
-                arg.move_path.clone(),
-            );
+        let (sync_hollow_event, hollow_grid, trigger_battle_id, hollow_finished) = session
+            .context
+            .hollow_grid_manager
+            .run_event_graph(arg.event_graph_uid, arg.event_id, arg.move_path.clone())
+            .await;
 
         if !hollow_finished {
             session
@@ -178,9 +210,11 @@ pub async fn on_rpc_run_hollow_event_graph(
             .await?;
 
         if hollow_finished {
-            let dungeon_manager = session.context.dungeon_manager.borrow();
-            let _ = *dungeon_manager
+            let _ = *session
+                .context
+                .dungeon_manager
                 .hollow_finished()
+                .await
                 .send_changes(session)
                 .await?;
 
@@ -198,17 +232,30 @@ pub async fn on_rpc_run_hollow_event_graph(
         }
 
         if let Some(trigger_battle_id) = trigger_battle_id {
-            let dungeon_manager = session.context.dungeon_manager.borrow();
-            let hollow_uid = *session.get_player().scene_uid.as_ref().unwrap();
-            let battle_scene_uid = *dungeon_manager
+            let hollow_uid = *session
+                .ns_prop_mgr
+                .player_info
+                .read()
+                .await
+                .scene_uid
+                .as_ref()
+                .unwrap();
+            let battle_scene_uid = *session
+                .context
+                .dungeon_manager
                 .create_fight(trigger_battle_id, hollow_uid)
+                .await
                 .send_changes(session)
                 .await?;
 
             let ptc_position_in_hollow_changed = PtcPositionInHollowChangedArg {
                 player_uid: 1337,
                 hollow_level: 1,
-                position: hollow_grid_manager.get_cur_position_in_hollow(),
+                position: session
+                    .context
+                    .hollow_grid_manager
+                    .get_cur_position_in_hollow()
+                    .await,
             };
 
             session
@@ -221,8 +268,11 @@ pub async fn on_rpc_run_hollow_event_graph(
             session
                 .send_rpc_arg(
                     PTC_ENTER_SCENE_ID,
-                    dungeon_manager
+                    session
+                        .context
+                        .dungeon_manager
                         .enter_battle(battle_scene_uid)
+                        .await
                         .send_changes(session)
                         .await?,
                 )
@@ -241,7 +291,7 @@ pub async fn on_rpc_start_hollow_quest(
 
     // Set avatar HP properties
     for (_idx, avatar_uid) in &arg.avatar_map {
-        let player_info = session.get_player();
+        let player_info = session.ns_prop_mgr.player_info.read().await;
         let items = player_info.items.as_ref().unwrap();
         let Some(ItemInfo::Avatar { id, .. }) = items
             .iter()
@@ -269,21 +319,23 @@ pub async fn on_rpc_start_hollow_quest(
             .await?;
     }
 
-    let dungeon_manager = session.context.dungeon_manager.borrow();
-
     let avatars = arg
         .avatar_map
         .iter()
         .sorted_by_key(|kv| kv.0)
         .map(|(_idx, uid)| *uid)
         .collect::<Vec<_>>();
-    let (dungeon_uid, scene_uid) = *dungeon_manager
+    let (dungeon_uid, scene_uid) = *session
+        .context
+        .dungeon_manager
         .create_hollow(10001, 10010001, &avatars)
+        .await
         .send_changes(session)
         .await?;
 
-    let quest_manager = session.context.quest_manager.borrow();
-    quest_manager
+    session
+        .context
+        .quest_manager
         .add_quest_to_collection(
             dungeon_uid,
             QuestInfo::DungeonInner {
@@ -298,29 +350,40 @@ pub async fn on_rpc_start_hollow_quest(
                 sort_id: 2000,
             },
         )
+        .await
         .send_changes(session)
         .await?;
 
-    let ptc_enter_scene = dungeon_manager
-        .enter_scene(scene_uid)?
+    let ptc_enter_scene = session
+        .context
+        .dungeon_manager
+        .enter_scene(scene_uid)
+        .await?
         .send_changes(session)
         .await?
         .clone();
 
-    let hollow_grid_manager = session.context.hollow_grid_manager.borrow();
-    hollow_grid_manager.init_default_map();
+    session.context.hollow_grid_manager.init_default_map().await;
 
     session
         .send_rpc_arg(
             PTC_SYNC_HOLLOW_GRID_MAPS_ID,
-            &hollow_grid_manager.sync_hollow_maps(session.get_player_uid(), scene_uid),
+            &session
+                .context
+                .hollow_grid_manager
+                .sync_hollow_maps(session.get_player_uid().await, scene_uid)
+                .await,
         )
         .await?;
 
     let ptc_position_in_hollow_changed = PtcPositionInHollowChangedArg {
         player_uid: 1337,
         hollow_level: 1,
-        position: hollow_grid_manager.get_cur_position_in_hollow(),
+        position: session
+            .context
+            .hollow_grid_manager
+            .get_cur_position_in_hollow()
+            .await,
     };
 
     session

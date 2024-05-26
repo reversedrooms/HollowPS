@@ -1,30 +1,27 @@
-use atomic_refcell::AtomicRefCell;
 use protocol::{ItemInfo, PlayerInfo};
 use qwer::{phashmap, PropertyHashMap};
 use std::sync::Arc;
+use tokio::sync::RwLock;
 
 use crate::game::{util, PlayerOperationResult};
 
 use super::UniqueIDManager;
 
 pub struct ItemManager {
-    uid_mgr: Arc<AtomicRefCell<UniqueIDManager>>,
-    player_info: Arc<AtomicRefCell<PlayerInfo>>,
+    uid_mgr: Arc<UniqueIDManager>,
+    player_info: Arc<RwLock<PlayerInfo>>,
 }
 
 impl ItemManager {
-    pub fn new(
-        uid_mgr: Arc<AtomicRefCell<UniqueIDManager>>,
-        player_info: Arc<AtomicRefCell<PlayerInfo>>,
-    ) -> Self {
+    pub fn new(uid_mgr: Arc<UniqueIDManager>, player_info: Arc<RwLock<PlayerInfo>>) -> Self {
         Self {
             uid_mgr,
             player_info,
         }
     }
 
-    pub fn add_resource(&self, currency_id: i32, amount: i32) -> PlayerOperationResult<i32> {
-        let mut player_info = self.player_info.borrow_mut();
+    pub async fn add_resource(&self, currency_id: i32, amount: i32) -> PlayerOperationResult<i32> {
+        let mut player_info = self.player_info.write().await;
 
         for (uid, item) in player_info.items.as_mut().unwrap() {
             if let ItemInfo::Resource { id, count, .. } = item {
@@ -45,7 +42,7 @@ impl ItemManager {
             }
         }
 
-        let uid = self.uid_mgr.borrow().next();
+        let uid = self.uid_mgr.next();
         let item = ItemInfo::Resource {
             uid,
             id: currency_id,
@@ -69,8 +66,8 @@ impl ItemManager {
         )
     }
 
-    pub fn unlock_avatar(&self, id: i32) -> PlayerOperationResult<u64> {
-        let uid = self.uid_mgr.borrow().next();
+    pub async fn unlock_avatar(&self, id: i32) -> PlayerOperationResult<u64> {
+        let uid = self.uid_mgr.next();
 
         let avatar = ItemInfo::Avatar {
             uid,
@@ -89,10 +86,10 @@ impl ItemManager {
         };
 
         // Unlock & equip default weapon
-        let weapon_uid = *self.unlock_weapon(10012).unwrap();
-        self.equip_weapon(weapon_uid, uid);
+        let weapon_uid = *self.unlock_weapon(10012).await.unwrap();
+        self.equip_weapon(weapon_uid, uid).await;
 
-        let mut player_info = self.player_info.borrow_mut();
+        let mut player_info = self.player_info.write().await;
         let items = player_info.items.as_mut().unwrap();
         items.insert(uid, avatar.clone());
 
@@ -111,11 +108,11 @@ impl ItemManager {
         )
     }
 
-    pub fn unlock_weapon(&self, id: i32) -> PlayerOperationResult<u64> {
-        let mut player_info = self.player_info.borrow_mut();
+    pub async fn unlock_weapon(&self, id: i32) -> PlayerOperationResult<u64> {
+        let mut player_info = self.player_info.write().await;
         let items = player_info.items.as_mut().unwrap();
 
-        let uid = self.uid_mgr.borrow().next();
+        let uid = self.uid_mgr.next();
 
         let weapon = ItemInfo::Weapon {
             uid,
@@ -144,12 +141,12 @@ impl ItemManager {
         )
     }
 
-    pub fn equip_weapon(
+    pub async fn equip_weapon(
         &self,
         weapon_uid: u64,
         equip_avatar_uid: u64,
     ) -> PlayerOperationResult<bool> {
-        let mut player_info = self.player_info.borrow_mut();
+        let mut player_info = self.player_info.write().await;
         let items = player_info.items.as_mut().unwrap();
 
         let Some(ItemInfo::Weapon { avatar_uid, .. }) = items.get_mut(&weapon_uid) else {

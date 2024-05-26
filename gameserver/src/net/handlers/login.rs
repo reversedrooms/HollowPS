@@ -7,10 +7,11 @@ const DEFAULT_ACCOUNT_ID: u64 = 1337;
 
 pub async fn on_rpc_login(session: &NetworkSession, arg: &RpcLoginArg) -> Result<RpcLoginRet> {
     tracing::info!("Received rpc login arg: {}", arg.account_name);
-    *session.get_account_mut() = util::create_default_account(DEFAULT_ACCOUNT_ID);
+    *session.ns_prop_mgr.account_info.write().await =
+        util::create_default_account(DEFAULT_ACCOUNT_ID);
 
     Ok(RpcLoginRet::new(
-        session.ns_prop_mgr.serialize_account_info(),
+        session.ns_prop_mgr.serialize_account_info().await,
     ))
 }
 

@@ -1,8 +1,8 @@
 use std::sync::Arc;
 
 use anyhow::Result;
-use atomic_refcell::AtomicRefCell;
 use protocol::{PlayerInfo, PtcPlayerInfoChangedArg};
+use tokio::sync::RwLock;
 
 use crate::net::NetworkSession;
 
@@ -13,40 +13,29 @@ use super::manager::{
 
 pub struct GameContext {
     #[allow(unused)]
-    pub uid_manager: Arc<AtomicRefCell<UniqueIDManager>>,
-    pub item_manager: Arc<AtomicRefCell<ItemManager>>,
-    pub dungeon_manager: Arc<AtomicRefCell<DungeonManager>>,
-    pub quest_manager: Arc<AtomicRefCell<QuestManager>>,
-    pub scene_unit_manager: Arc<AtomicRefCell<SceneUnitManager>>,
-    pub hollow_grid_manager: Arc<AtomicRefCell<HollowGridManager>>,
-    pub unlock_manager: Arc<AtomicRefCell<UnlockManager>>,
-    pub yorozuya_quest_manager: Arc<AtomicRefCell<YorozuyaQuestManager>>,
+    pub uid_manager: Arc<UniqueIDManager>,
+    pub item_manager: Arc<ItemManager>,
+    pub dungeon_manager: Arc<DungeonManager>,
+    pub quest_manager: Arc<QuestManager>,
+    pub scene_unit_manager: Arc<SceneUnitManager>,
+    pub hollow_grid_manager: Arc<HollowGridManager>,
+    pub unlock_manager: Arc<UnlockManager>,
+    pub yorozuya_quest_manager: Arc<YorozuyaQuestManager>,
 }
 
 impl GameContext {
-    pub fn new(player: Arc<AtomicRefCell<PlayerInfo>>) -> Self {
-        let uid_manager = Arc::new(AtomicRefCell::new(UniqueIDManager::new()));
+    pub fn new(player: Arc<RwLock<PlayerInfo>>) -> Self {
+        let uid_manager = Arc::new(UniqueIDManager::new());
 
         Self {
             uid_manager: uid_manager.clone(),
-            item_manager: Arc::new(AtomicRefCell::new(ItemManager::new(
-                uid_manager.clone(),
-                player.clone(),
-            ))),
-            dungeon_manager: Arc::new(AtomicRefCell::new(DungeonManager::new(
-                uid_manager.clone(),
-                player.clone(),
-            ))),
-            quest_manager: Arc::new(AtomicRefCell::new(QuestManager::new(
-                uid_manager.clone(),
-                player.clone(),
-            ))),
-            scene_unit_manager: Arc::new(AtomicRefCell::new(SceneUnitManager::new(uid_manager))),
-            hollow_grid_manager: Arc::new(AtomicRefCell::new(HollowGridManager::new(
-                player.clone(),
-            ))),
-            unlock_manager: Arc::new(AtomicRefCell::new(UnlockManager::new(player.clone()))),
-            yorozuya_quest_manager: Arc::new(AtomicRefCell::new(YorozuyaQuestManager::new(player))),
+            item_manager: Arc::new(ItemManager::new(uid_manager.clone(), player.clone())),
+            dungeon_manager: Arc::new(DungeonManager::new(uid_manager.clone(), player.clone())),
+            quest_manager: Arc::new(QuestManager::new(uid_manager.clone(), player.clone())),
+            scene_unit_manager: Arc::new(SceneUnitManager::new(uid_manager)),
+            hollow_grid_manager: Arc::new(HollowGridManager::new(player.clone())),
+            unlock_manager: Arc::new(UnlockManager::new(player.clone())),
+            yorozuya_quest_manager: Arc::new(YorozuyaQuestManager::new(player)),
         }
     }
 }
@@ -70,7 +59,7 @@ where
     pub async fn send_changes(&mut self, session: &NetworkSession) -> Result<&T> {
         if self.player_info_changes.is_some() {
             let ptc_player_info_changed = PtcPlayerInfoChangedArg {
-                player_uid: session.get_player_uid(),
+                player_uid: session.get_player_uid().await,
                 player_info: self.player_info_changes.take().unwrap(),
             };
 

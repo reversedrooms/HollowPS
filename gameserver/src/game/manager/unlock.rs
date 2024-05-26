@@ -1,22 +1,22 @@
 use std::sync::Arc;
 
-use atomic_refcell::AtomicRefCell;
 use protocol::*;
 use qwer::PropertyHashSet;
+use tokio::sync::RwLock;
 
 use crate::game::PlayerOperationResult;
 
 pub struct UnlockManager {
-    player: Arc<AtomicRefCell<PlayerInfo>>,
+    player: Arc<RwLock<PlayerInfo>>,
 }
 
 impl UnlockManager {
-    pub fn new(player: Arc<AtomicRefCell<PlayerInfo>>) -> Self {
+    pub fn new(player: Arc<RwLock<PlayerInfo>>) -> Self {
         Self { player }
     }
 
-    pub fn unlock(&self, unlock_id: i32) -> PlayerOperationResult<PtcUnlockArg> {
-        let mut player = self.player.borrow_mut();
+    pub async fn unlock(&self, unlock_id: i32) -> PlayerOperationResult<PtcUnlockArg> {
+        let mut player = self.player.write().await;
         let unlock_info = player.unlock_info.as_mut().unwrap();
 
         unlock_info

@@ -1,34 +1,34 @@
 use std::{collections::HashMap, sync::Arc};
 
-use atomic_refcell::AtomicRefCell;
 use protocol::*;
 use qwer::{phashmap, PropertyHashMap};
+use tokio::sync::RwLock;
 
 use super::UniqueIDManager;
 
 pub struct SceneUnitManager {
-    uid_mgr: Arc<AtomicRefCell<UniqueIDManager>>,
-    units: AtomicRefCell<HashMap<u64, SceneUnitProtocolInfo>>,
+    uid_mgr: Arc<UniqueIDManager>,
+    units: RwLock<HashMap<u64, SceneUnitProtocolInfo>>,
 }
 
 impl SceneUnitManager {
-    pub fn new(uid_mgr: Arc<AtomicRefCell<UniqueIDManager>>) -> Self {
+    pub fn new(uid_mgr: Arc<UniqueIDManager>) -> Self {
         Self {
             uid_mgr,
-            units: AtomicRefCell::new(HashMap::new()),
+            units: RwLock::new(HashMap::new()),
         }
     }
 
-    pub fn create_npc(
+    pub async fn create_npc(
         &self,
         id: i32,
         tag: i32,
         quest_id: i32,
         interacts_info: PropertyHashMap<i32, InteractInfo>,
     ) -> u64 {
-        let uid = self.uid_mgr.borrow().next();
+        let uid = self.uid_mgr.next();
 
-        self.units.borrow_mut().insert(
+        self.units.write().await.insert(
             uid,
             SceneUnitProtocolInfo::NpcProtocolInfo {
                 uid,
@@ -42,11 +42,11 @@ impl SceneUnitManager {
         uid
     }
 
-    pub fn get(&self, uid: u64) -> SceneUnitProtocolInfo {
-        self.units.borrow().get(&uid).unwrap().clone()
+    pub async fn get(&self, uid: u64) -> SceneUnitProtocolInfo {
+        self.units.read().await.get(&uid).unwrap().clone()
     }
 
-    pub fn sync(&self, scene_uid: u64, section_id: i32) -> PtcSyncSceneUnitArg {
+    pub async fn sync(&self, scene_uid: u64, section_id: i32) -> PtcSyncSceneUnitArg {
         PtcSyncSceneUnitArg {
             scene_uid,
             section_id,
@@ -54,7 +54,8 @@ impl SceneUnitManager {
             removed_scene_units: Vec::new(),
             scene_units: self
                 .units
-                .borrow()
+                .read()
+                .await
                 .iter()
                 .map(|(_, unit)| unit.clone())
                 .collect(),
@@ -64,7 +65,7 @@ impl SceneUnitManager {
     // TODO: partial_sync for newly added/removed units
 
     // currently hardcoded for Main City section 2
-    pub fn add_default_units(&self) {
+    pub async fn add_default_units(&self) {
         self.create_npc(
             100171011,
             3,
@@ -83,7 +84,8 @@ impl SceneUnitManager {
                     phashmap![(0, String::new())]
                 )
             )],
-        );
+        )
+        .await;
 
         self.create_npc(
             100171011,
@@ -103,7 +105,8 @@ impl SceneUnitManager {
                     phashmap![(0, String::new())]
                 )
             )],
-        );
+        )
+        .await;
 
         self.create_npc(
             100171011,
@@ -123,7 +126,8 @@ impl SceneUnitManager {
                     phashmap![(0, String::new())]
                 )
             )],
-        );
+        )
+        .await;
 
         self.create_npc(
             100171011,
@@ -143,7 +147,8 @@ impl SceneUnitManager {
                     phashmap![(1001, String::from("A"))]
                 )
             )],
-        );
+        )
+        .await;
 
         self.create_npc(
             100171011,
@@ -163,7 +168,8 @@ impl SceneUnitManager {
                     phashmap![(1005, String::from("A"))]
                 )
             )],
-        );
+        )
+        .await;
 
         self.create_npc(
             100173001,
@@ -183,7 +189,8 @@ impl SceneUnitManager {
                     phashmap![(2028, String::from("A"))]
                 )
             )],
-        );
+        )
+        .await;
 
         self.create_npc(
             100172011,
@@ -203,9 +210,10 @@ impl SceneUnitManager {
                     phashmap![(2000, String::from("A")), (2052, String::from("B"))]
                 )
             )],
-        );
+        )
+        .await;
 
-        self.create_npc(100172081, 2052, 0, phashmap![]);
+        self.create_npc(100172081, 2052, 0, phashmap![]).await;
     }
 }
 

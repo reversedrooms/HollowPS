@@ -6,7 +6,6 @@ version.workspace = true
 [dependencies]
 ansi_term.workspace = true
 anyhow.workspace = true
-atomic_refcell.workspace = true
 dirs.workspace = true
 env_logger.workspace = true
 hex.workspace = true

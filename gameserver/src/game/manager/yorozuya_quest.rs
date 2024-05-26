@@ -1,29 +1,29 @@
 use std::collections::HashSet;
 use std::sync::Arc;
 
-use atomic_refcell::AtomicRefCell;
 use qwer::{PropertyDoubleKeyHashMap, PropertyHashSet};
+use tokio::sync::RwLock;
 
 use crate::game::PlayerOperationResult;
 
 use protocol::*;
 
 pub struct YorozuyaQuestManager {
-    player: Arc<AtomicRefCell<PlayerInfo>>,
+    player: Arc<RwLock<PlayerInfo>>,
 }
 
 impl YorozuyaQuestManager {
-    pub fn new(player: Arc<AtomicRefCell<PlayerInfo>>) -> Self {
+    pub fn new(player: Arc<RwLock<PlayerInfo>>) -> Self {
         Self { player }
     }
 
-    pub fn add_hollow_quest(
+    pub async fn add_hollow_quest(
         &self,
         yorozuya_collection_id: i32,
         hollow_quest_type: HollowQuestType,
         id: i32,
     ) -> PlayerOperationResult<i32> {
-        let mut player = self.player.borrow_mut();
+        let mut player = self.player.write().await;
         let yorozuya = player.yorozuya_info.as_mut().unwrap();
         let hollow_quests = yorozuya.hollow_quests.as_mut().unwrap();
 

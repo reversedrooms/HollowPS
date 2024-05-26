@@ -14,8 +14,7 @@ pub async fn on_rpc_run_event_graph(
 ) -> Result<RpcRunEventGraphRet> {
     tracing::info!("RunEventGraph requested");
 
-    let scene_unit_mgr = session.context.scene_unit_manager.borrow();
-    let unit = scene_unit_mgr.get(arg.owner_uid);
+    let unit = session.context.scene_unit_manager.get(arg.owner_uid).await;
 
     let SceneUnitProtocolInfo::NpcProtocolInfo { tag, id, .. } = unit;
     let main_city_object = data::get_main_city_object(tag, id).unwrap();
@@ -90,8 +89,7 @@ pub async fn on_rpc_interact_with_unit(
 ) -> Result<RpcInteractWithUnitRet> {
     tracing::info!("InteractWithUnit");
 
-    let scene_unit_mgr = session.context.scene_unit_manager.borrow();
-    let unit = scene_unit_mgr.get(arg.unit_uid);
+    let unit = session.context.scene_unit_manager.get(arg.unit_uid).await;
 
     let SceneUnitProtocolInfo::NpcProtocolInfo { tag, id, .. } = unit;
     let main_city_object = data::get_main_city_object(tag, id).unwrap();
@@ -170,16 +168,20 @@ fn create_player(id: u64) -> PlayerInfo {
 }
 
 pub async fn enter_main_city(session: &NetworkSession) -> Result<()> {
-    let dungeon_manager = session.context.dungeon_manager.borrow();
-    let scene_unit_mgr = session.context.scene_unit_manager.borrow();
-
-    let hall_scene_uid = dungeon_manager.get_default_scene_uid();
+    let hall_scene_uid = session
+        .context
+        .dungeon_manager
+        .get_default_scene_uid()
+        .await;
 
     session
         .send_rpc_arg(
             PTC_ENTER_SECTION_ID,
-            dungeon_manager
+            session
+                .context
+                .dungeon_manager
                 .enter_scene_section(hall_scene_uid, 2)
+                .await
                 .unwrap(),
         )
         .await?;
@@ -187,15 +189,22 @@ pub async fn enter_main_city(session: &NetworkSession) -> Result<()> {
     session
         .send_rpc_arg(
             PTC_SYNC_SCENE_UNIT_ID,
-            &scene_unit_mgr.sync(hall_scene_uid, 2),
+            &session
+                .context
+                .scene_unit_manager
+                .sync(hall_scene_uid, 2)
+                .await,
         )
         .await?;
 
     session
         .send_rpc_arg(
             PTC_ENTER_SCENE_ID,
-            dungeon_manager
-                .enter_main_city()?
+            session
+                .context
+                .dungeon_manager
+                .enter_main_city()
+                .await?
                 .send_changes(session)
                 .await?,
         )
@@ -206,76 +215,87 @@ pub async fn on_rpc_enter_world(
     session: &NetworkSession,
     _arg: &RpcEnterWorldArg,
 ) -> Result<RpcEnterWorldRet> {
-    let account = session.get_account();
+    let account = session.ns_prop_mgr.account_info.read().await;
 
     let id = *account.players.as_ref().unwrap().first().unwrap(); // get first id from list
-    *session.get_player_mut() = create_player(id);
+    *session.ns_prop_mgr.player_info.write().await = create_player(id);
 
-    let item_manager = session.context.item_manager.borrow();
-
-    item_manager.add_resource(501, 120);
-    item_manager.add_resource(10, 228);
-    item_manager.add_resource(100, 1337);
+    let item_manager = &session.context.item_manager;
+    item_manager.add_resource(501, 120).await;
+    item_manager.add_resource(10, 228).await;
+    item_manager.add_resource(100, 1337).await;
 
     for avatar_id in data::iter_avatar_config_collection()
         .filter(|c| c.camp != 0)
         .map(|c| c.id)
     {
-        item_manager.unlock_avatar(avatar_id);
+        item_manager.unlock_avatar(avatar_id).await;
     }
 
-    let unlock_manager = session.context.unlock_manager.borrow();
     for unlock_id in data::iter_unlock_config_collection().map(|c| c.id) {
-        unlock_manager.unlock(unlock_id);
+        session.context.unlock_manager.unlock(unlock_id).await;
     }
 
-    let dungeon_manager = session.context.dungeon_manager.borrow();
-    dungeon_manager.create_hall(1);
-    let scene_unit_mgr = session.context.scene_unit_manager.borrow();
-    scene_unit_mgr.add_default_units();
+    session.context.dungeon_manager.create_hall(1).await;
+    session.context.scene_unit_manager.add_default_units().await;
 
-    let quest_manager = session.context.quest_manager.borrow();
-    quest_manager.add_world_quest(QuestInfo::MainCity {
-        id: 10020002,
-        finished_count: 0,
-        collection_uid: 0,
-        progress: 0,
-        parent_quest_id: 0,
-        state: QuestState::InProgress,
-        finish_condition_progress: phashmap![],
-        progress_time: 2111012,
-        sort_id: 1000,
-        bound_npc_and_interact: phashmap![],
-    });
+    let quest_manager = session.context.quest_manager.clone();
+    quest_manager
+        .add_world_quest(QuestInfo::MainCity {
+            id: 10020002,
+            finished_count: 0,
+            collection_uid: 0,
+            progress: 0,
+            parent_quest_id: 0,
+            state: QuestState::InProgress,
+            finish_condition_progress: phashmap![],
+            progress_time: 2111012,
+            sort_id: 1000,
+            bound_npc_and_interact: phashmap![],
+        })
+        .await;
 
-    quest_manager.add_world_quest(QuestInfo::Hollow {
-        id: 10010002,
-        finished_count: 0,
-        collection_uid: 3405096459205774,
-        progress: 0,
-        parent_quest_id: 0,
-        state: QuestState::Ready,
-        sort_id: 1001,
-        statistics: phashmap![],
-        statistics_ext: pdkhashmap![],
-        acquired_hollow_challenge_reward: 0,
-        progress_time: 0,
-        finish_condition_progress: phashmap![],
-        dungeon_uid: 0,
-    });
+    quest_manager
+        .add_world_quest(QuestInfo::Hollow {
+            id: 10010002,
+            finished_count: 0,
+            collection_uid: 3405096459205774,
+            progress: 0,
+            parent_quest_id: 0,
+            state: QuestState::Ready,
+            sort_id: 1001,
+            statistics: phashmap![],
+            statistics_ext: pdkhashmap![],
+            acquired_hollow_challenge_reward: 0,
+            progress_time: 0,
+            finish_condition_progress: phashmap![],
+            dungeon_uid: 0,
+        })
+        .await;
 
-    let yorozuya_quest_manager = session.context.yorozuya_quest_manager.borrow();
-    yorozuya_quest_manager.add_hollow_quest(102, HollowQuestType::SideQuest, 10010002);
+    session
+        .context
+        .yorozuya_quest_manager
+        .add_hollow_quest(102, HollowQuestType::SideQuest, 10010002)
+        .await;
 
     if CONFIGURATION.skip_tutorial {
         Box::pin(enter_main_city(session)).await?;
     } else {
-        let fresh_scene_uid = *dungeon_manager.create_fresh().unwrap();
+        let fresh_scene_uid = *session
+            .context
+            .dungeon_manager
+            .create_fresh()
+            .await
+            .unwrap();
         session
             .send_rpc_arg(
                 PTC_ENTER_SCENE_ID,
-                dungeon_manager
+                session
+                    .context
+                    .dungeon_manager
                     .enter_scene(fresh_scene_uid)
+                    .await
                     .unwrap()
                     .unwrap(),
             )
@@ -293,6 +313,6 @@ pub async fn on_rpc_enter_world(
         .await?;
 
     Ok(RpcEnterWorldRet::new(
-        session.ns_prop_mgr.serialize_player_info(),
+        session.ns_prop_mgr.serialize_player_info().await,
     ))
 }

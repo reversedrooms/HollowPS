@@ -4,43 +4,44 @@ use std::{
 };
 
 use crate::game::data;
-use atomic_refcell::AtomicRefCell;
 use protocol::*;
 use qwer::{phashmap, phashset, PropertyHashMap, PropertyHashSet};
+use tokio::sync::RwLock;
 
 pub struct HollowGridManager {
-    player: Arc<AtomicRefCell<PlayerInfo>>,
-    map: AtomicRefCell<Option<HollowGridMapProtocolInfo>>,
-    events: AtomicRefCell<HashMap<u64, EventInfo>>,
+    player: Arc<RwLock<PlayerInfo>>,
+    map: RwLock<Option<HollowGridMapProtocolInfo>>,
+    events: RwLock<HashMap<u64, EventInfo>>,
 }
 
 impl HollowGridManager {
-    pub fn new(player: Arc<AtomicRefCell<PlayerInfo>>) -> Self {
+    pub fn new(player: Arc<RwLock<PlayerInfo>>) -> Self {
         Self {
             player,
-            map: AtomicRefCell::new(None),
-            events: AtomicRefCell::new(HashMap::new()),
+            map: RwLock::new(None),
+            events: RwLock::new(HashMap::new()),
         }
     }
 
-    pub fn get_cur_position_in_hollow(&self) -> u16 {
-        self.map.borrow().as_ref().unwrap().start_grid
+    pub async fn get_cur_position_in_hollow(&self) -> u16 {
+        self.map.read().await.as_ref().unwrap().start_grid
     }
 
-    pub fn move_to(
+    pub async fn move_to(
         &self,
         destination_grid: u16,
         scene_uid: u64,
     ) -> (PtcHollowGridArg, Option<PtcSyncHollowEventInfoArg>) {
-        let mut map = self.map.borrow_mut();
+        let mut map = self.map.write().await;
         let map = map.as_mut().unwrap();
 
         map.start_grid = destination_grid;
         let grid = map.grids.get_mut(&destination_grid).unwrap();
 
-        self.update_position_to_scene(scene_uid, destination_grid);
+        self.update_position_to_scene(scene_uid, destination_grid)
+            .await;
 
-        let mut events = self.events.borrow_mut();
+        let mut events = self.events.write().await;
         let sync_event_info =
             if let Entry::Vacant(entry) = events.entry(u64::from(destination_grid)) {
                 let event_info = EventInfo {
@@ -81,7 +82,7 @@ impl HollowGridManager {
 
         (
             PtcHollowGridArg {
-                player_uid: self.player.borrow().uid.unwrap(),
+                player_uid: self.player.read().await.uid.unwrap(),
                 is_partial: true,
                 scene_uid,
                 hollow_level: 1,
@@ -91,8 +92,8 @@ impl HollowGridManager {
         )
     }
 
-    pub fn battle_finished(&self) -> (PtcSyncHollowEventInfoArg, bool) {
-        let map = self.map.borrow();
+    pub async fn battle_finished(&self) -> (PtcSyncHollowEventInfoArg, bool) {
+        let map = self.map.read().await;
         let map = map.as_ref().unwrap();
         let cur_grid = map.grids.get(&map.start_grid).unwrap();
 
@@ -129,16 +130,16 @@ impl HollowGridManager {
         )
     }
 
-    pub fn get_cur_event_template_id(&self) -> i32 {
-        let map = self.map.borrow();
+    pub async fn get_cur_event_template_id(&self) -> i32 {
+        let map = self.map.read().await;
         let map = map.as_ref().unwrap();
         let cur_grid = map.grids.get(&map.start_grid).unwrap();
 
         cur_grid.grid.event_graph_info.hollow_event_template_id
     }
 
-    fn update_position_to_scene(&self, scene_uid: u64, pos: u16) {
-        let mut player = self.player.borrow_mut();
+    async fn update_position_to_scene(&self, scene_uid: u64, pos: u16) {
+        let mut player = self.player.write().await;
         let scene = player
             .dungeon_collection
             .as_mut()
@@ -165,7 +166,7 @@ impl HollowGridManager {
         }
     }
 
-    pub fn run_event_graph(
+    pub async fn run_event_graph(
         &self,
         event_graph_uid: u64,
         _event_id: i32,
@@ -177,12 +178,12 @@ impl HollowGridManager {
         bool,
     ) {
         let (player_uid, scene_uid) = {
-            let player = self.player.borrow();
+            let player = self.player.read().await;
 
             (player.uid.unwrap(), player.scene_uid.unwrap())
         };
 
-        let mut map = self.map.borrow_mut();
+        let mut map = self.map.write().await;
         let map = map.as_mut().unwrap();
 
         let mut trigger_battle_id = None;
@@ -216,6 +217,7 @@ impl HollowGridManager {
                 if let Some(action) = actions.get(index as usize) {
                     last_exec_type = action["$type"].as_str().unwrap();
 
+                    // ugly, we have to parse these configs properly
                     match action["$type"].as_str().unwrap() {
                         "Share.CConfigSetMapState" => {
                             let x = action["X"].as_i64().unwrap() as u16;
@@ -320,19 +322,23 @@ impl HollowGridManager {
         )
     }
 
-    pub fn sync_hollow_maps(&self, player_uid: u64, scene_uid: u64) -> PtcSyncHollowGridMapsArg {
+    pub async fn sync_hollow_maps(
+        &self,
+        player_uid: u64,
+        scene_uid: u64,
+    ) -> PtcSyncHollowGridMapsArg {
         PtcSyncHollowGridMapsArg {
             player_uid,
             scene_uid,
             hollow_level: 1,
-            main_map: self.map.borrow().clone().unwrap(),
+            main_map: self.map.read().await.clone().unwrap(),
             time_period: TimePeriodType::Random,
             weather: WeatherType::Random,
         }
     }
 
-    pub fn init_default_map(&self) {
-        *self.map.borrow_mut() = Some(HollowGridMapProtocolInfo {
+    pub async fn init_default_map(&self) {
+        *self.map.write().await = Some(HollowGridMapProtocolInfo {
             row: 5,
             col: 11,
             start_grid: 22,

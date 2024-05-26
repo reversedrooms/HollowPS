@@ -1,6 +1,4 @@
 use anyhow::Result;
-use atomic_refcell::{AtomicRef, AtomicRefMut};
-use protocol::*;
 use qwer::{OctData, ProtocolHeader};
 use std::io::Cursor;
 use std::sync::Arc;
@@ -37,24 +35,8 @@ impl NetworkSession {
         self.client_socket.lock().await
     }
 
-    pub fn get_player_uid(&self) -> u64 {
-        self.get_player().uid.unwrap()
-    }
-
-    pub fn get_account(&self) -> AtomicRef<AccountInfo> {
-        self.ns_prop_mgr.account_info.borrow()
-    }
-
-    pub fn get_player(&self) -> AtomicRef<PlayerInfo> {
-        self.ns_prop_mgr.player_info.borrow()
-    }
-
-    pub fn get_account_mut(&self) -> AtomicRefMut<'_, AccountInfo> {
-        self.ns_prop_mgr.account_info.try_borrow_mut().unwrap()
-    }
-
-    pub fn get_player_mut(&self) -> AtomicRefMut<'_, PlayerInfo> {
-        self.ns_prop_mgr.player_info.try_borrow_mut().unwrap()
+    pub async fn get_player_uid(&self) -> u64 {
+        self.ns_prop_mgr.player_info.read().await.uid.unwrap()
     }
 
     pub async fn run(&mut self) -> Result<()> {

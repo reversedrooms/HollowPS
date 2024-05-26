@@ -15,6 +15,7 @@ paste.workspace = true
 sysinfo.workspace = true
 itertools.workspace = true
 
+csv.workspace = true
 serde.workspace = true
 serde_json.workspace = true
 

@@ -1,0 +1,498 @@
+TagID	NPCID	CreatePosition	CreateType	DefaultInteractIDs	InteractName	InteractShape	InteractScale	FanInteractParam	FocusInteractScale	IgnoreCollider	LookIK	NPCLookIK	SceneSoundID	PlayerRotate	NPCRotate	SceneObjectName	CameraStoryKey	ActionState	ColliderState	ItemState	ObjectIDs	CreateInterval	CreateDelay	NPCIcon	ActionSwitch
+1	100171011	Street_NPCPos_ToWorkshop	0	10000001	None	1	1,0,0,0,0	None	3.0	true	true	false	0	false	false	None	Small	0	None	None		0	0	None	None
+2	100171011	Street_NPCPos_ToGarage	0	10000002	None	1	1,0,0,0,0	None	3.0	true	true	false	0	false	false	None	Small	0	None	None		0	0	None	None
+3	100171011	Workshop_NPCPos_ToStreet	0	10000003	None	1	1,0,0,0,0	None	3.0	true	true	false	0	false	false	None	Small	0	None	None		0	0	None	None
+4	100171011	Workshop_NPCPos_ToGarage	0	10000004	None	1	1,0,0,0,0	None	3.0	true	true	false	0	false	false	None	Small	0	None	None		0	0	None	None
+5	100171011	Garage_NPCPos_ToStreet	0	10000005	None	1	1,0,0,0,0	None	3.0	true	true	false	0	false	false	None	Small	0	None	None		0	0	None	None
+6	100171011	Garage_NPCPos_ToWorkshop	0	10000006	A	1	1,0,0,0,0	None	3.0	true	true	false	0	false	false	None	Small	0	None	None		0	0	None	None
+7	100171011	Street_NPCPos_ToGarage2	0	10000016	None	1	1,0,0,0,0	None	3.0	true	true	false	0	false	false	None	Small	0	None	None		0	0	None	None
+8	100171011	Garage_NPCPos_ToStreet2	0	10000017	None	1	1,0,0,0,0	None	3.0	true	true	false	0	false	false	None	Small	0	None	None		0	0	None	None
+1001	100171011	Workshop_NPCPos_VHS	0	10000010	A	1	1,0,0,0,0	None	3.0	true	true	false	0	false	false	None	Small	0	None	None		0	0	None	None
+1002	100171011	Workshop_NPCPos_Hollow	0	10000009	A	1	1,0,0,0,0	None	3.0	true	true	false	0	false	false	None	Middle	0	None	None		0	0	None	None
+1003	100171011	Street_NPCPos_Smithy	0	10000007	A	1	1,0,0,0,0	None	3.0	true	true	false	0	false	false	None	Small	0	None	None		0	0	None	None
+1004	100171011	Workshop_NPCPos_Gacha	0		A	1	0.75,0,0,0,0	None	3.0	true	true	false	0	false	false	None	Small	0	None	None		0	0	None	None
+1005	100171011	Workshop_NPCPos_WorkTable	0	10000014	A	1	1,0,0,0,0	None	3.0	true	true	false	0	false	false	None	Small	0	None	None		0	0	None	None
+1006	100171011	Street_NPCPos_Grocery	0		A	1	2,0,0,0,0	None	3.0	true	true	false	0	false	false	None	Small	0	None	None		0	0	None	None
+1007	100171011	Workshop_NPCPos_TimeMachine	0	10000020	A	2	0,1.5,2,150,10	None	3.0	true	true	false	0	false	false	None	Small	0	None	None		0	0	None	None
+2000	100172011	WorkShop_NPCPos_Noca_Quest10020001	1	20000002	A	1	2,0,0,0,0	None	3.0	true	true	true	0	false	false	None	Middle	3	AvatarCollider:true	None		0	0	None	None
+2001	100172011	Garage_NPCPos_Nocha_Quest10020003	1	20000002	A	1	2,0,0,0,0	None	3.0	true	true	true	0	false	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2002	100172031	Garage_NPCPos_Billy_Quest10020003	1	20000002	A	1	2,0,0,0,0	None	3.0	true	true	true	0	false	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2003	100172041	Garage_NPCPos_Anbi_Quest10020003	1	20000002	A	1	2,0,0,0,0	None	3.0	true	true	true	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2004	100172151	Street_NPCPos_Temp_Quest10020005	1	20000002	A	1	2,0,0,0,0	None	3.0	true	true	true	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2005	100172031	Street_NPCPos_Billy_Quest10020006	1	19900013,20000002	A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2006	100172011	Garage_NPCPos_Nocha_Quest10020003	1	20000002	A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2007	100172031	Garage_NPCPos_Billy_Quest10020003	1	20000002	A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2008	100172041	Garage_NPCPos_Anbi_Quest10020003	1	19900022,20000002	A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2009	100172052	Street_NPCPos_Temp_Quest10020015	1	19900022,20000002	A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2010	100172011	Street_NPCPos_Nocha_Quest10020008	1	19900014,20000002	A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2011	100172041	Street_NPCPos_Anbi_Quest10020006	1	19900026,20000002	A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2012	100172054	Street_NPCPos_Bangboo_Quest10020018	1	19900026,20000002	A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Small	0	AvatarCollider:true	None		0	0	None	None
+2013	100172055	Street_NPCPos_Temp_Quest10020020	1	19900028,20000002	A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2014	100172056	Street_NPCPos_Temp_Quest10020021	1	19900029,20000002	A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2015	100172091	Workshop_NPCPos_SisterLing	1		A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	200203	AvatarCollider:true	None		0	0	None	None
+2016	100172058	Street_NPCPos_BangbooA_Quest10020006	0	10000015,20000001	A	2	0,1.8,2,120,10	None	3.0	true	true	false	0	true	false	None	Small	300101	AvatarCollider:true	None		0	0	None	None
+2017	100172059	Street_NPCPos_BangbooB_Quest10020006	0		A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Small	0	AvatarCollider:true	None		0	0	None	None
+2018	100172060	Street_NPCPos_BangbooC_Quest10020006	0		A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Small	0	AvatarCollider:true	None		0	0	None	None
+2019	100172061	Street_NPCPos_RamenStore	0	10000013,20000001	A	2	0,2.4,2,150,10	None	3.0	true	true	true	0	true	false	None	Middle	0	AvatarCollider:true	noodle:true		0	0	None	None
+2020	100172062	Street_NPCPos_TestS	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Small	0	AvatarCollider:true	None		0	0	None	None
+2021	100172063	Street_NPCPos_TestL	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2022	100172021	WorkShop_NPCPos_Tsubaki_Quest10020106	1	20000002	A	1	2,0,0,0,0	None	3.0	true	true	true	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2023	100172064	WorkShop_NPCPos_Salesman_Quest10020103	1	20000002	A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2024	100171011	Workshop_NPCPos_Telephone	1	20000002	A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2025	100172082	Workshop_NPCPos_HollowPause	0		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2026	100172092	Workshop_NPCPos_HollowPause	0		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2027	100172081	Workshop_NPCPos_SisterLing	1		A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	200101	AvatarCollider:true	None		0	0	None	None
+2028	100173001	Workshop_NPCPos_VHSBangboo	0	19900052	A	2	9,2,2,90,10	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2029	100172101	Street_NPCPos_TestBear	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Large	0	AvatarCollider:true	None		0	0	None	None
+2031	100180131	Street_NPCPos_Quest10020151	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2032	100180714	Street_NPCPos_Quest10020152	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2033	100180812	Workshop_NPCPos_Bangboo05_VHS	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2034	100180161	Street_NPCPos_Quest10020154	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400302	AvatarCollider:true	phone:true	1006	0	0	None	None
+2035	100180714	Street_NPCPos_Quest10020155	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400309	AvatarCollider:false	None		0	0	None	None
+2036	100180171	Street_NPCPos_Quest10020156	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2037	100180912	Workshop_NPCPos_Bangboo01_VHS	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2038	100180712	Street_NPCPos_Quest10020157	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400409	SitDownCollider:true|WallCollider:false|AvatarCollider:false	bag:false		0	0	None	None
+2039	100180713	Street_NPCPos_Quest10020158	1	100701	A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400109	AvatarCollider:true	None		0	0	None	None
+2040	100172021	Street_NPCPos_Quest10020118	1	20000002	A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2041	100172091	Workshop_NPCPos_ARole4	1		A	1	3,0,0,0,0	None	3.0	true	true	true	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2042	100172081	Workshop_NPCPos_ARole4	1		A	1	3,0,0,0,0	None	3.0	true	true	true	0	true	false	None	Middle	200101	AvatarCollider:true	None		0	0	None	None
+2043	100172091	Workshop_NPCPos_ARole5	1		A	1	3,0,0,0,0	None	3.0	true	true	true	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2044	100172081	Workshop_NPCPos_ARole5	1		A	1	3,0,0,0,0	None	3.0	true	true	true	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2045	100172021	WorkShop_NPCPos_Tsubaki_Quest10020115	1	20000002	A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2046	100172091	Workshop_NPCPos_ARole6	1		A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	200201	AvatarCollider:true	None		0	0	None	None
+2047	100172081	Workshop_NPCPos_ARole6	1		A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	200101	AvatarCollider:true	None		0	0	None	None
+2051	100172091	Workshop_NPCPos_ARole1	1		A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2052	100172081	Workshop_NPCPos_ARole1	1		A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2053	100172091	Workshop_NPCPos_ARole2	1		A	1	3,0,0,0,0	None	3.0	true	true	true	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2054	100172081	Workshop_NPCPos_ARole2	1		A	1	3,0,0,0,0	None	3.0	true	true	true	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2055	100172091	Workshop_NPCPos_ARole3	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	200203	AvatarCollider:true	None		0	0	None	None
+2056	100172081	Workshop_NPCPos_ARole3	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	200103	AvatarCollider:true	None		0	0	None	None
+2057	100172091	Workshop_NPCPos_ARole7	1		A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	200203	AvatarCollider:true	None		0	0	None	None
+2058	100172081	Workshop_NPCPos_ARole7	1		A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	200103	AvatarCollider:true	None		0	0	None	None
+2059	100172091	Workshop_NPCPos_ARole8F	1		A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	200202	SitDownCollider:true|WallCollider:false|AvatarCollider:false	phone:true	1003	0	0	None	None
+2060	100172081	Workshop_NPCPos_ARole8	1		A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	200102	SitDownCollider:true|WallCollider:false|AvatarCollider:false	phone:true	1004	0	0	None	None
+2061	100172091	Workshop_NPCPos_ARole9	1		A	1	3,0,0,0,0	None	3.0	true	true	true	0	true	false	None	Middle	200201	AvatarCollider:true	None		0	0	None	None
+2062	100172081	Workshop_NPCPos_ARole9	1		A	1	3,0,0,0,0	None	3.0	true	true	true	0	true	false	None	Middle	200101	AvatarCollider:true	None		0	0	None	None
+2063	100180719	Street_NPCPos_Gate	1	20000002	A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400409	SitDownCollider:true|WallCollider:false|AvatarCollider:false	None		0	0	None	None
+2064	100180712	Street_NPCPos_Quest10020151	1	20000002	A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400417	SitDownCollider:true|WallCollider:false|AvatarCollider:false	mask:true|computer:true	0,1026	0	0	None	None
+2065	100180812	Workshop_NpcPos_Quest10020151	1	20000002	A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400415	AvatarCollider:true	None		0	0	None	None
+2066	100180912	Workshop_NpcPos_Quest10020181	1	20000002	A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400512	AvatarCollider:true	None		0	0	None	None
+2067	100172091	Workshop_NPCPos_ARole11	1	20000002	A	1	3,0,0,0,0	None	3.0	true	true	true	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2068	100172081	Workshop_NPCPos_ARole11	1	20000002	A	1	3,0,0,0,0	None	3.0	true	true	true	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2069	100172021	WorkShop_NPCPos_Tsubaki_Quest10020119	1	20000002	A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2070	100172061	Street_NPCPos_RamenStore	1	20000002	A	2	0,2.4,2,150,10	None	3.0	true	true	true	0	true	false	None	Middle	200303	AvatarCollider:true	noodle:false		0	0	None	None
+2071	100172031	Street_NPCPos_Billy_Quest10020005	1	19900047	A	1	2,0,0,0,0	None	3.0	true	true	false	0	false	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2072	100172041	Street_NPCPos_Anbi_Quest10020005	1	19900048	A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2073	100172031	Garage_NPCPos_Billy_Quest10020012	1	20000002	A	1	2,0,0,0,0	None	3.0	true	true	false	0	false	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2074	100172041	Garage_NPCPos_Anbi_Quest10020012	1	20000002	A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2075	100172011	Garage_NPCPos_Nocha_Quest10020012	1	20000002	A	1	2,0,0,0,0	None	3.0	true	true	true	0	false	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2077	100172091	Workshop_NPCPos_ARole10	1		A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	200203	AvatarCollider:true	None		0	0	None	None
+2078	100172081	Workshop_NPCPos_ARole10	1		A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	200104	AvatarCollider:true	None		0	0	None	None
+2081	100172091	Workshop_NPCPos_ARole12	1		A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2082	100172081	Workshop_NPCPos_ARole12	1		A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2083	100180812	Street_NPCPos_Joe	1	20000002	A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400412	AvatarCollider:true	None		0	0	None	None
+2084	100172042	Street_NPCPos_No11_01	1	20000002	A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2085	100180912	Street_NPCPos_Xiute	1	20000002	A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400512	AvatarCollider:true	None		0	0	None	None
+2086	100180718	Street_NPCPos_Keli_01	1	20000002	A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400103	AvatarCollider:true	None		0	0	None	None
+2087	100172042	Workshop_NPCPos_No11_03	1	20000002	A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2088	100180714	Workshop_NPCPos_DrawingRoom	1	20000002	A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2089	100180715	Street_NPCPos_Bangboo_Quest10020188	1	20000002	A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Small	200702	AvatarCollider:true	None		0	0	None	None
+2090	100172042	Street_NPCPos_No11_01End	1	20000002	A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2091	100172042	Street_NPCPos_No11_02	1	20000002	A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2092	100180718	Street_NPCPos_Keli_02	1	20000002	A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400103	AvatarCollider:true	None		0	0	None	None
+2093	100180718	Street_NPCPos_Keli_02End	1	20000002	A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400103	AvatarCollider:true	None		0	0	None	None
+2094	100180717	Street_NPCPos_Quest10020155_02	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	200701	AvatarCollider:false	None		0	0	None	30:200703
+2095	100172042	Street_NPCPos_No11_03End	1	20000002	A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2096	100180718	Street_NPCPos_Keli_03End	1	20000002	A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400103	AvatarCollider:true	None		0	0	None	None
+2097	100172181	Street_NPCPos_Woof	0		A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	200501	AvatarCollider:true	None		0	0	None	None
+2098	100172161	WorkShop_NPCPos_Bangboo_Quest10020106	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Small	200703	AvatarCollider:true	None		0	0	None	30:200703
+2099	100172181	Street_NPCPos_Woof2	0		A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	200501	AvatarCollider:true	None		0	0	None	45:200502
+2100	100172181	Street_NPCPos_Woof3	0		A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	200503	AvatarCollider:true	None		0	0	None	None
+2101	100172091	Garage_NPCPos_Quest10020024	1		A	1	3,0,0,0,0	None	3.0	true	true	true	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2102	100172081	Garage_NPCPos_Quest10020024	1		A	1	3,0,0,0,0	None	3.0	true	true	true	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2103	100172191	Street_NPCPos_Susie	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2104	100172201	Street_NPCPos_TinMaster01	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	200602	AvatarCollider:true	None		0	0	None	None
+2105	100172201	Street_NPCPos_TinMaster02	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	200601	AvatarCollider:true	None		0	0	None	None
+2106	100180715	Street_NPCPos_Bangboo_Quest10020140	1	20000002	A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Small	200701	AvatarCollider:true	None		0	0	None	30:200703
+2107	100180715	Workshop_NpcPos_Bangboo_Quest10020195	1	20000002	A	1	1,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Small	200701	AvatarCollider:true	None		0	0	None	30:200703
+2108	100180715	Street_NPCPos_Bangboo_Quest10020196	1	20000002	A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Small	200701	AvatarCollider:true	None		0	0	None	30:200703
+2109	100180112	Street_NPCPos_PAFUMEI	1	20000002	A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400204	AvatarCollider:true	None		0	0	None	None
+2110	100180412	Street_NPCPos_MEIKE	1	20000002	B	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400303	AvatarCollider:true	None		0	0	None	None
+2111	100172101	Street_NPCPos_Ben	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Large	0	AvatarCollider:true	None		0	0	None	None
+2112	100172071	Street_NPCPos_Anton	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2113	100172211	Street_NPCPos_OokumaMari	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2114	100172231	Street_NPCPos_Enzo	0		A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2115	100172041	Street_NPCPos_Anbi02	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2116	100172211	Street_NPCPos_OokumaMari02	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2117	100172031	Street_NPCPos_Billy02	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2118	100172021	Street_NPCPos_Tsubaki	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2119	100172071	Street_NPCPos_Anton02	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2120	100172011	Street_NPCPos_Nocha02	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2121	100172021	Street_NPCPos_Tsubaki02	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2122	100172211	Street_NPCPos_OokumaMari04	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2123	100172101	Street_NPCPos_Ben02	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Large	0	AvatarCollider:true	None		0	0	None	None
+2124	100172211	Street_NPCPos_OokumaMari03	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2125	100172101	Street_NPCPos_Ben03	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Large	0	AvatarCollider:true	None		0	0	None	None
+2126	100172031	Street_NPCPos_Billy03	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2127	100172011	Street_NPCPos_Nocha03	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2128	100172021	Street_NPCPos_Tsubaki03	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2129	100172041	Street_NPCPos_Anbi03	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2130	100172101	Street_NPCPos_Ben04	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Large	0	AvatarCollider:true	None		0	0	None	None
+2131	100172211	Street_NPCPos_OokumaMari05	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2132	100172071	Street_NPCPos_Anton03	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2133	100172011	Street_NPCPos_Nocha04	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2134	100172031	Street_NPCPos_Billy04	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2135	100172041	Street_NPCPos_Anbi04	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2136	100180715	Workshop_NpcPos_Bangboo_Quest10020141	1	20000002	A	1	1,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Small	200701	AvatarCollider:true	None		0	0	None	30:200703
+2140	100173012	Street_NPCPos_Schroeder02	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Small	400418	SitDownCollider:true|WallCollider:false|AvatarCollider:false	bag:false|phone01:true	0,1017	0	0	None	None
+2141	100173012	Street_NPCPos_Schroeder03	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Small	400409	SitDownCollider:true|WallCollider:false|AvatarCollider:false	bag:false|phone02:true	0,1017	0	0	None	None
+2142	100172042	Garage_NPCPos_No11	1	20000002	A	1	2,0,0,0,0	None	3.0	true	true	true	0	true	false	None	Middle	200405	AvatarCollider:true	None		0	0	None	None
+2143	100172042	Garage_NPCPos_No11_02	1	20000002	A	1	2,0,0,0,0	None	3.0	true	true	true	0	true	false	None	Middle	200403	AvatarCollider:true	None		0	0	None	None
+2144	100172042	Garage_NPCPos_No11_03	1	20000002	A	1	2,0,0,0,0	None	3.0	true	true	true	0	true	false	None	Middle	200405	AvatarCollider:true	None		0	0	None	None
+2145	100180712	Street_NPCPos_Shepherd02	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400417	SitDownCollider:true|WallCollider:false|AvatarCollider:false	mask:true|computer:true	0,1025	0	0	None	None
+2146	100172091	Workshop_NPCPos_ARole13	1		A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	200201	AvatarCollider:true	None		0	0	None	None
+2147	100172081	Workshop_NPCPos_ARole13	1		A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	200101	AvatarCollider:true	None		0	0	None	None
+2148	100172091	Workshop_NPCPos_ARole14	1		A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	200202	AvatarCollider:true	None		0	0	None	None
+2149	100172081	Workshop_NPCPos_ARole14	1		A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	200102	AvatarCollider:true	None		0	0	None	None
+2150	100172091	Workshop_NPCPos_ARole15	1		A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	200203	AvatarCollider:true	None		0	0	None	None
+2151	100172081	Workshop_NPCPos_ARole15	1		A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	200103	AvatarCollider:true	None		0	0	None	None
+2152	100172091	Workshop_NPCPos_ARole16	1		A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	200204	SitDownCollider:true|WallCollider:false|AvatarCollider:false	computer:true	1027	0	0	None	None
+2153	100172081	Workshop_NPCPos_ARole16F	1		A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	200104	AvatarCollider:true	None		0	0	None	None
+2154	100172091	Workshop_NPCPos_ARole17F	1		A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Small	200205	AvatarCollider:true	gameboy:true	1022	0	0	None	None
+2155	100172081	Workshop_NPCPos_ARole17	1		A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Small	200105	AvatarCollider:true	gameboy:true	1022	0	0	None	None
+2156	100172042	Garage_NPCPos_No11_04	1	20000002	A	1	3,0,0,0,0	None	3.0	true	true	true	0	true	false	None	Middle	200403	AvatarCollider:true	None		0	0	None	None
+2157	100172091	Workshop_NPCPos_ARole18	1		A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2158	100172081	Workshop_NPCPos_ARole18	1		A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+2159	100172091	Garage_NPCPos_Quest10020120	1		A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	200203	AvatarCollider:true	None		0	0	None	None
+2160	100172081	Garage_NPCPos_Quest10020120	1		A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	200103	AvatarCollider:true	None		0	0	None	None
+3005	100173005	Workshop_NPCPos_Bangboo01_VHS	1	100701	A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Small	0	AvatarCollider:true	None		0	0	None	None
+3006	100173006	Workshop_NPCPos_Bangboo02_VHS	1	100702	A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Small	0	AvatarCollider:true	None		0	0	None	None
+3007	100173007	Workshop_NPCPos_Bangboo03_VHS	1	100703	A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Small	0	AvatarCollider:true	None		0	0	None	None
+3008	100173008	Workshop_NPCPos_Bangboo04_VHS	1	100707	A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Small	0	AvatarCollider:true	None		0	0	None	None
+3009	100173009	Workshop_NPCPos_Bangboo05_VHS	1	100708	A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Small	0	AvatarCollider:true	None		0	0	None	None
+3011	100180711	Workshop_NPCPos_guest01_VHS	1	10200001	A	1	1,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400413	AvatarCollider:true	None		0	0	None	None
+3012	100181411	Workshop_NPCPos_guest02_VHS	1	10200002	A	1	1,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400414	AvatarCollider:true	None		0	0	None	None
+3013	100180511	Workshop_NPCPos_guest03_VHS	1	10200003	A	1	1,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400117	AvatarCollider:true	bag:false		0	0	None	None
+3014	100180511	Workshop_NPCPos_guest04_VHS	1	10200004	A	1	1,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400109	AvatarCollider:true	None		0	0	None	None
+3015	100180111	Workshop_NPCPos_guest05_VHS	1	10200005	A	1	1,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400309	AvatarCollider:true	None		0	0	None	None
+3016	100180211	Workshop_NPCPos_guest06_VHS	1	10200006	A	1	1,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400310	AvatarCollider:true	None		0	0	None	None
+3017	100180311	Workshop_NPCPos_guest01_VHS	1	10200007	A	1	1,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400215	AvatarCollider:true	None		0	0	None	None
+3018	100180411	Workshop_NPCPos_guest03_VHS	1	10200008	A	1	1,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400311	AvatarCollider:true	None		0	0	None	None
+3019	100181111	Workshop_NPCPos_guest02_VHS	1	10200009	A	1	1,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400510	AvatarCollider:true	None		0	0	None	30:200703
+3020	100181011	Workshop_NPCPos_guest04_VHS	1	10200010	A	1	1,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400511	AvatarCollider:true	None		0	0	None	30:200703
+3021	100180713	Workshop_NpcPos_VHS31020001	1		A	1	1,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400113	AvatarCollider:true	bag:false		0	0	UI/Sprite/A1DynamicLoad/IconRoleCircle/UnPacker/IconNPCCircle2090.png	None
+3022	100180714	Workshop_NpcPos_VHS31020002	1		A	1	1,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400310	AvatarCollider:true	None		0	0	UI/Sprite/A1DynamicLoad/IconRoleCircle/UnPacker/IconNPCCircle2035.png	30:200703
+3023	100180715	Workshop_NpcPos_VHS31010001	1		A	1	1,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Small	200701	AvatarCollider:true	None		0	0	None	None
+3024	100180716	Workshop_NpcPos_VHS31010002	1		A	1	1,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Small	200701	AvatarCollider:true	None		0	0	None	30:200703
+3025	100180713	Workshop_NpcPos_VHS31020001End	1		A	1	1,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400111	AvatarCollider:true	None		0	0	UI/Sprite/A1DynamicLoad/IconRoleCircle/UnPacker/IconNPCCircle2090.png	None
+3026	100180717	Workshop_NpcPos_VHS31020002_02	1		A	1	1,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Small	200701	AvatarCollider:true	None		0	0	None	None
+3027	100180714	Workshop_NpcPos_VHS31020002End	1		A	1	1,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400310	AvatarCollider:true	None		0	0	UI/Sprite/A1DynamicLoad/IconRoleCircle/UnPacker/IconNPCCircle2035.png	None
+3028	100180717	Workshop_NpcPos_VHS31020002_02End	1		A	1	1,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Small	200701	AvatarCollider:true	None		0	0	None	None
+4001	100180711	Street_Passerby_A1	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400409	SitDownCollider:true|WallCollider:false|AvatarCollider:false	bag:false		0	0	None	None
+4002	100181111	Street_Passerby_A2	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400507	SitDownCollider:true|WallCollider:false|AvatarCollider:false	gameboy:true	1022	0	0	None	None
+4003	100180311	Street_Passerby_B1	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400204	AvatarCollider:true	None		0	0	None	None
+4004	100181111	Street_Passerby_B2	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400509	AvatarCollider:true	None		0	0	None	None
+4005	100181311	Street_Passerby_C1	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400502	AvatarCollider:true	phone:true	1029	0	0	None	None
+4006	100181011	Street_Passerby_C2	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400506	SitDownCollider:true|WallCollider:false|AvatarCollider:false	bag:false|phone02:true	0,1003	0	0	None	None
+4007	100181511	Street_Passerby_D1	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400118	AvatarCollider:true	None		0	0	None	None
+4008	100180811	Street_Passerby_D2	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400421	AvatarCollider:true	phone:true	1016	0	0	None	None
+4009	100180711	Street_Passerby_09	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400402	AvatarCollider:true	phone:true|bag:false	1014,0	0	0	None	None
+4010	100180811	Street_Passerby_10	1		B	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400419	AvatarCollider:true	None		0	0	None	None
+4011	100180911	Street_Passerby_11	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400509	AvatarCollider:true	None		0	0	None	None
+4012	100181111	Street_Passerby_12	1		B	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400503	AvatarCollider:true	None		0	0	None	None
+4013	100181311	Street_Passerby_13	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400510	AvatarCollider:true	None		0	0	None	None
+4014	100180111	Street_Passerby_14	1		B	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400203	AvatarCollider:true	None		0	0	None	None
+4015	100181311	Street_Passerby_15	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400510	AvatarCollider:true	None		0	0	None	None
+4016	100180311	Street_Passerby_16	1		B	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400503	AvatarCollider:true	None		0	0	None	None
+4017	100180111	Street_Passerby_17	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400215	AvatarCollider:true	None		0	0	None	None
+4018	100180411	Street_Passerby_18	1		B	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400312	AvatarCollider:true	None		0	0	None	None
+4019	100180711	Street_Passerby_19	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400412	AvatarCollider:true	None		0	0	None	None
+4020	100181511	Street_Passerby_20	1		B	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400118	AvatarCollider:true	None		0	0	None	None
+4021	100180911	Street_Passerby_21	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400503	AvatarCollider:true	None		0	0	None	None
+4022	100180111	Street_Passerby_22	1		B	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400210	AvatarCollider:true	None		0	0	None	None
+4023	100180511	Street_Passerby_23	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400116	AvatarCollider:true	bag:false		0	0	None	None
+4024	100181011	Street_Passerby_24	1		B	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400512	AvatarCollider:true	bag:false		0	0	None	None
+4025	100180811	Street_Passerby_25	1		C	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400412	AvatarCollider:true	None		0	0	None	None
+4026	100180111	Street_Passerby_26	1		D	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400215	AvatarCollider:true	None		0	0	None	None
+4027	100180211	Street_Passerby_27	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400308	AvatarCollider:true	None		0	0	None	None
+4028	100180311	Street_Passerby_28	1		B	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400202	AvatarCollider:true	phone:true	1010	0	0	None	None
+4029	100181111	Street_Passerby_29	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400503	AvatarCollider:true	None		0	0	None	None
+4030	100180411	Street_Passerby_30	1		B	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400312	AvatarCollider:false	None		0	0	None	None
+4031	100180111	Street_Passerby_31	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400214	AvatarCollider:true	None		0	0	None	None
+4032	100180411	Street_Passerby_32	1		B	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400303	AvatarCollider:true	None		0	0	None	None
+4033	100181411	Street_Passerby_33	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400419	AvatarCollider:true	None		0	0	None	None
+4034	100180611	Street_Passerby_34	1		B	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400116	AvatarCollider:true	bag:false		0	0	None	None
+4035	100181511	Street_Passerby_35	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400116	AvatarCollider:true	bag:false		0	0	None	None
+4036	100180711	Street_Passerby_36	1		B	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400402	AvatarCollider:true	phone:true	1016	0	0	None	None
+4037	100181111	Street_Passerby_37	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400503	AvatarCollider:true	None		0	0	None	None
+4038	100180611	Street_Passerby_38	1		B	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400118	AvatarCollider:true	bag:false		0	0	None	None
+4039	100181311	Street_Passerby_39	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400512	AvatarCollider:true	None		0	0	None	None
+4040	100180711	Street_Passerby_40	1		B	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400402	AvatarCollider:true	phone:true	1021	0	0	None	None
+4041	100180211	Street_Passerby_41	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400309	AvatarCollider:true	None		0	0	None	None
+4042	100181411	Street_Passerby_42	1		B	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400411	AvatarCollider:true	mask:false		0	0	None	None
+4043	100180311	Street_Passerby_43	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400214	AvatarCollider:true	None		0	0	None	None
+4044	100180611	Street_Passerby_44	1		B	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400102	AvatarCollider:true	phone_idle:true	1012	0	0	None	None
+4045	100180511	Street_Passerby_45	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400102	AvatarCollider:true	phone_idle:true	1008	0	0	None	None
+4046	100181511	Street_Passerby_46	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400114	AvatarCollider:true	bag:false		0	0	None	None
+4047	100180111	Street_Passerby_47	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400211	AvatarCollider:true	None		0	0	None	None
+4048	100181511	Street_Passerby_48	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400111	AvatarCollider:true	None		0	0	None	None
+4049	100180411	Street_Passerby_49	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400302	AvatarCollider:true	phone:true	1011	0	0	None	None
+4050	100181011	Street_Passerby_50	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400503	AvatarCollider:true	None		0	0	None	None
+4051	100180911	Street_Passerby_51	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400509	AvatarCollider:true	None		0	0	None	None
+4052	100180411	Street_Passerby_52	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400303	AvatarCollider:true	None		0	0	None	None
+4053	100180111	Street_Passerby_53	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400216	AvatarCollider:true	mask:true		0	0	None	None
+4054	100181111	Street_Passerby_54	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400513	AvatarCollider:true	gameboy02:true|bag:false	1023	0	0	None	None
+4055	100181411	Street_Passerby_55	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400402	AvatarCollider:true	phone:true	1017	0	0	None	None
+4056	100180511	Street_Passerby_56	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400110	AvatarCollider:true	mask:false		0	0	None	None
+4057	100180711	Street_Passerby_57	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400413	AvatarCollider:true	None		0	0	None	None
+4058	100180811	Street_Passerby_58	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400103	AvatarCollider:true	None		0	0	None	None
+4059	100180611	Street_Passerby_59	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400111	AvatarCollider:true	None		0	0	None	None
+4060	100181511	Street_Passerby_60	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400110	AvatarCollider:true	None		0	0	None	None
+4061	100180711	Street_Passerby_61	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400410	SitDownCollider:true|WallCollider:false|AvatarCollider:false	computer:true|bag:false	1025,0	0	0	None	None
+4062	100180511	Street_Passerby_62	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400108	SitDownCollider:true|WallCollider:false|AvatarCollider:false	phone_cafe:true|bag:false	1011,0	0	0	None	None
+4063	100180211	Street_Passerby_63	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400302	AvatarCollider:true	phone:true	1006	0	0	None	None
+4064	100180311	Street_Passerby_64	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400215	AvatarCollider:true	None		0	0	None	None
+4065	100181411	Street_Passerby_65	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400402	AvatarCollider:true	phone:true	1017	0	0	None	None
+4066	100180511	Street_Passerby_66	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400117	AvatarCollider:true	bag:false		0	0	None	None
+4067	100181311	Street_Passerby_67	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400509	AvatarCollider:true	None		0	0	None	None
+4068	100181311	Street_Passerby_68	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400503	AvatarCollider:true	None		0	0	None	None
+4069	100181011	Street_Passerby_69	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400512	AvatarCollider:true	None		0	0	None	None
+4070	100180511	Street_Passerby_70	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400102	AvatarCollider:true	phone_idle:true	1011	0	0	None	None
+4071	100180311	Street_Passerby_71	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400210	AvatarCollider:true	None		0	0	None	None
+4072	100180311	Street_Passerby_72	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400202	AvatarCollider:true	phone:true	1007	0	0	None	None
+4073	100180211	Street_Passerby_73	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400210	AvatarCollider:true	None		0	0	None	None
+4074	100181011	Street_Passerby_74	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400511	AvatarCollider:true	None		0	0	None	None
+4075	100180711	Street_Passerby_75	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400408	SitDownCollider:true|WallCollider:false|AvatarCollider:false	bag:false		0	0	None	None
+4076	100180811	Street_Passerby_76	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400414	AvatarCollider:true	None		0	0	None	None
+4077	100180611	Street_Passerby_77	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400102	AvatarCollider:true	phone_idle:true	1013	0	0	None	None
+4078	100180411	Street_Passerby_78	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400302	AvatarCollider:true	phone:true	1007	0	0	None	None
+4079	100181511	Street_Passerby_79	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400112	AvatarCollider:true	bag:false		0	0	None	None
+4080	100180611	Street_Passerby_80	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400112	AvatarCollider:true	bag:false		0	0	None	None
+4081	100180711	Street_Passerby_81	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400405	AvatarCollider:true	None		0	0	None	None
+4082	100180111	Street_Passerby_82	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400211	AvatarCollider:true	None		0	0	None	None
+4083	100180411	Street_Passerby_83	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400302	AvatarCollider:true	phone:true	1003	0	0	None	None
+4084	100180311	Street_Passerby_84	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400204	AvatarCollider:true	mask:false		0	0	None	None
+4085	100180411	Street_Passerby_85	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400308	AvatarCollider:true	None		0	0	None	None
+4086	100180111	Street_Passerby_86	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+4087	100180211	Street_Passerby_87	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+4088	100180311	Street_Passerby_88	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+4089	100180311	Street_Passerby_89	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400202	AvatarCollider:true	phone:true	1004	0	0	None	None
+4090	100180111	Street_Passerby_90	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400207	SitDownCollider:true|WallCollider:false|AvatarCollider:false	phone:true	1010	0	0	None	None
+4091	100180411	Street_Passerby_91	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400303	AvatarCollider:true	None		0	0	None	None
+4092	100180511	Street_Passerby_92	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400107	SitDownCollider:true|WallCollider:false|AvatarCollider:false	phone_ramen:true|bag:false	1010,0	0	0	None	None
+4093	100180411	Street_Passerby_93	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+4094	100180811	Street_Passerby_94	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400421	AvatarCollider:true	phone:true	1015	0	0	None	None
+4095	100181411	Street_Passerby_95	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400402	AvatarCollider:true	phone:true	1021	0	0	None	None
+4096	100180711	Street_Passerby_96	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400402	AvatarCollider:true	phone:true	1019	0	0	None	None
+4097	100181411	Street_Passerby_97	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400415	AvatarCollider:true	bag:false		0	0	None	None
+4098	100181411	Street_Passerby_98	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400413	AvatarCollider:true	None		0	0	None	None
+4099	100180811	Street_Passerby_99	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400408	SitDownCollider:true|WallCollider:false|AvatarCollider:false	None		0	0	None	None
+4100	100180811	Street_Passerby_100	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400411	AvatarCollider:true	None		0	0	None	None
+4101	100180811	Street_Passerby_101	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400404	AvatarCollider:true	phone02:true		0	0	None	None
+4102	100180711	Street_Passerby_102	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400408	SitDownCollider:true|WallCollider:false|AvatarCollider:false	None		0	0	None	None
+4103	100181111	Street_Passerby_103	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+4104	100181111	Street_Passerby_104	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400509	AvatarCollider:true	None		0	0	None	None
+4105	100181111	Street_Passerby_105	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400502	AvatarCollider:true	phone:true	1028	0	0	None	None
+4106	100181011	Street_Passerby_106	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+4107	100180911	Street_Passerby_107	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400507	SitDownCollider:true|WallCollider:false|AvatarCollider:false	gameboy:true	1023	0	0	None	None
+4108	100181111	Street_Passerby_108	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+4109	100181511	Street_Passerby_109	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400106	SitDownCollider:true|WallCollider:false|AvatarCollider:false	phone_bench:true|bag:false	1004,0	0	0	None	None
+4110	100181511	Street_Passerby_110	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+4111	100180611	Street_Passerby_111	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400117	AvatarCollider:true	bag:false		0	0	None	None
+4112	100181511	Street_Passerby_112	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400115	SitDownCollider:true|WallCollider:false|AvatarCollider:false	phone_cafe02:true	1006	0	0	None	None
+4113	100180611	Street_Passerby_113	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400111	AvatarCollider:true	None		0	0	None	None
+4114	100181511	Street_Passerby_114	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:true	None		0	0	None	None
+4115	100181311	Street_Passerby_115	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400507	SitDownCollider:true|WallCollider:false|AvatarCollider:false	gameboy:true	1023	0	0	None	None
+4116	100181311	Street_Passerby_116	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400507	SitDownCollider:true|WallCollider:false|AvatarCollider:false	gameboy:true	1022	0	0	None	None
+4117	100180611	Street_Passerby_117	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400108	SitDownCollider:true|WallCollider:false|AvatarCollider:false	phone_cafe:true	1008	0	0	None	None
+4118	100181011	Street_Passerby_118	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400507	SitDownCollider:true|WallCollider:false|AvatarCollider:false	gameboy:true	1023	0	0	None	None
+4119	100180211	Street_Passerby_119	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400302	AvatarCollider:true	phone:true	1009	0	0	None	None
+4120	100180811	Street_Passerby_120	1	20000002	A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400410	SitDownCollider:true|WallCollider:false|AvatarCollider:false	computer:true|bag:false	1026,0	0	0	None	None
+4123	100180811	Street_Passerby_123	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400409	SitDownCollider:true|WallCollider:false|AvatarCollider:false	bag:false		0	0	None	None
+4124	100180611	Street_Passerby_124	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400107	SitDownCollider:true|WallCollider:false|AvatarCollider:false	phone_ramen:true|bag:false	1013,0	0	0	None	None
+4125	100180711	Street_Passerby_125	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400409	SitDownCollider:true|WallCollider:false|AvatarCollider:false	bag:false		0	0	None	None
+4126	100181511	Street_Passerby_126	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400107	SitDownCollider:true|WallCollider:false|AvatarCollider:false	phone_ramen:true|bag:false	1011,0	0	0	None	None
+4127	100180911	Street_Passerby_127	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400507	SitDownCollider:true|WallCollider:false|AvatarCollider:false	gameboy:true	1023	0	0	None	None
+4128	100181511	Street_Passerby_128	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400107	SitDownCollider:true|WallCollider:false|AvatarCollider:false	phone_ramen:true|bag:false	1005,0	0	0	None	None
+4129	100180811	Street_Passerby_129	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400409	SitDownCollider:true|WallCollider:false|AvatarCollider:false	bag:false		0	0	None	None
+4130	100180711	Street_Passerby_130	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400420	AvatarCollider:true	bag:false		0	0	None	None
+4131	100180711	Street_Passerby_131	1	20000002	A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400409	SitDownCollider:true|WallCollider:false|AvatarCollider:false	bag:false		0	0	None	None
+4132	100180511	Street_Passerby_132	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400102	AvatarCollider:true	phone_idle:true	1006	0	0	None	None
+4133	100180611	Workshop_Passerby_133	1	10200004	A	1	1,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400118	AvatarCollider:true	None		0	0	None	None
+4134	100181511	Workshop_Passerby_134	1	10200004	A	1	1,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400117	AvatarCollider:true	bag:false		0	0	None	None
+4135	100180611	Workshop_Passerby_135	1	10200004	A	1	1,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400110	AvatarCollider:true	None		0	0	None	None
+4136	100180311	Workshop_Passerby_136	1	10200006	A	1	1,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400210	AvatarCollider:true	None		5000	5000	None	None
+4137	100180411	Workshop_Passerby_137	1	10200006	A	1	1,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400309	AvatarCollider:true	None		5000	5000	None	None
+4138	100180811	Workshop_Passerby_138	1	20000002	A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400411	AvatarCollider:true	None		0	0	None	None
+4139	100173241	Street_Passerby_139	3		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400512	AvatarCollider:true	None		0	0	None	None
+4140	100173242	Street_Passerby_140	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400511	AvatarCollider:true	None		0	0	None	None
+4141	100173243	Street_Passerby_141	3		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400302	AvatarCollider:true	phone:true	1006	0	0	None	None
+4142	100173244	Street_Passerby_142	3		A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400118	AvatarCollider:true	None		0	0	None	None
+4143	100173245	Street_Passerby_143	3		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400415	AvatarCollider:true	None		0	0	None	None
+4144	100173246	Street_Passerby_144	3		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400512	AvatarCollider:true	None		0	0	None	None
+4145	100173247	Street_Passerby_145	3		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400112	AvatarCollider:true	bag:false		0	0	None	None
+4146	100173248	Street_Passerby_146	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400116	AvatarCollider:true	bag:false		0	0	None	None
+4147	100173249	Street_Passerby_147	3		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400512	AvatarCollider:true	None		0	0	None	None
+4148	100173250	Street_Passerby_148	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400511	AvatarCollider:true	None		0	0	None	None
+4149	100173251	Street_Passerby_149	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400216	AvatarCollider:true	None		0	0	None	None
+4150	100173252	Street_Passerby_150	3		A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400111	AvatarCollider:true	None		0	0	None	None
+4151	100180811	Street_Passerby_151	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400416	SitDownCollider:true|WallCollider:false|AvatarCollider:false	None		0	0	None	None
+4152	100180711	Street_Passerby_152	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Small	400418	AvatarCollider:true	None		0	0	None	30:200703
+4153	100181111	Street_Passerby_153	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400508	AvatarCollider:true	None		0	0	None	None
+4501	100173501	Street_Passerby_501	3		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400512	AvatarCollider:true	None		0	0	None	None
+4502	100173502	Street_Passerby_502	3		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400117	AvatarCollider:true	bag:false		0	0	None	None
+4503	100173503	Street_Passerby_503	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Small	200703	AvatarCollider:true	None		0	0	None	None
+4504	100173010	Street_Passerby_121	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400303	AvatarCollider:true	None		0	0	None	None
+4505	100173011	Street_Passerby_122	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400213	AvatarCollider:true	None		0	0	None	None
+4506	100173012	Street_NPCPos_Schroeder	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Small	400418	SitDownCollider:true|WallCollider:false|AvatarCollider:false	bag:false		0	0	None	None
+4507	100173504	Street_Passerby_507	3		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400412	AvatarCollider:true	None		0	0	None	None
+4508	100173505	Street_Passerby_508	3		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400415	AvatarCollider:true	None		0	0	None	None
+4509	100173506	Street_Passerby_509	3		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400511	AvatarCollider:true	None		0	0	None	None
+4510	100173507	Street_Passerby_510	3		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400108	SitDownCollider:true|WallCollider:false|AvatarCollider:false	phone_cafe:true|bag:false	1007,0	0	0	None	None
+4511	100173508	Street_Passerby_511	3		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400411	AvatarCollider:true	None		0	0	None	None
+4512	100173509	Street_Passerby_512	3		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400115	SitDownCollider:true|WallCollider:false|AvatarCollider:false	phone_cafe02:true	1012,0	0	0	None	None
+4513	100173510	Street_Passerby_513	3		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400509	AvatarCollider:true	None		0	0	None	None
+4514	100173511	Street_Passerby_514	3		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400213	AvatarCollider:true	None		0	0	None	None
+4515	100173512	Street_Passerby_515	3		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400313	AvatarCollider:true	bag:false|phone02:true	0,1006	0	0	None	None
+4516	100173513	Street_Passerby_516	3		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400202	AvatarCollider:true	phone:true	1003	0	0	None	None
+4517	100173514	Street_Passerby_517	3		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400210	AvatarCollider:true	None		0	0	None	None
+4518	100173515	Street_Passerby_518	3		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400509	AvatarCollider:true	None		0	0	None	None
+4519	100173516	Street_Passerby_519	3		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400102	AvatarCollider:true	phone_idle:true	1013	0	0	None	None
+4520	100173517	Street_Passerby_520	3		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400413	AvatarCollider:true	None		0	0	None	None
+4521	100173518	Street_Passerby_521	3		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400418	AvatarCollider:true	bag:false|mask:false		0	0	None	None
+4522	100173519	Street_Passerby_522	3		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400403	AvatarCollider:true	bag:false		0	0	None	None
+4523	100173520	Street_Passerby_523	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400401	AvatarCollider:true	None		0	0	None	None
+4524	100173521	Street_Passerby_524	3		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400106	SitDownCollider:true|WallCollider:false|AvatarCollider:false	phone_bench:true|mask:false|bag:false	1013,0,0	0	0	None	None
+4525	100173522	Street_Passerby_525	3		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400211	AvatarCollider:true	None		0	0	None	None
+4526	100173523	Street_Passerby_526	3		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400509	AvatarCollider:true	None		0	0	None	None
+4527	100173524	Street_Passerby_527	3		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400413	AvatarCollider:true	None		0	0	None	None
+4528	100173525	Street_Passerby_528	3		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400503	AvatarCollider:true	None		0	0	None	None
+4529	100173526	Street_Passerby_529	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400511	AvatarCollider:true	None		0	0	None	None
+4530	100173527	Street_Passerby_530	3		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400110	AvatarCollider:true	None		0	0	None	None
+4531	100173528	Street_Passerby_531	3		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400511	AvatarCollider:true	None		0	0	None	None
+4532	100173529	Street_Passerby_532	3		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400509	AvatarCollider:true	None		0	0	None	None
+4533	100173530	Street_Passerby_533	3		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400415	AvatarCollider:true	None		0	0	None	None
+4534	100173531	Street_Passerby_534	3		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400415	AvatarCollider:true	None		0	0	None	None
+4535	100173532	Street_Passerby_535	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400112	AvatarCollider:true	bag:false		0	0	None	None
+4536	100173249	Street_Passerby_536	3		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400503	AvatarCollider:true	mask:false		0	0	None	None
+5001	100180191	Garage_Object_Car_01	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	None	None		0	0	None	None
+5002	100180191	Street_NPCPos_Car_Quest10020005	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	None	None		0	0	None	None
+5003	100171011	Street_ObjectPos_Newsstand	0	70000001	A	1	1,0,0,0,0	None	3.0	true	true	false	0	false	false	None	Small	0	None	None		0	0	None	None
+5004	100171011	Street_ObjectPos_02	0	70000002	A	1	1,0,0,0,0	None	3.0	true	true	false	0	false	false	None	Large	0	None	None		0	0	None	None
+5005	100171011	Street_ObjectPos_03	0	70000003	A	1	2,0,0,0,0	None	3.0	true	true	false	0	false	false	None	Small	0	None	None		0	0	None	None
+5006	100171011	Street_ObjectPos_04	0	70000004	A	1	1,0,0,0,0	None	3.0	true	true	false	0	false	false	None	Middle	0	None	None		0	0	None	None
+5007	100171011	Street_ObjectPos_05	0	70000005	A	1	1,0,0,0,0	None	3.0	true	true	false	0	false	false	None	Large	0	None	None		0	0	None	None
+5008	100171011	Street_ObjectPos_06	0	70000006	A	1	1,0,0,0,0	None	3.0	true	true	false	0	false	false	None	Large	0	None	None		0	0	None	None
+5009	100171011	Street_ObjectPos_07	0	70000007	A	1	1,0,0,0,0	None	3.0	true	true	false	0	false	false	None	Middle	0	None	None		0	0	None	None
+5010	100171011	Street_ObjectPos_08	0	70000008	A	1	1,0,0,0,0	None	3.0	true	true	false	0	false	false	None	Small	0	None	None		0	0	None	None
+5011	100171011	Street_ObjectPos_09	0	70000009	A	1	1.5,0,0,0,0	None	3.0	true	true	false	0	false	false	None	Small	0	None	None		0	0	None	None
+5012	100171011	Street_ObjectPos_10	0	70000010	A	1	1,0,0,0,0	None	3.0	true	true	false	0	false	false	None	Large	0	None	None		0	0	None	None
+5013	100171011	Street_ObjectPos_11	0	70000011	A	1	1,0,0,0,0	None	3.0	true	true	false	0	false	false	None	Large	0	None	None		0	0	None	None
+5014	100171011	Street_ObjectPos_12	0	70000012	A	1	1,0,0,0,0	None	3.0	true	true	false	0	false	false	None	Small	0	None	None		0	0	None	None
+5015	100171011	Street_ObjectPos_13	0	70000013	A	1	1,0,0,0,0	None	3.0	true	true	false	0	false	false	None	Middle	0	None	None		0	0	None	None
+5016	100171011	Garage_ObjectPos_14	0	70000014	A	1	3,0,0,0,0	None	3.0	true	true	false	0	false	false	None	Middle	0	None	None		0	0	None	None
+5017	100171011	Garage_ObjectPos_15	0	70000015	A	1	1,0,0,0,0	None	3.0	true	true	false	0	false	false	None	Middle	0	None	None		0	0	None	None
+5018	100171011	Garage_ObjectPos_16	0	70000016	A	1	1,0,0,0,0	None	3.0	true	true	false	0	false	false	None	Middle	0	None	None		0	0	None	None
+5019	100171011	Garage_ObjectPos_17	0	70000017	A	1	1,0,0,0,0	None	3.0	true	true	false	0	false	false	None	Middle	0	None	None		0	0	None	None
+5020	100171011	Garage_ObjectPos_18	0	70000018	A	1	1,0,0,0,0	None	3.0	true	true	false	0	false	false	None	Small	0	None	None		0	0	None	None
+6001	100185001	Way8	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400217	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	None		0	5000	None	None
+6002	100185014	Way8	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400407	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	None		4000	27000	None	None
+6003	100185004	Way8	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400314	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	None		3000	45000	None	None
+6004	100185015	Way8	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400120	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	None		7600	70000	None	None
+6005	100185008	Way8	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400407	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	None		2540	86000	None	None
+6006	100185005	Way8	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400120	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	None		7600	100000	None	None
+6007	100185002	Way8	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400304	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	None		10000	0	None	None
+6008	100185007	Way14	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400423	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	phone_walk:true	1014	21100	0	None	None
+6009	100185013	Way14	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400505	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	phone_walk:true	1008	0	36000	None	None
+6010	100185006	Way14	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400105	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	phone_walk:true	1015	20400	72000	None	None
+6011	100185011	Way13	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400504	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	None		11600	0	None	None
+6012	100185003	Way13	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400205	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	None		6700	32000	None	None
+6013	100185001	Way13	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400206	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	phone:true	1004	0	64000	None	None
+6014	100185010	Way13	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400504	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	None		11600	96000	None	None
+6015	100185003	Way13	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400304	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	None		0	0	None	None
+6016	100185001	Way13	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400406	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	None		0	0	None	None
+6017	100185005	Way6	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400119	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	bag:false		2960	0	None	None
+6018	100185014	Way6	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400406	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	None		0	36000	None	None
+6019	100185015	Way6	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400119	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	bag:false		2960	72000	None	None
+6020	100185003	Way19	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400206	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	phone:true	1006	0	0	None	None
+6021	100185009	Way19	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400504	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	None		13000	36000	None	None
+6022	100185001	Way19	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400205	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	None		7500	72000	None	None
+6023	100185008	Way12	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400406	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	None		0	10000	None	None
+6024	100185006	Way12	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400119	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	None		3000	46000	None	None
+6025	100185007	Way12	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400406	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	None		0	82000	None	None
+6026	100185015	Way10	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400105	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	phone_walk:true	1017	2700	0	None	None
+6027	100185007	Way10	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400423	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	phone_walk:true	1016	8700	36000	None	None
+6028	100185004	Way10	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400305	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	phone:true	1010	0	72000	None	None
+6029	100185006	Way17	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400119	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	None		2960	0	None	None
+6030	100185008	Way17	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400406	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	None		0	48000	None	None
+6031	100185005	Way6	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400120	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	None		12000	0	None	None
+6032	100185002	Way6	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400304	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	None		8000	20000	None	None
+6033	100185008	Way6	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400407	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	None		530	38000	None	None
+6034	100185004	Way6	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400314	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	None		0	56000	None	None
+6035	100185006	Way6	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400120	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	None		12000	84000	None	None
+6036	100185007	Way6	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400407	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	None		530	96000	None	None
+6037	100185005	Way12	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400120	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	None		5000	96000	None	None
+6038	100185014	Way17	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400406	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	None		0	0	None	None
+6039	100185007	Way17	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400406	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	None		0	36000	None	None
+6040	100185015	Way17	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400119	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	bag:false		2960	72000	None	None
+6041	100185001	Way12	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400206	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	phone:true	1010	0	5000	None	None
+6042	100185003	Way12	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400205	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	None		7500	37000	None	None
+6043	100185011	Way12	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400504	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	None		13000	69000	None	None
+6044	100185010	Way12	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400504	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	None		13000	101000	None	None
+6045	100185003	Way6	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400304	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	None		0	76000	None	None
+6046	100185001	Way6	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400406	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	None		4000	95000	None	None
+6047	100185009	Way11	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400504	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	None		5500	0	None	None
+6048	100185003	Way11	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400205	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	None		0	36000	None	None
+6049	100185011	Way11	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400504	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	None		5500	72000	None	None
+6050	100185010	Way9	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400514	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	gameboy_walk:true	1023	0	0	None	None
+6051	100185013	Way9	2		A	1	2,0,0,0,0	None	3.0	true	true	false	50001	true	false	None	Middle	400505	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	phone_walk:true	1011	0	36000	None	None
+6052	100185008	Way9	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400422	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	None		0	72000	None	None
+6053	100185006	Way18	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400120	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	None		6300	0	None	None
+6054	100185015	Way18	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400119	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	bag:false		18000	36000	None	None
+6055	100185002	Way18	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	400314	SitDownCollider:false|AvatarCollider:false|WalkCollider:false|WallCollider:true	None		0	72000	None	None
+7001	100184011	Way101	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:false|WalkCollider:false|WallCollider:true	None		60000	0	None	None
+7002	100184021	Way101	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:false|WalkCollider:false|WallCollider:true	None		60000	10000	None	None
+7003	100184111	Way101	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:false|WalkCollider:false|WallCollider:true	None		60000	30000	None	None
+7004	100184211	Way103	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:false|WalkCollider:false|WallCollider:true	None		600000	60000	None	None
+7005	100184011	Way102	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:false|WalkCollider:false|WallCollider:true	None		60000	10000	None	None
+7006	100184021	Way102	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:false|WalkCollider:false|WallCollider:true	None		60000	0	None	None
+7007	100184111	Way102	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:false|WalkCollider:false|WallCollider:true	None		60000	39000	None	None
+7008	100184221	Way103	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:false|WalkCollider:false|WallCollider:true	None		600000	60000	None	None
+7009	100184121	Way101	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:false|WalkCollider:false|WallCollider:true	None		60000	55000	None	None
+7010	100184121	Way102	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:false|WalkCollider:false|WallCollider:true	None		60000	30000	None	None
+7011	100184111	Way101	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:false|WalkCollider:false|WallCollider:true	None		60000	49000	None	None
+7012	100184111	Way102	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:false|WalkCollider:false|WallCollider:true	None		60000	49000	None	None
+7013	100184121	Way101	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:false|WalkCollider:false|WallCollider:true	None		60000	39000	None	None
+7014	100184121	Way102	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:false|WalkCollider:false|WallCollider:true	None		60000	55000	None	None
+7015	100184111	Way101	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:false|WalkCollider:false|WallCollider:true	None		30000	0	None	None
+7016	100184111	Way102	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:false|WalkCollider:false|WallCollider:true	None		30000	5000	None	None
+7017	100184121	Way101	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:false|WalkCollider:false|WallCollider:true	None		30000	5000	None	None
+7018	100184121	Way102	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:false|WalkCollider:false|WallCollider:true	None		30000	0	None	None
+7101	100184011	Way101	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:false|WalkCollider:false|WallCollider:true	None		60000	0	None	None
+7102	100184021	Way101	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:false|WalkCollider:false|WallCollider:true	None		60000	10000	None	None
+7103	100184111	Way101	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:false|WalkCollider:false|WallCollider:true	None		60000	30000	None	None
+7104	100184211	Way103	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:false|WalkCollider:false|WallCollider:true	None		600000	60000	None	None
+7105	100184011	Way102	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:false|WalkCollider:false|WallCollider:true	None		60000	10000	None	None
+7106	100184021	Way102	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:false|WalkCollider:false|WallCollider:true	None		60000	0	None	None
+7107	100184111	Way102	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:false|WalkCollider:false|WallCollider:true	None		60000	39000	None	None
+7108	100184221	Way103	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:false|WalkCollider:false|WallCollider:true	None		600000	60000	None	None
+7109	100184121	Way101	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:false|WalkCollider:false|WallCollider:true	None		60000	55000	None	None
+7110	100184121	Way102	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:false|WalkCollider:false|WallCollider:true	None		60000	30000	None	None
+7111	100184111	Way101	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:false|WalkCollider:false|WallCollider:true	None		60000	49000	None	None
+7112	100184111	Way102	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:false|WalkCollider:false|WallCollider:true	None		60000	49000	None	None
+7113	100184121	Way101	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:false|WalkCollider:false|WallCollider:true	None		60000	39000	None	None
+7114	100184121	Way102	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:false|WalkCollider:false|WallCollider:true	None		60000	55000	None	None
+7115	100184111	Way101	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:false|WalkCollider:false|WallCollider:true	None		30000	0	None	None
+7116	100184111	Way102	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:false|WalkCollider:false|WallCollider:true	None		30000	5000	None	None
+7117	100184121	Way101	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:false|WalkCollider:false|WallCollider:true	None		30000	5000	None	None
+7118	100184121	Way102	2		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	AvatarCollider:false|WalkCollider:false|WallCollider:true	None		30000	0	None	None
+9001	100171011	Street_NPCPos_Test	0	10000008	A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Small	0	None	None		0	0	None	None
+9002	100170111	Street_NPCPos_Test	0	19900001	A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	true	None	Small	0	None	None		0	0	None	None
+9003	100170111	Street_NPCPos_Test	0	19900000	A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	true	None	Small	0	None	None		0	0	None	None
+9004	100170111	Street_NPCPos_Test	0	19900000	B	1	2,0,0,0,0	None	3.0	true	true	false	0	true	true	None	Middle	0	None	None		0	0	None	None
+9005	100172011	Street_NPCPos_Test	0	19900002	A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	true	None	Middle	0	None	None		0	0	None	None
+9006	100172021	Street_NPCPos_Test	0	19900003	A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	true	None	Small	0	None	None		0	0	None	None
+9007	10086	Workshop_NPCPos_Test	0	100860	A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	None	None		0	0	None	None
+9008	100172011	Workshop_NPCPos_Test	1	10000003	A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	true	None	Middle	0	None	None		0	0	None	None
+9009	100172053	Street_NPCPos_Quest	1		A	1	2,0,0,0,0	None	3.0	true	true	false	0	true	true	None	Middle	0	None	None		0	0	None	None
+9010	100172091	Workshop_NPCPos_ARoleTest	1		A	1	3,0,0,0,0	None	3.0	true	true	false	0	true	false	None	Middle	0	None	None		0	0	None	None

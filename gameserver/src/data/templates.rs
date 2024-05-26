@@ -1,4 +1,5 @@
 #![allow(dead_code)]
+use super::tsv_util::from_sequence;
 use serde::Deserialize;
 
 #[derive(Deserialize, Debug)]
@@ -11,6 +12,7 @@ pub struct MainCityObjectTemplate {
     pub create_position: String,
     pub create_type: i32,
     #[serde(rename = "DefaultInteractIDs")]
+    #[serde(deserialize_with = "from_sequence")]
     pub default_interact_ids: Vec<i32>,
     pub interact_name: Option<String>,
     pub interact_shape: i32,
@@ -33,6 +35,7 @@ pub struct MainCityObjectTemplate {
     pub collider_state: Option<String>,
     pub item_state: Option<String>,
     #[serde(rename = "ObjectIDs")]
+    #[serde(deserialize_with = "from_sequence")]
     pub object_ids: Vec<i32>,
     pub create_interval: i32,
     pub create_delay: i32,
@@ -77,8 +80,11 @@ pub struct AvatarConfigTemplate {
     pub uiprefab_path: String,
     pub main_page_show: bool,
     pub need_show: bool,
+    #[serde(deserialize_with = "from_sequence")]
     pub hit_types: Vec<i32>,
+    #[serde(deserialize_with = "from_sequence")]
     pub element_types: Vec<i32>,
+    #[serde(deserialize_with = "from_sequence")]
     pub tags: Vec<String>,
     pub gender: i32,
     pub camp: i32,

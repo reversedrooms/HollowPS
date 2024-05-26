@@ -1,4 +1,5 @@
 mod templates;
+mod tsv_util;
 
 use std::path::Path;
 
@@ -15,9 +16,9 @@ macro_rules! template_collections {
 
         fn init_template_collections() -> Result<()> {
             $(paste! {
-                let path = concat!("assets/TemplateCollections/", stringify!($template_type), "TemplateCollection.json");
+                let path = concat!("assets/TemplateCollections/", stringify!($template_type), "TemplateCollection.tsv");
                 let data = std::fs::read_to_string(path)?;
-                [<$template_type:snake:upper _COLLECTION>].set(serde_json::from_str(&data)?).unwrap();
+                [<$template_type:snake:upper _COLLECTION>].set(tsv_util::from_str(&data)?).unwrap();
             })*
 
             Ok(())

@@ -7,6 +7,7 @@ use axum::{
 };
 
 mod crypto;
+mod data;
 mod services;
 
 use services::{auth, config, entry, errors};

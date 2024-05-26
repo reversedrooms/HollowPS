@@ -1,0 +1,15 @@
+{
+	"InfoGroups": {
+		"StandaloneWindows64": {
+			"VersionInfoGroups": {
+				"0.1.0": {
+					"MinVersion": "0.1.0",
+					"LatestVersion": "0.1.18",
+					"GameResUrl": "http://127.0.0.1:21000/game_res/NAP_Publish/output_147608_1361f678bc/client/",
+					"DesignDataUrl": "http://127.0.0.1:21000/",
+					"ServerListUrl": "http://127.0.0.1:21000/design_data/NAP_Publish_AppStore_0.1.0/oversea/serverlist.bin"
+				}
+			}
+		}
+	}
+}

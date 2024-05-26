@@ -1,0 +1,11 @@
+[
+	{
+		"sid": 142,
+		"serverName": "HollowPS",
+		"ip": "127.0.0.1",
+		"port": "21000",
+		"noticeRegion": "nap_glb_cbus01",
+		"protocol": "http",
+		"$Type": "MoleMole.ServerListInfo"
+	}
+]

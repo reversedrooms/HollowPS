@@ -15,7 +15,7 @@ pub fn encrypt_config(content: &str, key: &str) -> Vec<u8> {
 
     leb128::write::unsigned(&mut out, u64::try_from(k.len()).unwrap()).unwrap();
     out.extend_from_slice(k);
-    out.extend(0_u32.to_le_bytes());
+    out.extend([0u8; 4]);
     out.extend(u32::try_from(content_bytes.len()).unwrap().to_le_bytes());
     out.extend(content_bytes);
 

@@ -1,5 +1,6 @@
+use std::sync::LazyLock;
+
 use axum::{body::Body, response::IntoResponse};
-use lazy_static::lazy_static;
 use rand::Rng;
 use serde::de::DeserializeOwned;
 
@@ -11,11 +12,11 @@ pub const SERVER_LIST_ENDPOINT: &str =
     "/design_data/NAP_Publish_AppStore_0.1.0/oversea/serverlist.bin";
 pub const VERSIONS_BUNDLE_ENDPOINT: &str = "/game_res/NAP_Publish/output_147608_1361f678bc/client/StandaloneWindows64/oversea/versions.bundle";
 
-lazy_static! {
-    static ref APP_CONFIG: AppConfig = read_config("config.json");
-    static ref SERVER_LIST: Vec<ServerListInfo> = read_config("serverlist.json");
-    static ref VERSIONS_BUNDLE: Box<[u8]> = read_binary_data("versions.bundle");
-}
+static APP_CONFIG: LazyLock<AppConfig> = LazyLock::new(|| read_config("config.json"));
+static SERVER_LIST: LazyLock<Vec<ServerListInfo>> =
+    LazyLock::new(|| read_config("serverlist.json"));
+
+static VERSIONS_BUNDLE: LazyLock<Box<[u8]>> = LazyLock::new(|| read_binary_data("versions.bundle"));
 
 pub async fn application() -> Vec<u8> {
     crypto::encrypt_config(

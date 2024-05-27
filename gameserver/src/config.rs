@@ -1,5 +1,6 @@
+use std::sync::LazyLock;
+
 use common::util::load_or_create_config;
-use lazy_static::lazy_static;
 use serde::Deserialize;
 
 const DEFAULT_CONFIG: &str = include_str!("../gameserver.default.json");
@@ -11,12 +12,11 @@ pub struct GameServerConfig {
     pub system_resources_logging: bool,
 }
 
-lazy_static! {
-    pub static ref CONFIGURATION: GameServerConfig =
-        serde_json::from_str(&load_or_create_config("gameserver.json", DEFAULT_CONFIG))
-            .expect("Failed to parse server configuration file");
-}
+pub static CONFIGURATION: LazyLock<GameServerConfig> = LazyLock::new(|| {
+    serde_json::from_str(&load_or_create_config("gameserver.json", DEFAULT_CONFIG))
+        .expect("Failed to parse server configuration file")
+});
 
 pub fn init_config() {
-    let _configuration = &*CONFIGURATION; // init static
+    let _configuration = &*CONFIGURATION;
 }

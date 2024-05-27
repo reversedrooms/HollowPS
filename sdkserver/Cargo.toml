@@ -17,7 +17,6 @@ serde.workspace = true
 serde_json.workspace = true
 tokio-util.workspace = true
 ansi_term.workspace = true
-lazy_static.workspace = true
 rand.workspace = true
 
 [[bin]]

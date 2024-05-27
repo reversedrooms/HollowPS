@@ -9,7 +9,6 @@ anyhow.workspace = true
 dirs.workspace = true
 env_logger.workspace = true
 hex.workspace = true
-lazy_static.workspace = true
 paste.workspace = true
 sysinfo.workspace = true
 itertools.workspace = true

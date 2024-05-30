@@ -1,3 +1,5 @@
+use std::io::{stdin, Read};
+
 use anyhow::Result;
 use tracing::Level;
 
@@ -15,7 +17,10 @@ use logging::{init_logging, init_system_logging};
 async fn main() -> Result<()> {
     init_logging();
     init_config();
-    init_assets()?;
+    if let Err(err) = init_assets() {
+        tracing::error!("Error occurred during assets initialization: {err}");
+        on_critical_fault();
+    }
 
     let span = tracing::span!(Level::DEBUG, "main");
     let _enter = span.enter();
@@ -25,4 +30,11 @@ async fn main() -> Result<()> {
     }
 
     net::gateway::listen(&CONFIGURATION.gateway_endpoint).await
+}
+
+fn on_critical_fault() {
+    eprintln!("Critical error occurred, press any key to exit...");
+
+    let _ = stdin().read(&mut [0u8]).unwrap();
+    std::process::exit(1);
 }

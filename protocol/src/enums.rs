@@ -1,3 +1,5 @@
+use serde::Deserialize;
+
 use super::*;
 
 #[derive(OctData, Clone, Debug, PartialEq, Eq)]
@@ -560,7 +562,7 @@ flag! {
     }
 }
 
-#[derive(OctData, Clone, Debug)]
+#[derive(OctData, Clone, Debug, Hash, PartialEq, Eq, Deserialize)]
 #[repr(i16)]
 pub enum NodeState {
     All = 0,
@@ -577,7 +579,7 @@ pub enum NodeState {
     EnumCount = 11,
 }
 
-#[derive(OctData, Clone, Debug)]
+#[derive(OctData, Clone, Debug, Hash, PartialEq, Eq, Deserialize)]
 #[repr(i16)]
 pub enum NodeVisible {
     All = 0,
@@ -588,24 +590,34 @@ pub enum NodeVisible {
     EnumCount = 5,
 }
 
-#[derive(OctData, Clone, Debug)]
+#[derive(OctData, Clone, Debug, Hash, PartialEq, Eq, Deserialize)]
 #[repr(i16)]
 pub enum HollowEventType {
     None = 0,
     All = 1,
     Begin = 10,
     End = 20,
+    #[serde(rename = "Interact_End")]
     InteractEnd = 21,
+    #[serde(rename = "Battle_End")]
     BattleEnd = 22,
+    #[serde(rename = "Change_Level_Interact")]
     ChangeLevelInteract = 23,
+    #[serde(rename = "Change_Level_Fight")]
     ChangeLevelFight = 24,
     Battle = 30,
+    #[serde(rename = "Battle_Normal")]
     BattleNormal = 31,
+    #[serde(rename = "Battle_Elite")]
     BattleElite = 32,
+    #[serde(rename = "Battle_Boss")]
     BattleBoss = 33,
     Dialog = 40,
+    #[serde(rename = "Dialog_Positive")]
     DialogPositive = 41,
+    #[serde(rename = "Dialog_Negative")]
     DialogNegative = 42,
+    #[serde(rename = "Dialog_Special")]
     DialogSpecial = 43,
 }
 

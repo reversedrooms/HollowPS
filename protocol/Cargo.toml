@@ -7,3 +7,4 @@ version.workspace = true
 byteorder.workspace = true
 hex.workspace = true
 qwer.workspace = true
+serde.workspace = true

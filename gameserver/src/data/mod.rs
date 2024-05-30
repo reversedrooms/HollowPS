@@ -1,9 +1,11 @@
+mod event_graph;
 mod templates;
 mod tsv_util;
 
-use std::path::Path;
+use std::{collections::HashMap, path::Path};
 
 use anyhow::{bail, Result};
+pub use event_graph::*;
 use paste::paste;
 pub use templates::*;
 use tokio::sync::OnceCell;
@@ -38,6 +40,15 @@ template_collections! {
     MainCityObject;
 }
 
+static EVENT_GRAPH_COLLECTION: OnceCell<HashMap<i32, ConfigEventGraph>> = OnceCell::const_new();
+
+fn init_binoutput() -> Result<()> {
+    let _ = EVENT_GRAPH_COLLECTION.set(serde_json::from_str(
+        std::fs::read_to_string("assets/BinOutput/EventGraphCollection.json")?.as_str(),
+    )?);
+    Ok(())
+}
+
 pub fn init_assets() -> Result<()> {
     if !Path::new("assets/").exists() {
         bail!(
@@ -46,9 +57,13 @@ pub fn init_assets() -> Result<()> {
     }
 
     init_template_collections()?;
-    Ok(())
+    init_binoutput()
 }
 
 pub fn get_main_city_object(tag_id: i32, npc_id: i32) -> Option<&'static MainCityObjectTemplate> {
     iter_main_city_object_collection().find(|o| o.tag_id == tag_id && o.npc_id == npc_id)
+}
+
+pub fn get_event_graph(id: i32) -> Option<&'static ConfigEventGraph> {
+    EVENT_GRAPH_COLLECTION.get().unwrap().get(&id)
 }

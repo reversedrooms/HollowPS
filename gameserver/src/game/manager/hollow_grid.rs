@@ -3,10 +3,11 @@ use std::{
     sync::Arc,
 };
 
-use crate::game::data;
 use protocol::*;
 use qwer::{phashmap, phashset, PropertyHashMap, PropertyHashSet};
 use tokio::sync::RwLock;
+
+use crate::data::{self, ConfigAction, ConfigEventType, ConfigValue};
 
 pub struct HollowGridManager {
     player: Arc<RwLock<PlayerInfo>>,
@@ -97,15 +98,14 @@ impl HollowGridManager {
         let map = map.as_ref().unwrap();
         let cur_grid = map.grids.get(&map.start_grid).unwrap();
 
-        let event_config =
-            data::get_event_config_json(cur_grid.grid.event_graph_info.hollow_event_template_id);
+        let graph =
+            data::get_event_graph(cur_grid.grid.event_graph_info.hollow_event_template_id).unwrap();
 
         let mut hollow_finished = false;
-        let actions = event_config["Events"]["OnEnd"]["Actions"]
-            .as_array()
-            .unwrap();
-        if let Some(action) = actions.first() {
-            hollow_finished = action["$type"].as_str().unwrap() == "Share.CConfigFinishHollow";
+        if let Some(event) = graph.events.get(&ConfigEventType::OnEnd) {
+            if let Some(ConfigAction::ConfigFinishHollow) = event.actions.first() {
+                hollow_finished = true;
+            }
         }
 
         (
@@ -199,31 +199,29 @@ impl HollowGridManager {
 
         let sync_hollow_event = {
             let info = map.grids.get(&(event_graph_uid as u16)).unwrap().clone();
-            let event_config =
-                data::get_event_config_json(info.grid.event_graph_info.hollow_event_template_id);
+            let graph =
+                data::get_event_graph(info.grid.event_graph_info.hollow_event_template_id).unwrap();
 
-            let mut last_exec_type = "";
+            let mut last_action = &ConfigAction::ConfigEmpty;
+
             for id in &move_path {
                 let index = (id % 1000) - 1;
-                let actions = if id / 1000 == 1 {
-                    event_config["Events"]["OnStart"]["Actions"]
-                        .as_array()
-                        .unwrap()
+                let event = if id / 1000 == 1 {
+                    graph.events.get(&ConfigEventType::OnStart)
                 } else {
-                    event_config["Events"]["OnEnd"]["Actions"]
-                        .as_array()
-                        .unwrap()
+                    graph.events.get(&ConfigEventType::OnEnd)
                 };
-                if let Some(action) = actions.get(index as usize) {
-                    last_exec_type = action["$type"].as_str().unwrap();
+                if let Some(action) = event.unwrap().actions.get(index as usize) {
+                    last_action = action;
 
-                    // ugly, we have to parse these configs properly
-                    match action["$type"].as_str().unwrap() {
-                        "Share.CConfigSetMapState" => {
-                            let x = action["X"].as_i64().unwrap() as u16;
-                            let y = action["Y"].as_i64().unwrap() as u16;
+                    match action {
+                        ConfigAction::ConfigSetMapState { x, y, .. } => {
+                            let (ConfigValue::Constant(x), ConfigValue::Constant(y)) = (x, y)
+                            else {
+                                panic!("ConfigSetMapState: only constant values are supported");
+                            };
 
-                            let uid = (y * 11) + x;
+                            let uid = ((y * 11) + x) as u16;
                             if let Some(info) = map.grids.get_mut(&uid) {
                                 info.grid.flag |= HollowGridFlag::Visible as i32
                                     | HollowGridFlag::CanMove as i32
@@ -232,14 +230,14 @@ impl HollowGridManager {
                                 grid_update.grids.insert(uid, info.clone());
                             }
                         }
-                        "Share.CConfigTriggerBattle" => {
+                        ConfigAction::ConfigTriggerBattle { .. } => {
                             trigger_battle_id =
                                 Some(match info.grid.event_graph_info.hollow_event_template_id {
                                     1000107 => 10101002,
                                     _ => 10101001,
                                 });
                         }
-                        "Share.CConfigFinishHollow" => {
+                        ConfigAction::ConfigFinishHollow => {
                             hollow_finished = true;
                         }
                         _ => {}
@@ -251,13 +249,9 @@ impl HollowGridManager {
 
             let last_client_action = *action_move_path.last().unwrap();
             let actions = if last_client_action / 1000 == 1 {
-                event_config["Events"]["OnStart"]["Actions"]
-                    .as_array()
-                    .unwrap()
+                &graph.events.get(&ConfigEventType::OnStart).unwrap().actions
             } else {
-                event_config["Events"]["OnEnd"]["Actions"]
-                    .as_array()
-                    .unwrap()
+                &graph.events.get(&ConfigEventType::OnEnd).unwrap().actions
             };
             let state = if last_client_action == -1 {
                 EventState::Finished
@@ -265,24 +259,24 @@ impl HollowGridManager {
                 action_move_path.push(-1);
                 EventState::Finished
             } else {
-                if last_exec_type != "Share.CConfigEmpty" {
+                if !matches!(last_action, ConfigAction::ConfigEmpty) {
                     action_move_path.push(last_client_action + 1);
                 }
 
                 EventState::WaitingClient
             };
 
-            let finish_event = if last_exec_type != "Share.CConfigTriggerBattle" {
+            let finish_event = if let ConfigAction::ConfigTriggerBattle { .. } = last_action {
                 PtcSyncHollowEventInfoArg {
                     event_graph_uid,
                     hollow_event_template_id: info.grid.event_graph_info.hollow_event_template_id,
                     event_graph_id: info.grid.event_graph_info.hollow_event_template_id,
                     updated_event: EventInfo {
-                        id: 1000,
-                        cur_action_id: *action_move_path.last().unwrap(),
-                        action_move_path,
-                        state,
-                        prev_state: EventState::Running,
+                        id: 0,
+                        cur_action_id: 0,
+                        action_move_path: vec![],
+                        state: EventState::Initing,
+                        prev_state: EventState::Initing,
                         cur_action_info: ActionInfo::None {},
                         cur_action_state: ActionState::Init,
                         predicated_failed_actions: phashset![],
@@ -296,11 +290,11 @@ impl HollowGridManager {
                     hollow_event_template_id: info.grid.event_graph_info.hollow_event_template_id,
                     event_graph_id: info.grid.event_graph_info.hollow_event_template_id,
                     updated_event: EventInfo {
-                        id: 0,
-                        cur_action_id: 0,
-                        action_move_path: vec![],
-                        state: EventState::Initing,
-                        prev_state: EventState::Initing,
+                        id: 1000,
+                        cur_action_id: *action_move_path.last().unwrap(),
+                        action_move_path,
+                        state,
+                        prev_state: EventState::Running,
                         cur_action_info: ActionInfo::None {},
                         cur_action_state: ActionState::Init,
                         predicated_failed_actions: phashset![],

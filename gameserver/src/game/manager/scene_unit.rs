@@ -42,8 +42,8 @@ impl SceneUnitManager {
         uid
     }
 
-    pub async fn get(&self, uid: u64) -> SceneUnitProtocolInfo {
-        self.units.read().await.get(&uid).unwrap().clone()
+    pub async fn get(&self, uid: u64) -> Option<SceneUnitProtocolInfo> {
+        self.units.read().await.get(&uid).map(|u| u.clone())
     }
 
     pub async fn sync(&self, scene_uid: u64, section_id: i32) -> PtcSyncSceneUnitArg {
@@ -113,7 +113,7 @@ impl SceneUnitManager {
             1002,
             0,
             phashmap![(
-                19900062,
+                10000009,
                 create_interact(
                     0,
                     1,

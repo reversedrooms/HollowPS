@@ -683,7 +683,7 @@ pub enum InteractTarget {
     TriggerBox = 1,
 }
 
-#[derive(OctData, Clone, Debug)]
+#[derive(OctData, Clone, Copy, Debug)]
 #[repr(i16)]
 pub enum EventGraphOwnerType {
     Scene = 0,

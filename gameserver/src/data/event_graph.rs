@@ -27,6 +27,8 @@ pub enum ConfigValue {
 pub enum ConfigEventType {
     OnStart,
     OnEnd,
+    OnBro,
+    OnSis,
     #[serde(other)]
     Unknown,
 }

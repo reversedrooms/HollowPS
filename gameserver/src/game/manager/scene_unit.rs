@@ -1,8 +1,11 @@
 use std::{collections::HashMap, sync::Arc};
 
+use anyhow::{bail, Result};
 use protocol::*;
 use qwer::{phashmap, PropertyHashMap};
 use tokio::sync::RwLock;
+
+use crate::data;
 
 use super::UniqueIDManager;
 
@@ -62,181 +65,68 @@ impl SceneUnitManager {
         }
     }
 
+    pub async fn add_scene_units(&self, section_id: i32) {
+        for o in data::iter_main_city_object_collection().filter(|o| {
+            o.create_type == 0
+                && data::is_transform_in_section(&o.create_position, section_id)
+                && o.default_interact_ids.len() != 0
+                && !o.create_position.ends_with("_Test")
+        }) {
+            self.create_npc(
+                o.npc_id,
+                o.tag_id,
+                0,
+                PropertyHashMap::Base(
+                    o.default_interact_ids
+                        .iter()
+                        .map(|id| {
+                            (
+                                *id,
+                                create_interact(
+                                    *id,
+                                    o.interact_shape as u16,
+                                    InteractScale::from_slice(&o.interact_scale).unwrap(),
+                                    &o.interact_name.clone().unwrap_or_default(),
+                                    phashmap![],
+                                ),
+                            )
+                        })
+                        .collect(),
+                ),
+            )
+            .await;
+        }
+    }
+
     // TODO: partial_sync for newly added/removed units
+}
 
-    // currently hardcoded for Main City section 2
-    pub async fn add_default_units(&self) {
-        self.create_npc(
-            100171011,
-            3,
-            0,
-            phashmap![(
-                19900006,
-                create_interact(
-                    0,
-                    1,
-                    2.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    "",
-                    phashmap![(0, String::new())]
-                )
-            )],
-        )
-        .await;
+struct InteractScale(pub f64, pub f64, pub f64, pub f64, pub f64);
+impl InteractScale {
+    pub fn from_slice(v: &[f64]) -> Result<Self> {
+        if v.len() != 5 {
+            bail!("InteractScale slice should contain 5 values");
+        }
 
-        self.create_npc(
-            100171011,
-            4,
-            0,
-            phashmap![(
-                19900006,
-                create_interact(
-                    0,
-                    1,
-                    2.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    "",
-                    phashmap![(0, String::new())]
-                )
-            )],
-        )
-        .await;
-
-        self.create_npc(
-            100171011,
-            1002,
-            0,
-            phashmap![(
-                10000009,
-                create_interact(
-                    0,
-                    1,
-                    2.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    "",
-                    phashmap![(0, String::new())]
-                )
-            )],
-        )
-        .await;
-
-        self.create_npc(
-            100171011,
-            1001,
-            0,
-            phashmap![(
-                10000010,
-                create_interact(
-                    10000010,
-                    1,
-                    1.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    "A",
-                    phashmap![(1001, String::from("A"))]
-                )
-            )],
-        )
-        .await;
-
-        self.create_npc(
-            100171011,
-            1005,
-            0,
-            phashmap![(
-                10000014,
-                create_interact(
-                    10000014,
-                    1,
-                    1.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    "A",
-                    phashmap![(1005, String::from("A"))]
-                )
-            )],
-        )
-        .await;
-
-        self.create_npc(
-            100173001,
-            2028,
-            0,
-            phashmap![(
-                19900052,
-                create_interact(
-                    19900052,
-                    2,
-                    9.0,
-                    2.0,
-                    2.0,
-                    90.0,
-                    10.0,
-                    "A",
-                    phashmap![(2028, String::from("A"))]
-                )
-            )],
-        )
-        .await;
-
-        self.create_npc(
-            100172011,
-            2000,
-            0,
-            phashmap![(
-                19900030,
-                create_interact(
-                    0,
-                    1,
-                    2.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    "",
-                    phashmap![(2000, String::from("A")), (2052, String::from("B"))]
-                )
-            )],
-        )
-        .await;
-
-        self.create_npc(100172081, 2052, 0, phashmap![]).await;
+        Ok(Self(v[0], v[1], v[2], v[3], v[4]))
     }
 }
 
-#[allow(clippy::too_many_arguments)]
 fn create_interact(
     interact_id: i32,
     interact_shape: u16,
-    scale_x: f64,
-    scale_y: f64,
-    scale_z: f64,
-    scale_w: f64,
-    scale_r: f64,
+    scale: InteractScale,
     name: &str,
     participators: PropertyHashMap<i32, String>,
 ) -> InteractInfo {
     InteractInfo {
         interact_id,
         interact_shape,
-        scale_x,
-        scale_y,
-        scale_z,
-        scale_w,
-        scale_r,
+        scale_x: scale.0,
+        scale_y: scale.1,
+        scale_z: scale.2,
+        scale_w: scale.3,
+        scale_r: scale.4,
         name: name.to_string(),
         participators,
     }

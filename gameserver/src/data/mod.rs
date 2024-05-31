@@ -38,6 +38,7 @@ template_collections! {
     AvatarConfig;
     UnlockConfig;
     MainCityObject;
+    NPCTransform;
 }
 
 static EVENT_GRAPH_COLLECTION: OnceCell<HashMap<i32, ConfigEventGraph>> = OnceCell::const_new();
@@ -62,6 +63,12 @@ pub fn init_assets() -> Result<()> {
 
 pub fn get_main_city_object(tag_id: i32, npc_id: i32) -> Option<&'static MainCityObjectTemplate> {
     iter_main_city_object_collection().find(|o| o.tag_id == tag_id && o.npc_id == npc_id)
+}
+
+pub fn is_transform_in_section(transform_id: &str, section_id: i32) -> bool {
+    iter_n_p_c_transform_collection()
+        .find(|t| t.id == transform_id)
+        .map_or(false, |t| t.section == section_id)
 }
 
 pub fn get_event_graph(id: i32) -> Option<&'static ConfigEventGraph> {

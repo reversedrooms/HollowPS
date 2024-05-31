@@ -274,7 +274,7 @@ pub async fn on_rpc_enter_world(
     }
 
     session.context.dungeon_manager.create_hall(1).await;
-    session.context.scene_unit_manager.add_default_units().await;
+    session.context.scene_unit_manager.add_scene_units(2).await;
 
     let quest_manager = session.context.quest_manager.clone();
     quest_manager

@@ -16,7 +16,8 @@ pub struct MainCityObjectTemplate {
     pub default_interact_ids: Vec<i32>,
     pub interact_name: Option<String>,
     pub interact_shape: i32,
-    pub interact_scale: String,
+    #[serde(deserialize_with = "from_sequence")]
+    pub interact_scale: Vec<f64>,
     pub fan_interact_param: Option<String>,
     pub focus_interact_scale: f64,
     pub ignore_collider: bool,
@@ -42,6 +43,20 @@ pub struct MainCityObjectTemplate {
     #[serde(rename = "NPCIcon")]
     pub npc_icon: Option<String>,
     pub action_switch: Option<String>,
+}
+
+#[derive(Deserialize, Debug)]
+#[serde(rename_all = "PascalCase")]
+pub struct NPCTransformTemplate {
+    #[serde(rename = "ID")]
+    pub id: String,
+    pub position_x: f64,
+    pub position_y: f64,
+    pub position_z: f64,
+    pub rotation_x: f64,
+    pub rotation_y: f64,
+    pub rotation_z: f64,
+    pub section: i32,
 }
 
 #[derive(Deserialize, Debug)]

@@ -1,10 +1,11 @@
 use anyhow::Result;
+use protocol::{AccountInfo, PlayerInfo};
 use qwer::{OctData, ProtocolHeader};
 use std::io::Cursor;
 use std::sync::Arc;
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio::net::TcpStream;
-use tokio::sync::{Mutex, MutexGuard};
+use tokio::sync::{Mutex, MutexGuard, OnceCell};
 
 use crate::game::manager::net_stream;
 use crate::game::GameContext;
@@ -12,11 +13,19 @@ use crate::game::GameContext;
 use super::handlers::ProtocolHandler;
 use super::{Packet, RequestBody, ResponseBody};
 
+#[derive(Clone, Copy, Debug)]
+pub struct AccountUID(pub u64);
+
+#[derive(Clone, Copy, Debug)]
+pub struct PlayerUID(pub u64);
+
 pub struct NetworkSession {
     client_socket: Arc<Mutex<TcpStream>>,
     cur_rpc_uid: u64,
     pub ns_prop_mgr: net_stream::PropertyManager,
     pub context: GameContext,
+    account_uid: OnceCell<AccountUID>,
+    player_uid: OnceCell<PlayerUID>,
 }
 
 impl NetworkSession {
@@ -28,6 +37,8 @@ impl NetworkSession {
             cur_rpc_uid: 0,
             context: GameContext::new(ns_prop_mgr.player_info.clone()),
             ns_prop_mgr,
+            account_uid: OnceCell::new(),
+            player_uid: OnceCell::new(),
         }
     }
 
@@ -35,8 +46,26 @@ impl NetworkSession {
         self.client_socket.lock().await
     }
 
-    pub async fn get_player_uid(&self) -> u64 {
-        self.ns_prop_mgr.player_info.read().await.uid.unwrap()
+    pub async fn logged_in(&self, uid: AccountUID, account: AccountInfo) -> Result<()> {
+        self.account_uid.set(uid)?;
+        *self.ns_prop_mgr.account_info.write().await = account;
+
+        Ok(())
+    }
+
+    pub async fn set_cur_player(&self, uid: PlayerUID, player: PlayerInfo) -> Result<()> {
+        self.player_uid.set(uid)?;
+        *self.ns_prop_mgr.player_info.write().await = player;
+
+        Ok(())
+    }
+
+    pub fn account_uid(&self) -> AccountUID {
+        *self.account_uid.get().unwrap()
+    }
+
+    pub fn player_uid(&self) -> PlayerUID {
+        *self.player_uid.get().unwrap()
     }
 
     pub async fn run(&mut self) -> Result<()> {

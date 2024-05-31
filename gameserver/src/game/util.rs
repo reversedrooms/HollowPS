@@ -14,7 +14,7 @@ pub fn cur_timestamp_ms() -> u64 {
 pub fn create_default_account(id: u64) -> AccountInfo {
     AccountInfo {
         account_name: Some(format!("1_{id}")),
-        players: Some(vec![id]),
+        players: Some(Vec::new()),
         gm_level: Some(10),
         account_type: Some(1),
         register_cps: Some(String::new()),

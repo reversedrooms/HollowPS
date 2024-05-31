@@ -61,6 +61,9 @@ pub struct RpcLoginArg {
     pub config_sign: String,
 }
 
+#[derive(OctData, Debug)]
+pub struct RpcCreatePlayerArg {}
+
 #[derive(OctData, Clone, Debug)]
 pub struct PtcEnterSceneArg {
     pub player_uid: u64,
@@ -355,6 +358,10 @@ pub struct PtcKickPlayerArg {
 ret! {
     struct RpcLoginRet {
         account_info: PropertyBlob,
+    }
+
+    struct RpcCreatePlayerRet {
+        player_uid: u64,
     }
 
     struct RpcEnterWorldRet {

@@ -5,6 +5,7 @@ use qwer::{
 use crate::config::CONFIGURATION;
 use crate::data;
 use crate::game::util;
+use crate::net::session::PlayerUID;
 
 use super::*;
 
@@ -251,8 +252,10 @@ pub async fn on_rpc_enter_world(
 ) -> Result<RpcEnterWorldRet> {
     let account = session.ns_prop_mgr.account_info.read().await;
 
-    let id = *account.players.as_ref().unwrap().first().unwrap(); // get first id from list
-    *session.ns_prop_mgr.player_info.write().await = create_player(id);
+    let player_uid = *account.players.as_ref().unwrap().first().unwrap(); // get first id from list
+    session
+        .set_cur_player(PlayerUID(player_uid), create_player(player_uid))
+        .await?;
 
     let item_manager = &session.context.item_manager;
     item_manager.add_resource(501, 120).await;

@@ -37,7 +37,7 @@ pub async fn on_rpc_hollow_move(
     }
 
     let pos = PtcPositionInHollowChangedArg {
-        player_uid: 1337,
+        player_uid: session.player_uid().0,
         hollow_level: arg.hollow_level,
         position: destination_pos,
     };
@@ -58,7 +58,7 @@ pub async fn on_rpc_end_battle(
 ) -> Result<RpcEndBattleRet> {
     tracing::info!("RpcEndBattle: {:?}", &arg);
 
-    let player_uid = session.get_player_uid().await;
+    let player_uid = session.player_uid().0;
     let (sync_event, hollow_finished) = session.context.hollow_grid_manager.battle_finished().await;
 
     if !hollow_finished {
@@ -75,7 +75,7 @@ pub async fn on_rpc_end_battle(
             .await?;
 
         let ptc_dungeon_quest_finished = PtcDungeonQuestFinishedArg {
-            player_uid: 1337,
+            player_uid,
             quest_id: 1001000101,
             success: true,
             reward_items: phashmap![],
@@ -219,7 +219,7 @@ pub async fn on_rpc_run_hollow_event_graph(
                 .await?;
 
             let ptc_dungeon_quest_finished = PtcDungeonQuestFinishedArg {
-                player_uid: 1337,
+                player_uid: session.player_uid().0,
                 quest_id: 1001000101,
                 success: true,
                 reward_items: phashmap![],
@@ -249,7 +249,7 @@ pub async fn on_rpc_run_hollow_event_graph(
                 .await?;
 
             let ptc_position_in_hollow_changed = PtcPositionInHollowChangedArg {
-                player_uid: 1337,
+                player_uid: session.player_uid().0,
                 hollow_level: 1,
                 position: session
                     .context
@@ -371,13 +371,13 @@ pub async fn on_rpc_start_hollow_quest(
             &session
                 .context
                 .hollow_grid_manager
-                .sync_hollow_maps(session.get_player_uid().await, scene_uid)
+                .sync_hollow_maps(session.player_uid().0, scene_uid)
                 .await,
         )
         .await?;
 
     let ptc_position_in_hollow_changed = PtcPositionInHollowChangedArg {
-        player_uid: 1337,
+        player_uid: session.player_uid().0,
         hollow_level: 1,
         position: session
             .context

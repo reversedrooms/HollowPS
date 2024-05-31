@@ -57,6 +57,7 @@ macro_rules! protocol_handlers {
 
 protocol_handlers! {
     RpcLogin;
+    RpcCreatePlayer;
     PtcGetServerTimestamp;
     PtcPlayerOperation;
     RpcAdvanceBeginnerProcedure;

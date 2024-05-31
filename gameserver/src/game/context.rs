@@ -59,7 +59,7 @@ where
     pub async fn send_changes(&mut self, session: &NetworkSession) -> Result<&T> {
         if self.player_info_changes.is_some() {
             let ptc_player_info_changed = PtcPlayerInfoChangedArg {
-                player_uid: session.get_player_uid().await,
+                player_uid: session.player_uid().0,
                 player_info: self.player_info_changes.take().unwrap(),
             };
 

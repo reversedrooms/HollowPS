@@ -77,6 +77,9 @@ pub struct PtcEnterSceneArg {
 }
 
 #[derive(OctData, Clone, Debug)]
+pub struct RpcReenterWorldArg {}
+
+#[derive(OctData, Clone, Debug)]
 pub struct RpcEnterWorldArg {}
 
 #[derive(OctData, Clone, Debug)]
@@ -343,12 +346,22 @@ pub struct PtcSyncSceneTimeArg {
     pub last_timestamp: u64,
 }
 
+#[derive(OctData, Debug)]
+pub struct PtcKickPlayerArg {
+    pub reason_id: i32,
+    pub reason_str: String,
+}
+
 ret! {
     struct RpcLoginRet {
         account_info: PropertyBlob,
     }
 
     struct RpcEnterWorldRet {
+        player_info: PropertyBlob,
+    }
+
+    struct RpcReenterWorldRet {
         player_info: PropertyBlob,
     }
 

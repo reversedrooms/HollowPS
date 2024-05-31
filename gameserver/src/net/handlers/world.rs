@@ -350,3 +350,22 @@ pub async fn on_rpc_enter_world(
         session.ns_prop_mgr.serialize_player_info().await,
     ))
 }
+
+pub async fn on_rpc_reenter_world(
+    session: &NetworkSession,
+    _arg: &RpcReenterWorldArg,
+) -> Result<RpcReenterWorldRet> {
+    tracing::warn!("OnRpcReenterWorld: world re-entrance is not implemented yet, kicking player!");
+
+    session
+        .send_rpc_arg(
+            PTC_KICK_PLAYER_ID,
+            &PtcKickPlayerArg {
+                reason_id: 2,
+                reason_str: String::new(),
+            },
+        )
+        .await?;
+
+    Ok(RpcReenterWorldRet::error(ErrorCode::Fail, Vec::new()))
+}

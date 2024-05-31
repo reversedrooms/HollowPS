@@ -68,6 +68,7 @@ protocol_handlers! {
     RpcDelNewMap;
     RpcEndBattle;
     RpcEnterWorld;
+    RpcReenterWorld;
     RpcFinishActPerformShow;
     RpcFinishEventGraphPerformShow;
     RpcGetPlayerMails;

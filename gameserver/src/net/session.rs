@@ -17,7 +17,21 @@ use super::{Packet, RequestBody, ResponseBody};
 pub struct AccountUID(pub u64);
 
 #[derive(Clone, Copy, Debug)]
-pub struct PlayerUID(pub u64);
+pub struct PlayerUID(u64);
+
+impl PlayerUID {
+    pub const fn new(account_uid: AccountUID, index: usize) -> Self {
+        Self(account_uid.0 * 100 + index as u64)
+    }
+
+    pub const fn from(raw: u64) -> Self {
+        Self(raw)
+    }
+
+    pub const fn raw(&self) -> u64 {
+        self.0
+    }
+}
 
 pub struct NetworkSession {
     client_socket: Arc<Mutex<TcpStream>>,

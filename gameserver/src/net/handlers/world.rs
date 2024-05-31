@@ -254,7 +254,7 @@ pub async fn on_rpc_enter_world(
 
     let player_uid = *account.players.as_ref().unwrap().first().unwrap(); // get first id from list
     session
-        .set_cur_player(PlayerUID(player_uid), create_player(player_uid))
+        .set_cur_player(PlayerUID::from(player_uid), create_player(player_uid))
         .await?;
 
     let item_manager = &session.context.item_manager;

@@ -1,7 +1,10 @@
 use std::time::{SystemTime, UNIX_EPOCH};
 
 use super::*;
-use crate::{game::util, net::session::AccountUID};
+use crate::{
+    game::util,
+    net::session::{AccountUID, PlayerUID},
+};
 
 const DEFAULT_ACCOUNT_ID: u64 = 1;
 
@@ -35,9 +38,9 @@ pub async fn on_rpc_create_player(
         .players
         .as_ref()
         .unwrap()
-        .len() as u64;
+        .len();
 
-    let player_uid = account_uid.0 * 100 + player_count + 1;
+    let player_uid = PlayerUID::new(account_uid, player_count + 1);
     session
         .ns_prop_mgr
         .account_info
@@ -46,9 +49,9 @@ pub async fn on_rpc_create_player(
         .players
         .as_mut()
         .unwrap()
-        .push(player_uid);
+        .push(player_uid.raw());
 
-    Ok(RpcCreatePlayerRet::new(player_uid))
+    Ok(RpcCreatePlayerRet::new(player_uid.raw()))
 }
 
 pub async fn on_ptc_get_server_timestamp(

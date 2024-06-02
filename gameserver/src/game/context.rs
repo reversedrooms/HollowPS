@@ -52,21 +52,21 @@ impl<T> PlayerOperationResult<T>
 where
     T: Send + Sync,
 {
-    pub const fn unwrap(&self) -> &T {
-        &self.result
+    pub fn take(self) -> T {
+        self.result
     }
 
-    pub async fn send_changes(&mut self, session: &NetworkSession) -> Result<&T> {
+    pub async fn send_changes(mut self, session: &NetworkSession) -> Result<T> {
         if self.player_info_changes.is_some() {
             let ptc_player_info_changed = PtcPlayerInfoChangedArg {
                 player_uid: session.player_uid().raw(),
                 player_info: self.player_info_changes.take().unwrap(),
             };
 
-            session.send_rpc_arg(101, &ptc_player_info_changed).await?;
+            session.push_rpc_arg(101, ptc_player_info_changed).await?;
         }
 
-        Ok(self.unwrap())
+        Ok(self.take())
     }
 
     pub const fn ret(result: T) -> Self {

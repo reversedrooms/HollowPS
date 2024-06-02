@@ -39,6 +39,7 @@ macro_rules! protocol_handlers {
                                     .instrument(tracing::info_span!(stringify!([<on_$name:snake>]), protocol_id = protocol_id))
                                     .await?;
 
+                                session.flush_rpc_queue().await?;
                                 session.send_rpc_ret(ret).await
                             }
                         )*

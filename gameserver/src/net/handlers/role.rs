@@ -22,7 +22,7 @@ pub async fn on_rpc_mod_nick_name(
     };
 
     session
-        .send_rpc_arg(PTC_PLAYER_INFO_CHANGED_ID, &player_info_changed)
+        .push_rpc_arg(PTC_PLAYER_INFO_CHANGED_ID, player_info_changed)
         .await?;
     Ok(RpcModNickNameRet::new())
 }

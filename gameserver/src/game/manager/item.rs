@@ -86,7 +86,7 @@ impl ItemManager {
         };
 
         // Unlock & equip default weapon
-        let weapon_uid = *self.unlock_weapon(10012).unwrap();
+        let weapon_uid = self.unlock_weapon(10012).take();
         self.equip_weapon(weapon_uid, uid);
 
         let mut player_info = self.player_info.write();

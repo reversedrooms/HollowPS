@@ -56,7 +56,7 @@ pub async fn on_rpc_run_event_graph(
     );
 
     session
-        .send_rpc_arg(PTC_SYNC_EVENT_INFO_ID, &ptc_sync_event_info)
+        .push_rpc_arg(PTC_SYNC_EVENT_INFO_ID, ptc_sync_event_info)
         .await?;
 
     Ok(RpcRunEventGraphRet::new())
@@ -89,7 +89,7 @@ pub async fn on_rpc_finish_event_graph_perform_show(
     );
 
     session
-        .send_rpc_arg(PTC_SYNC_EVENT_INFO_ID, &ptc_sync_event_info)
+        .push_rpc_arg(PTC_SYNC_EVENT_INFO_ID, ptc_sync_event_info)
         .await?;
 
     Ok(RpcFinishEventGraphPerformShowRet::new())
@@ -152,7 +152,7 @@ pub async fn on_rpc_interact_with_unit(
         );
 
         session
-            .send_rpc_arg(PTC_SYNC_EVENT_INFO_ID, &ptc_sync_event_info)
+            .push_rpc_arg(PTC_SYNC_EVENT_INFO_ID, ptc_sync_event_info)
             .await?;
     }
 
@@ -206,25 +206,25 @@ pub async fn enter_main_city(session: &NetworkSession) -> Result<()> {
     let hall_scene_uid = session.context.dungeon_manager.get_default_scene_uid();
 
     session
-        .send_rpc_arg(
+        .push_rpc_arg(
             PTC_ENTER_SECTION_ID,
             session
                 .context
                 .dungeon_manager
                 .enter_scene_section(hall_scene_uid, 2)
-                .unwrap(),
+                .take(),
         )
         .await?;
 
     session
-        .send_rpc_arg(
+        .push_rpc_arg(
             PTC_SYNC_SCENE_UNIT_ID,
-            &session.context.scene_unit_manager.sync(hall_scene_uid, 2),
+            session.context.scene_unit_manager.sync(hall_scene_uid, 2),
         )
         .await?;
 
     session
-        .send_rpc_arg(
+        .push_rpc_arg(
             PTC_ENTER_SCENE_ID,
             session
                 .context
@@ -305,24 +305,24 @@ pub async fn on_rpc_enter_world(
     if CONFIGURATION.skip_tutorial {
         Box::pin(enter_main_city(session)).await?;
     } else {
-        let fresh_scene_uid = *session.context.dungeon_manager.create_fresh().unwrap();
+        let fresh_scene_uid = session.context.dungeon_manager.create_fresh().take();
         session
-            .send_rpc_arg(
+            .push_rpc_arg(
                 PTC_ENTER_SCENE_ID,
                 session
                     .context
                     .dungeon_manager
                     .enter_scene(fresh_scene_uid)
                     .unwrap()
-                    .unwrap(),
+                    .take(),
             )
             .await?;
     }
 
     session
-        .send_rpc_arg(
+        .push_rpc_arg(
             PTC_SYNC_SCENE_TIME_ID,
-            &PtcSyncSceneTimeArg {
+            PtcSyncSceneTimeArg {
                 timestamp: 3600 * 8 * 1000,
                 last_timestamp: 0,
             },
@@ -341,9 +341,9 @@ pub async fn on_rpc_reenter_world(
     tracing::warn!("OnRpcReenterWorld: world re-entrance is not implemented yet, kicking player!");
 
     session
-        .send_rpc_arg(
+        .push_rpc_arg(
             PTC_KICK_PLAYER_ID,
-            &PtcKickPlayerArg {
+            PtcKickPlayerArg {
                 reason_id: 2,
                 reason_str: String::new(),
             },

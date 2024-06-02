@@ -1,6 +1,7 @@
 use anyhow::Result;
 use protocol::{AccountInfo, PlayerInfo};
 use qwer::{OctData, ProtocolHeader};
+use std::collections::VecDeque;
 use std::io::Cursor;
 use std::sync::Arc;
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
@@ -33,9 +34,12 @@ impl PlayerUID {
     }
 }
 
+struct QueueItem(pub u16, pub Vec<u8>);
+
 pub struct NetworkSession {
     client_socket: Arc<Mutex<TcpStream>>,
     cur_rpc_uid: u64,
+    outgoing_rpc_queue: Mutex<VecDeque<QueueItem>>,
     pub ns_prop_mgr: net_stream::PropertyManager,
     pub context: GameContext,
     account_uid: OnceCell<AccountUID>,
@@ -49,6 +53,7 @@ impl NetworkSession {
         Self {
             client_socket: Arc::new(Mutex::new(client_socket)),
             cur_rpc_uid: 0,
+            outgoing_rpc_queue: Mutex::new(VecDeque::new()),
             context: GameContext::new(ns_prop_mgr.player_info.clone()),
             ns_prop_mgr,
             account_uid: OnceCell::new(),
@@ -108,12 +113,31 @@ impl NetworkSession {
         }
     }
 
-    pub async fn send_rpc_arg(&self, protocol_id: u16, data: &impl OctData) -> Result<()> {
-        let header: Vec<u8> = ProtocolHeader::default().into();
-
+    pub async fn push_rpc_arg(&self, protocol_id: u16, data: impl OctData) -> Result<()> {
         let mut payload = Vec::new();
         let mut cursor = Cursor::new(&mut payload);
         data.marshal_to(&mut cursor, 0)?;
+
+        self.outgoing_rpc_queue
+            .lock()
+            .await
+            .push_back(QueueItem(protocol_id, payload));
+
+        Ok(())
+    }
+
+    pub async fn flush_rpc_queue(&self) -> Result<()> {
+        let mut queue = self.outgoing_rpc_queue.lock().await;
+
+        while let Some(QueueItem(protocol_id, payload)) = queue.pop_front() {
+            self.send_rpc_arg(protocol_id, payload).await?;
+        }
+
+        Ok(())
+    }
+
+    async fn send_rpc_arg(&self, protocol_id: u16, payload: Vec<u8>) -> Result<()> {
+        let header: Vec<u8> = ProtocolHeader::default().into();
 
         let body: Vec<u8> = RequestBody {
             protocol_id,

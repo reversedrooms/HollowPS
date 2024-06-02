@@ -421,7 +421,7 @@ impl DungeonManager {
     pub fn enter_battle(&self, scene_uid: u64) -> PlayerOperationResult<PtcEnterSceneArg> {
         let hollow_scene_uid = *self.player.read().scene_uid.as_ref().unwrap();
         let hollow_scene = self.set_cur_hollow_battle(scene_uid, hollow_scene_uid);
-        let ptc_enter_scene = self.enter_scene(scene_uid).unwrap().unwrap().clone();
+        let ptc_enter_scene = self.enter_scene(scene_uid).unwrap().take().clone();
 
         let player = self.player.read();
         let dungeon_collection = player.dungeon_collection.as_ref().unwrap();

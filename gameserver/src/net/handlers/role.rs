@@ -6,17 +6,19 @@ pub async fn on_rpc_mod_nick_name(
 ) -> Result<RpcModNickNameRet> {
     tracing::info!("creating character");
 
-    let mut player = session.ns_prop_mgr.player_info.write().await;
-    player.nick_name.replace(arg.nick_name.clone());
-    player.avatar_id.replace(arg.avatar_id);
+    let player_info_changed = {
+        let mut player = session.ns_prop_mgr.player_info.write();
+        player.nick_name.replace(arg.nick_name.clone());
+        player.avatar_id.replace(arg.avatar_id);
 
-    let player_info_changed = PtcPlayerInfoChangedArg {
-        player_uid: player.uid.unwrap(),
-        player_info: PlayerInfo {
-            nick_name: Some(arg.nick_name.clone()),
-            avatar_id: Some(arg.avatar_id),
-            ..Default::default()
-        },
+        PtcPlayerInfoChangedArg {
+            player_uid: player.uid.unwrap(),
+            player_info: PlayerInfo {
+                nick_name: Some(arg.nick_name.clone()),
+                avatar_id: Some(arg.avatar_id),
+                ..Default::default()
+            },
+        }
     };
 
     session

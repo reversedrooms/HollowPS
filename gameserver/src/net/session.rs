@@ -60,16 +60,16 @@ impl NetworkSession {
         self.client_socket.lock().await
     }
 
-    pub async fn logged_in(&self, uid: AccountUID, account: AccountInfo) -> Result<()> {
+    pub fn logged_in(&self, uid: AccountUID, account: AccountInfo) -> Result<()> {
         self.account_uid.set(uid)?;
-        *self.ns_prop_mgr.account_info.write().await = account;
+        *self.ns_prop_mgr.account_info.write() = account;
 
         Ok(())
     }
 
-    pub async fn set_cur_player(&self, uid: PlayerUID, player: PlayerInfo) -> Result<()> {
+    pub fn set_cur_player(&self, uid: PlayerUID, player: PlayerInfo) -> Result<()> {
         self.player_uid.set(uid)?;
-        *self.ns_prop_mgr.player_info.write().await = player;
+        *self.ns_prop_mgr.player_info.write() = player;
 
         Ok(())
     }

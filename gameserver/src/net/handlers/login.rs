@@ -11,15 +11,12 @@ const DEFAULT_ACCOUNT_ID: u64 = 1;
 pub async fn on_rpc_login(session: &NetworkSession, arg: &RpcLoginArg) -> Result<RpcLoginRet> {
     tracing::info!("Received rpc login arg: {}", arg.account_name);
 
-    match session
-        .logged_in(
-            AccountUID(DEFAULT_ACCOUNT_ID),
-            util::create_default_account(DEFAULT_ACCOUNT_ID),
-        )
-        .await
-    {
+    match session.logged_in(
+        AccountUID(DEFAULT_ACCOUNT_ID),
+        util::create_default_account(DEFAULT_ACCOUNT_ID),
+    ) {
         Ok(()) => Ok(RpcLoginRet::new(
-            session.ns_prop_mgr.serialize_account_info().await,
+            session.ns_prop_mgr.serialize_account_info(),
         )),
         Err(_) => Ok(RpcLoginRet::error(ErrorCode::RepeatedLogin, Vec::new())),
     }
@@ -34,7 +31,6 @@ pub async fn on_rpc_create_player(
         .ns_prop_mgr
         .account_info
         .read()
-        .await
         .players
         .as_ref()
         .unwrap()
@@ -45,7 +41,6 @@ pub async fn on_rpc_create_player(
         .ns_prop_mgr
         .account_info
         .write()
-        .await
         .players
         .as_mut()
         .unwrap()

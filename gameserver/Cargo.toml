@@ -29,6 +29,7 @@ tracing-bunyan-formatter.workspace = true
 common.workspace = true
 protocol.workspace = true
 qwer.workspace = true
+parking_lot.workspace = true
 
 [[bin]]
 name = "nap-gameserver"

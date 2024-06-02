@@ -1,8 +1,8 @@
 use std::collections::HashSet;
 use std::sync::Arc;
 
+use parking_lot::RwLock;
 use qwer::{PropertyDoubleKeyHashMap, PropertyHashSet};
-use tokio::sync::RwLock;
 
 use crate::game::PlayerOperationResult;
 
@@ -17,13 +17,13 @@ impl YorozuyaQuestManager {
         Self { player }
     }
 
-    pub async fn add_hollow_quest(
+    pub fn add_hollow_quest(
         &self,
         yorozuya_collection_id: i32,
         hollow_quest_type: HollowQuestType,
         id: i32,
     ) -> PlayerOperationResult<i32> {
-        let mut player = self.player.write().await;
+        let mut player = self.player.write();
         let yorozuya = player.yorozuya_info.as_mut().unwrap();
         let hollow_quests = yorozuya.hollow_quests.as_mut().unwrap();
 

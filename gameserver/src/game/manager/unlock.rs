@@ -1,8 +1,8 @@
 use std::sync::Arc;
 
+use parking_lot::RwLock;
 use protocol::*;
 use qwer::PropertyHashSet;
-use tokio::sync::RwLock;
 
 use crate::game::PlayerOperationResult;
 
@@ -15,8 +15,8 @@ impl UnlockManager {
         Self { player }
     }
 
-    pub async fn unlock(&self, unlock_id: i32) -> PlayerOperationResult<PtcUnlockArg> {
-        let mut player = self.player.write().await;
+    pub fn unlock(&self, unlock_id: i32) -> PlayerOperationResult<PtcUnlockArg> {
+        let mut player = self.player.write();
         let unlock_info = player.unlock_info.as_mut().unwrap();
 
         unlock_info

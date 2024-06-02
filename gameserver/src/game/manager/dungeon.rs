@@ -1,7 +1,7 @@
 use anyhow::{anyhow, bail, Result};
+use parking_lot::RwLock;
 use protocol::*;
 use std::sync::Arc;
-use tokio::sync::RwLock;
 
 use crate::game::{manager::UniqueIDManager, util, PlayerOperationResult};
 use qwer::{
@@ -23,9 +23,9 @@ impl DungeonManager {
         }
     }
 
-    pub async fn enter_main_city(&self) -> Result<PlayerOperationResult<PtcEnterSceneArg>> {
+    pub fn enter_main_city(&self) -> Result<PlayerOperationResult<PtcEnterSceneArg>> {
         let (player_uid, scene_position, scene_rotation) = {
-            let player = self.player.read().await;
+            let player = self.player.read();
             let pos_in_main_city = player.pos_in_main_city.as_ref().unwrap();
 
             (
@@ -35,7 +35,7 @@ impl DungeonManager {
             )
         };
 
-        let mut player = self.player.write().await;
+        let mut player = self.player.write();
         let default_scene_uid = player
             .dungeon_collection
             .as_ref()
@@ -113,12 +113,12 @@ impl DungeonManager {
         ))
     }
 
-    pub async fn enter_scene_section(
+    pub fn enter_scene_section(
         &self,
         scene_uid: u64,
         section_id: i32,
     ) -> PlayerOperationResult<PtcEnterSectionArg> {
-        let mut player = self.player.write().await;
+        let mut player = self.player.write();
         let scene_info = player
             .dungeon_collection
             .as_mut()
@@ -145,12 +145,9 @@ impl DungeonManager {
         )
     }
 
-    pub async fn enter_scene(
-        &self,
-        scene_uid: u64,
-    ) -> Result<PlayerOperationResult<PtcEnterSceneArg>> {
+    pub fn enter_scene(&self, scene_uid: u64) -> Result<PlayerOperationResult<PtcEnterSceneArg>> {
         let (player_uid, prev_scene_uid) = {
-            let player = self.player.read().await;
+            let player = self.player.read();
 
             (
                 *player.uid.as_ref().unwrap(),
@@ -158,7 +155,7 @@ impl DungeonManager {
             )
         };
 
-        let mut player = self.player.write().await;
+        let mut player = self.player.write();
         player.scene_uid.replace(scene_uid);
         player.prev_scene_uid.replace(prev_scene_uid);
         let dungeon_collection = player.dungeon_collection.as_mut().unwrap();
@@ -248,10 +245,10 @@ impl DungeonManager {
         ))
     }
 
-    pub async fn hollow_finished(&self) -> PlayerOperationResult<u64> {
-        let cur_scene_uid = self.get_cur_scene_uid().await;
+    pub fn hollow_finished(&self) -> PlayerOperationResult<u64> {
+        let cur_scene_uid = self.get_cur_scene_uid();
 
-        let mut player = self.player.write().await;
+        let mut player = self.player.write();
 
         let hollow_scene = player
             .dungeon_collection
@@ -313,10 +310,9 @@ impl DungeonManager {
         )
     }
 
-    pub async fn get_default_scene_uid(&self) -> u64 {
+    pub fn get_default_scene_uid(&self) -> u64 {
         self.player
             .read()
-            .await
             .dungeon_collection
             .as_ref()
             .unwrap()
@@ -325,10 +321,9 @@ impl DungeonManager {
     }
 
     #[allow(dead_code)]
-    pub async fn get_default_scene_uid_for_dungeon(&self, dungeon_uid: u64) -> u64 {
+    pub fn get_default_scene_uid_for_dungeon(&self, dungeon_uid: u64) -> u64 {
         self.player
             .read()
-            .await
             .dungeon_collection
             .as_ref()
             .unwrap()
@@ -340,12 +335,12 @@ impl DungeonManager {
             .default_scene_uid
     }
 
-    pub async fn get_cur_scene_uid(&self) -> u64 {
-        self.player.read().await.scene_uid.unwrap()
+    pub fn get_cur_scene_uid(&self) -> u64 {
+        self.player.read().scene_uid.unwrap()
     }
 
-    async fn add_default_hollow_properties(&self, scene_uid: u64) {
-        let mut props = self.scene_properties.write().await;
+    fn add_default_hollow_properties(&self, scene_uid: u64) {
+        let mut props = self.scene_properties.write();
 
         for (sub_key, value) in &[
             (1001, 0),
@@ -380,11 +375,11 @@ impl DungeonManager {
         }
     }
 
-    pub async fn leave_battle(&self) -> Result<PlayerOperationResult<PtcEnterSceneArg>> {
-        let back_scene_uid = self.get_back_scene_uid().await;
+    pub fn leave_battle(&self) -> Result<PlayerOperationResult<PtcEnterSceneArg>> {
+        let back_scene_uid = self.get_back_scene_uid();
 
         {
-            let mut player = self.player.write().await;
+            let mut player = self.player.write();
 
             let hollow_scene = player
                 .dungeon_collection
@@ -404,11 +399,11 @@ impl DungeonManager {
             }
         }
 
-        self.enter_scene(back_scene_uid).await
+        self.enter_scene(back_scene_uid)
     }
 
-    async fn get_back_scene_uid(&self) -> u64 {
-        let player = self.player.read().await;
+    fn get_back_scene_uid(&self) -> u64 {
+        let player = self.player.read();
         let fight_scene_uid = player.scene_uid.as_ref().unwrap();
         let fight_scene = player
             .dungeon_collection
@@ -423,14 +418,12 @@ impl DungeonManager {
         fight_scene.get_back_scene_uid()
     }
 
-    pub async fn enter_battle(&self, scene_uid: u64) -> PlayerOperationResult<PtcEnterSceneArg> {
-        let hollow_scene_uid = *self.player.read().await.scene_uid.as_ref().unwrap();
-        let hollow_scene = self
-            .set_cur_hollow_battle(scene_uid, hollow_scene_uid)
-            .await;
-        let ptc_enter_scene = self.enter_scene(scene_uid).await.unwrap().unwrap().clone();
+    pub fn enter_battle(&self, scene_uid: u64) -> PlayerOperationResult<PtcEnterSceneArg> {
+        let hollow_scene_uid = *self.player.read().scene_uid.as_ref().unwrap();
+        let hollow_scene = self.set_cur_hollow_battle(scene_uid, hollow_scene_uid);
+        let ptc_enter_scene = self.enter_scene(scene_uid).unwrap().unwrap().clone();
 
-        let player = self.player.read().await;
+        let player = self.player.read();
         let dungeon_collection = player.dungeon_collection.as_ref().unwrap();
         let fight_scene = dungeon_collection
             .scenes
@@ -459,8 +452,8 @@ impl DungeonManager {
         )
     }
 
-    async fn set_cur_hollow_battle(&self, scene_uid: u64, hollow_scene_uid: u64) -> SceneInfo {
-        let mut player = self.player.write().await;
+    fn set_cur_hollow_battle(&self, scene_uid: u64, hollow_scene_uid: u64) -> SceneInfo {
+        let mut player = self.player.write();
         let hollow_scene = player
             .dungeon_collection
             .as_mut()
@@ -485,8 +478,8 @@ impl DungeonManager {
         hollow_scene.clone()
     }
 
-    pub async fn create_fight(&self, id: i32, hollow_scene_uid: u64) -> PlayerOperationResult<u64> {
-        let mut player = self.player.write().await;
+    pub fn create_fight(&self, id: i32, hollow_scene_uid: u64) -> PlayerOperationResult<u64> {
+        let mut player = self.player.write();
         let dungeon_collection = player.dungeon_collection.as_mut().unwrap();
         let scenes = dungeon_collection.scenes.as_mut().unwrap();
         let hollow_scene = scenes.get_mut(&hollow_scene_uid).unwrap();
@@ -526,10 +519,10 @@ impl DungeonManager {
     }
 
     #[allow(dead_code)]
-    pub async fn is_in_tutorial(&self) -> bool {
-        let cur_scene_uid = self.get_cur_scene_uid().await;
+    pub fn is_in_tutorial(&self) -> bool {
+        let cur_scene_uid = self.get_cur_scene_uid();
 
-        let player = self.player.read().await;
+        let player = self.player.read();
         let cur_scene = player
             .dungeon_collection
             .as_ref()
@@ -543,24 +536,22 @@ impl DungeonManager {
         matches!(cur_scene, SceneInfo::Fresh { .. })
     }
 
-    pub async fn create_hollow(
+    pub fn create_hollow(
         &self,
         id: i32,
         world_quest_id: i32,
         avatar_uids: &[u64],
     ) -> PlayerOperationResult<(u64, u64)> {
-        let back_scene_uid = self.get_default_scene_uid().await;
+        let back_scene_uid = self.get_default_scene_uid();
 
-        let mut dungeon = self
-            .create_base_dungeon(id, back_scene_uid, world_quest_id)
-            .await;
+        let mut dungeon = self.create_base_dungeon(id, back_scene_uid, world_quest_id);
         dungeon.hollow_event_version = 526;
 
         let scene_uid = self.uid_mgr.next();
         dungeon.default_scene_uid = scene_uid;
         dungeon.scene_properties_uid = scene_uid;
 
-        self.add_default_hollow_properties(scene_uid).await;
+        self.add_default_hollow_properties(scene_uid);
 
         for (index, avatar_uid) in avatar_uids.iter().enumerate() {
             dungeon.avatar_map.insert(
@@ -642,10 +633,10 @@ impl DungeonManager {
         };
 
         {
-            let mut player = self.player.write().await;
+            let mut player = self.player.write();
             player
                 .scene_properties
-                .replace(self.scene_properties.read().await.clone());
+                .replace(self.scene_properties.read().clone());
 
             let dungeon_collection = player.dungeon_collection.as_mut().unwrap();
 
@@ -660,7 +651,7 @@ impl DungeonManager {
                 .unwrap()
                 .insert(scene_uid, scene.clone());
         }
-        let mut player = self.player.write().await;
+        let mut player = self.player.write();
         let items = player.items.as_mut().unwrap();
 
         let mut updated_items = Vec::new();
@@ -674,7 +665,7 @@ impl DungeonManager {
         }
 
         let mut prop_changes = Vec::new();
-        for (key, sub_key, value) in &*self.scene_properties.write().await {
+        for (key, sub_key, value) in &*self.scene_properties.write() {
             prop_changes.push((*key, *sub_key, *value));
         }
 
@@ -705,8 +696,8 @@ impl DungeonManager {
         )
     }
 
-    pub async fn create_hall(&self, id: i32) -> PlayerOperationResult<u64> {
-        let mut dungeon = self.create_base_dungeon(id, 0, 0).await;
+    pub fn create_hall(&self, id: i32) -> PlayerOperationResult<u64> {
+        let mut dungeon = self.create_base_dungeon(id, 0, 0);
         let dungeon_uid = dungeon.uid;
 
         let scene_uid = self.uid_mgr.next();
@@ -726,7 +717,7 @@ impl DungeonManager {
 
         dungeon.default_scene_uid = scene_uid;
 
-        let mut player = self.player.write().await;
+        let mut player = self.player.write();
         let dungeon_collection = player.dungeon_collection.as_mut().unwrap();
 
         dungeon_collection
@@ -762,8 +753,8 @@ impl DungeonManager {
         )
     }
 
-    pub async fn create_fresh(&self) -> PlayerOperationResult<u64> {
-        let mut dungeon = self.create_base_dungeon(2, 0, 0).await;
+    pub fn create_fresh(&self) -> PlayerOperationResult<u64> {
+        let mut dungeon = self.create_base_dungeon(2, 0, 0);
         let dungeon_uid = dungeon.uid;
 
         let scene_uid = self.uid_mgr.next();
@@ -783,7 +774,7 @@ impl DungeonManager {
 
         dungeon.default_scene_uid = scene_uid;
 
-        let mut player = self.player.write().await;
+        let mut player = self.player.write();
         let dungeon_collection = player.dungeon_collection.as_mut().unwrap();
 
         dungeon_collection
@@ -817,13 +808,13 @@ impl DungeonManager {
         )
     }
 
-    async fn create_base_dungeon(
+    fn create_base_dungeon(
         &self,
         id: i32,
         back_scene_uid: u64,
         world_quest_id: i32,
     ) -> DungeonInfo {
-        let player = self.player.read().await;
+        let player = self.player.read();
         let uid = self.uid_mgr.next();
 
         DungeonInfo {

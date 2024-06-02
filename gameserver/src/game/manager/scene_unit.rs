@@ -1,9 +1,9 @@
 use std::{collections::HashMap, sync::Arc};
 
 use anyhow::{bail, Result};
+use parking_lot::RwLock;
 use protocol::*;
 use qwer::{phashmap, PropertyHashMap};
-use tokio::sync::RwLock;
 
 use crate::data;
 
@@ -22,7 +22,7 @@ impl SceneUnitManager {
         }
     }
 
-    pub async fn create_npc(
+    pub fn create_npc(
         &self,
         id: i32,
         tag: i32,
@@ -31,7 +31,7 @@ impl SceneUnitManager {
     ) -> u64 {
         let uid = self.uid_mgr.next();
 
-        self.units.write().await.insert(
+        self.units.write().insert(
             uid,
             SceneUnitProtocolInfo::NpcProtocolInfo {
                 uid,
@@ -45,11 +45,11 @@ impl SceneUnitManager {
         uid
     }
 
-    pub async fn get(&self, uid: u64) -> Option<SceneUnitProtocolInfo> {
-        self.units.read().await.get(&uid).map(|u| u.clone())
+    pub fn get(&self, uid: u64) -> Option<SceneUnitProtocolInfo> {
+        self.units.read().get(&uid).map(|u| u.clone())
     }
 
-    pub async fn sync(&self, scene_uid: u64, section_id: i32) -> PtcSyncSceneUnitArg {
+    pub fn sync(&self, scene_uid: u64, section_id: i32) -> PtcSyncSceneUnitArg {
         PtcSyncSceneUnitArg {
             scene_uid,
             section_id,
@@ -58,14 +58,13 @@ impl SceneUnitManager {
             scene_units: self
                 .units
                 .read()
-                .await
                 .iter()
                 .map(|(_, unit)| unit.clone())
                 .collect(),
         }
     }
 
-    pub async fn add_scene_units(&self, section_id: i32) {
+    pub fn add_scene_units(&self, section_id: i32) {
         for o in data::iter_main_city_object_collection().filter(|o| {
             o.create_type == 0
                 && data::is_transform_in_section(&o.create_position, section_id)
@@ -93,8 +92,7 @@ impl SceneUnitManager {
                         })
                         .collect(),
                 ),
-            )
-            .await;
+            );
         }
     }
 

@@ -1,7 +1,7 @@
+use parking_lot::RwLock;
 use protocol::{ItemInfo, PlayerInfo};
 use qwer::{phashmap, PropertyHashMap};
 use std::sync::Arc;
-use tokio::sync::RwLock;
 
 use crate::game::{util, PlayerOperationResult};
 
@@ -20,8 +20,8 @@ impl ItemManager {
         }
     }
 
-    pub async fn add_resource(&self, currency_id: i32, amount: i32) -> PlayerOperationResult<i32> {
-        let mut player_info = self.player_info.write().await;
+    pub fn add_resource(&self, currency_id: i32, amount: i32) -> PlayerOperationResult<i32> {
+        let mut player_info = self.player_info.write();
 
         for (uid, item) in player_info.items.as_mut().unwrap() {
             if let ItemInfo::Resource { id, count, .. } = item {
@@ -66,7 +66,7 @@ impl ItemManager {
         )
     }
 
-    pub async fn unlock_avatar(&self, id: i32) -> PlayerOperationResult<u64> {
+    pub fn unlock_avatar(&self, id: i32) -> PlayerOperationResult<u64> {
         let uid = self.uid_mgr.next();
 
         let avatar = ItemInfo::Avatar {
@@ -86,10 +86,10 @@ impl ItemManager {
         };
 
         // Unlock & equip default weapon
-        let weapon_uid = *self.unlock_weapon(10012).await.unwrap();
-        self.equip_weapon(weapon_uid, uid).await;
+        let weapon_uid = *self.unlock_weapon(10012).unwrap();
+        self.equip_weapon(weapon_uid, uid);
 
-        let mut player_info = self.player_info.write().await;
+        let mut player_info = self.player_info.write();
         let items = player_info.items.as_mut().unwrap();
         items.insert(uid, avatar.clone());
 
@@ -108,8 +108,8 @@ impl ItemManager {
         )
     }
 
-    pub async fn unlock_weapon(&self, id: i32) -> PlayerOperationResult<u64> {
-        let mut player_info = self.player_info.write().await;
+    pub fn unlock_weapon(&self, id: i32) -> PlayerOperationResult<u64> {
+        let mut player_info = self.player_info.write();
         let items = player_info.items.as_mut().unwrap();
 
         let uid = self.uid_mgr.next();
@@ -141,12 +141,12 @@ impl ItemManager {
         )
     }
 
-    pub async fn equip_weapon(
+    pub fn equip_weapon(
         &self,
         weapon_uid: u64,
         equip_avatar_uid: u64,
     ) -> PlayerOperationResult<bool> {
-        let mut player_info = self.player_info.write().await;
+        let mut player_info = self.player_info.write();
         let items = player_info.items.as_mut().unwrap();
 
         let Some(ItemInfo::Weapon { avatar_uid, .. }) = items.get_mut(&weapon_uid) else {

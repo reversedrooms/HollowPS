@@ -1,7 +1,7 @@
 use std::sync::Arc;
 
+use parking_lot::RwLock;
 use qwer::PropertyDoubleKeyHashMap;
-use tokio::sync::RwLock;
 
 use crate::game::PlayerOperationResult;
 
@@ -18,11 +18,10 @@ impl QuestManager {
         Self { uid_mgr, player }
     }
 
-    pub async fn add_world_quest(&self, quest: QuestInfo) -> PlayerOperationResult<u64> {
+    pub fn add_world_quest(&self, quest: QuestInfo) -> PlayerOperationResult<u64> {
         let mut world_quest_collection_uid = self
             .player
             .read()
-            .await
             .quest_data
             .as_ref()
             .unwrap()
@@ -33,7 +32,6 @@ impl QuestManager {
             world_quest_collection_uid = self.uid_mgr.next();
             self.player
                 .write()
-                .await
                 .quest_data
                 .as_mut()
                 .unwrap()
@@ -42,15 +40,14 @@ impl QuestManager {
         }
 
         self.add_quest_to_collection(world_quest_collection_uid, quest)
-            .await
     }
 
-    pub async fn add_quest_to_collection(
+    pub fn add_quest_to_collection(
         &self,
         collection_uid: u64,
         mut quest: QuestInfo,
     ) -> PlayerOperationResult<u64> {
-        let mut player = self.player.write().await;
+        let mut player = self.player.write();
         let quest_data = player.quest_data.as_mut().unwrap();
         quest.set_collection_uid(collection_uid);
 

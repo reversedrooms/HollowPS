@@ -1,8 +1,8 @@
 use std::sync::Arc;
 
 use anyhow::Result;
+use parking_lot::RwLock;
 use protocol::{PlayerInfo, PtcPlayerInfoChangedArg};
-use tokio::sync::RwLock;
 
 use crate::net::NetworkSession;
 
